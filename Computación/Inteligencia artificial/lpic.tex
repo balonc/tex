@@ -1,0 +1,92 @@
+\documentclass[a4paper, 11pt, titlepage]{article}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{imakeidx}
+\usepackage{makeidx}
+\usepackage{mathtools}
+\usepackage[spanish]{babel}
+\usepackage{eurosym}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% \setcounter{secnumdepth}{5}
+% \setcounter{tocdepth}{5}
+
+\title{Inteligencia artifical}
+\author{Francisco Javier Balón Aguilar}
+
+\begin{document}
+
+\maketitle
+\renewcommand{\contentsname}{Índice}
+\tableofcontents
+\newpage
+
+\section{Contextualización}
+
+    La inteligencia artifical puede definirse como una rama de la computación dedicada al
+    desarrollo de agentes inteligentes no vivos por medio de las técnicas de la computación 
+    y la programación.
+
+    \paragraph{Etapa anterior al siglo XX} Las bases en las que se apoya el desarrollo de la inteligencia 
+    artificial son anteriores al siglo XX, concretamente podemos ver su origen en la antigua Grecia.
+
+    Aristóteles hacia el año 300 a.C. ya definió, en sus estudios, lo que conocemos como 
+    \textbf{silogismos}\footnote{
+        Un silogismo es un conjunto estructurado de reglas que describen una parte del conocimiento, 
+        a partir de las cuales se pueden establecer conclusiones racionales en base a unas 
+        premisas dadas.
+    }. Posteriormente, hacia el año 1.315, Ramón Llull, basándose en otra herramienta astrológica 
+    árabe, para combinar conceptos mecánicamente. Esta máquina estaba formada por tres discos 
+    giratorios concéntricos que albergaban regiones en las que se ubicaban determinadas categorías 
+    del pensamiento; es decir, girando estos discos se formaban nuevas teorías (véase imagen 
+    \ref{arsmagna}).
+
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[width=0.4\textwidth]{resources/arsmagna.png}
+        \caption{Esquema de la máquina Ars Magna, de Ramón Llull.}
+        \label{arsmagna}
+    \end{figure}
+
+    En el año 1.842, Charles Babbage es considerado el padre de la informática por la creación de la 
+    primera calculadora mecánica programable (véase imagen \ref{maquinabaggage}), introduciendo las bases 
+    de la computación.
+
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[width=0.6\textwidth]{resources/maquinababbage.jpg}
+        \caption{Máquina analítica de Babbage.}
+        \label{maquinabaggage}
+    \end{figure}
+
+    Unos años más tarde, en 1.847, George Bool con su llamada lógica booleana o proposicional, mientras 
+    investigaba las leyes fundamentales sobre las que basa el razonamiento humano y su expresión matemática, 
+    añadió complejidad a la lógica de Aristóteles. Basándose en estos estudios, en 1.879, Gottlob Frege extiende 
+    la lógica booleana creando la lógica de Primer Orden, utilizada hasta nuestros días y con una escalabilidad 
+    de expresión mayor que la lógica booleana.
+
+    \paragraph{El siglo XX} El desarrollo de la computación alrededor de los años 40 supuso un impulso exponencial 
+    para el desarrollo de la inteligencia artificial como ciencia. El primero en vaticinarlo fue Alan Turing, en
+    1.950, introduciendo la posibilidad de mecanizar la inteligencia humana a través de una evolución de su máquina 
+    de Turing (simultáneamente propuso el conocido test de Turing, o juego de imitación, a través del cual las 
+    máquinas llegarían a emular el comportamiento humano inteligente a base de preguntas y razonamientos mecánicos).
+
+    Si podemos dar un <<nacimiento>> a la inteligencia artificial en la práctica podemos considerarlo en el verano 
+    de 1.956, en un evento en el Dartmouth College en New Hampshire. Tal evento estuvo organizado por John McCarthy, 
+    creador del lenguaje LISP, Marvin Minsky, Nathaniel Rochester y Claude Shanon. Este mismo año se desarrollaron en 
+    IBM (con Nathaniel Rochester) algunos de los primeros programas considerados como <<inteligentes>>, como juegos 
+    de damas (con Claude Shanon) o un demostrador de teoremas de geometría (Gelernter).
+
+    Un programa que llamó la atención en 1.966 fue ELIZA, por Joseph Weizenbaum. Éste permitía establecer una 
+    conversación simple entre el ordenador y el humano.
+
+    En los años 70 aparecieron dos proyectos que captaron la atención del gremio. El primero fue el sistema SHRDLU, 
+    desarrollado por Terry Winograd, del Instituto Tecnológico de Massachussets (MIT). Este sistema suministra 
+    una interfaz de lenguaje natural al brazo de un robot acerca de un conjunto de objetos que aparecen en pantalla y 
+    los movimientos que se pueden realizar con ellos. El segundo fue el sistema LUNAR de William Woods, que proporciona 
+    a los geólogos lunares una interfaz en lenguaje natural que permite acceder a una base de datos de rocas lunares. 
+
+\end{document}
