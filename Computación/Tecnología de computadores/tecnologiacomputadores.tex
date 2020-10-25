@@ -1,0 +1,53 @@
+\documentclass[a4paper, 11pt, titlepage]{article}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{imakeidx}
+\usepackage{makeidx}
+\usepackage{mathtools}
+\usepackage[spanish]{babel}
+\usepackage{eurosym}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\title{Tecnología de computadores}
+\author{Francisco Javier Balón Aguilar}
+
+\begin{document}
+
+\maketitle
+\renewcommand{\contentsname}{Índice}
+\tableofcontents
+\newpage
+
+\section{Introducción}
+
+    \subsection{Transformación de valores analógicos a valores digitales}
+
+        El mundo físico se caracteriza por continuas, el cambio de valor se realiza de forma continua, hay infinitos 
+        valores con un posible infinito número de decimales. Por lo que para poder medir y trabajar con magnitudes 
+        analógicas se discretizan, es decir, los posibles valores se reducen a unos pocos, transformándolo en magnitudes 
+        digitales (interpretables mediante ordenadores). Estas medidas discretizadas se realizan, además, cada cierto 
+        tiempo y no de forma contínua, muestreando los valores de entrada.
+
+        Para realizar estas transformaciones se utilizan conversores de magnitudes analógicas a digitales o A/D y de 
+        magnitudes digitales a analógicas o D/A, contando con las siguientes etapas de conversión:
+
+        \begin{itemize}
+            \item \textbf{Muestreador.} Muestrea la señal analógica de entrada para discretizar el número de medidas 
+            tomadas.
+            \item \textbf{Cuantificador.} Asigna a la magnitud analógica una magnitud digital. Inevitablemente se 
+            añadirá ruido a la señal.
+            \item \textbf{Codificador.} Transforma las magnitudes digitales, generalmente, a código binario.
+        \end{itemize}
+
+    \subsection{Sistemas de numeración}
+
+        Los sistemas de numeración se utilizan para representar magnitudes. Existen multitud de ellos, aunque el más 
+        utilizado de forma cotidiana es el sistema decimal, llamado así por tener base 10, es decir, emplear 1o dígitos:
+
+        \[[0,1,2,3,4,5,6,7,8,9]\]
+
+
+\end{document}
