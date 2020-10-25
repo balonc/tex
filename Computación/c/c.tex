@@ -585,6 +585,17 @@ showstringspaces=false}
                 de una arquitectura concreta.
             }.
 
+            Los paquetes RPM componen primero de un lead que le identifica como rpm, una 
+            firma criptográfica que verifica su integridad y autenticidad, una cabecera con 
+            metadatos y un payload con el contenido del programa en sí. El contenido se 
+            encuentra comprimido en un solo\textit{.cpio}, que utiliza cualquier algoritmo 
+            de compresión (normalmente \textit{gzip}, \textit{xz} o \textit{xar}). 
+            
+            Un paquete RPM se analiza con la herramienta \textit{rpm2cpio}:
+
+            \begin{lstlisting}[language=bash]
+    $ rpm2cpio paquete.rpm | cpio -idmv\end{lstlisting}
+            
     \subsection{Paquetes fuente}
 
         \subsubsection{Empaquetación tarball}
