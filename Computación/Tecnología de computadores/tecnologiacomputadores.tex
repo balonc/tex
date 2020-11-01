@@ -10,6 +10,8 @@
 \usepackage{amssymb}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{blkarray, bigstrut}
 
 \title{Tecnología de computadores}
 \author{Francisco Javier Balón Aguilar}
@@ -21,45 +23,79 @@
 \tableofcontents
 \newpage
 
-\section{Introducción}
+\section{Álgebra de Boole y puertas lógicas}
 
-    \subsection{Transformación de valores analógicos a valores digitales}
+    El matemático y filósofo George Boole enunció una teoría matemática que permitía, de forma 
+    algebráica, representar y operar con lógica preposicional. Una de sus características más 
+    importantes es que las variables sólo podían tener dos valores: verdadero y falso. A esta 
+    teoría se le conoce como Álgebra de Boole.
 
-        El mundo físico se caracteriza por continuas, el cambio de valor se realiza de forma continua, hay infinitos 
-        valores con un posible infinito número de decimales. Por lo que para poder medir y trabajar con magnitudes 
-        analógicas se discretizan, es decir, los posibles valores se reducen a unos pocos, transformándolo en magnitudes 
-        digitales (interpretables mediante ordenadores). Estas medidas discretizadas se realizan, además, cada cierto 
-        tiempo y no de forma contínua, muestreando los valores de entrada.
+    Posteriormente, Claude E. Shannon, ingeniero electrónico, llega a la conclusión de que 
+    es posible aplicar el Álgebra de Boole para el diseño, estudio y simplificación de circuitos 
+    digitales. Uno de los factores que lo permiten son la simplificación a dos los valores de 
+    las variables.
 
-        Para realizar estas transformaciones se utilizan conversores de magnitudes analógicas a digitales o A/D y de 
-        magnitudes digitales a analógicas o D/A, contando con las siguientes etapas de conversión:
+    El Álgebra de Boole queda definida, pues, por las siguientes reglas:
 
-        \begin{itemize}
-            \item \textbf{Muestreador.} Muestrea la señal analógica de entrada para discretizar el número de medidas 
-            tomadas.
-            \item \textbf{Cuantificador.} Asigna a la magnitud analógica una magnitud digital. Inevitablemente se 
-            añadirá ruido a la señal.
-            \item \textbf{Codificador.} Transforma las magnitudes digitales, generalmente, a código binario.
-        \end{itemize}
+    \begin{itemize}
+        \item Las variables sólo tienen dos posibles valores: 0 ó 1, es decir, utilizamos el 
+        sistema de numeración binario.
+        \item Operación de complementación o función NOT.
+        \item Operación de suma lógica o función OR.
+        \item Operación de producto lógico o función AND.
+        \item Por convenio, el producto lógico es precedente a la suma lógica.
+    \end{itemize}
 
-    \subsection{Representación de números enteros}
+    Estas operaciones algebráicas se implementan en los circuitos digitales mediante \textbf{puertas 
+    lógicas}. Cada operación tiene asignada una puerta lógica.
 
-        \subsubsection{Binario}
+    % TODO: poner gráfica con la representación de las puertas lógicas.
 
-        \subsubsection{Signo-binario}
+    Para representar los posibles resultados de la función lógica en función de las entradas se 
+    utilizan las \textbf{tablas de verdad}. Ésta consta de una serie de columnas que representan 
+    las variables de entrada y de salida, representando todas las combinaciones posibles de entradas.
 
-        \subsubsection{Complemento a 1}
+    \begin{figure}[htp]
+      \centering
+      \includegraphics[width=1\textwidth]{resources/boole-or.png}
+      \caption{OR.}
+      \label{boole-or}
+    \end{figure}
 
-        \subsubsection{Complemento a 2}
+    \begin{figure}[htp]
+      \centering
+      \includegraphics[width=1\textwidth]{resources/boole-and.png}
+      \caption{AND.}
+      \label{boole-and}
+    \end{figure}
 
-        \subsubsection{Exceso a Z}
+    \begin{figure}[htp]
+      \centering
+      \includegraphics[width=1\textwidth]{resources/boole-not.png}
+      \caption{NOT.}
+      \label{boole-not}
+    \end{figure}
 
-    \subsection{Representación de números reales}
+    \begin{figure}[htp]
+      \centering
+      \includegraphics[width=1\textwidth]{resources/boole-nand.png}
+      \caption{NAND.}
+      \label{boole-nand}
+    \end{figure}
 
-    \subsection{Representación de caracteres alfanuméricos}
+    \begin{figure}[htp]
+      \centering
+      \includegraphics[width=1\textwidth]{resources/boole-nor.png}
+      \caption{NOR.}
+      \label{boole-nor}
+    \end{figure}
 
-        \subsubsection{ACII extendido}
+    \begin{figure}[htp]
+      \centering
+      \includegraphics[width=1\textwidth]{resources/boole-xor.png}
+      \caption{XOR.}
+      \label{boole-xor}
+    \end{figure}
 
-        \subsubsection{EBCDIC}
 
 \end{document}
