@@ -12,6 +12,7 @@
 \usepackage{xcolor}
 \usepackage{mathtools}
 \usepackage{blkarray, bigstrut}
+\usepackage{stackrel} 
 
 \title{Tecnología de computadores}
 \author{Francisco Javier Balón Aguilar}
@@ -75,6 +76,37 @@
       \caption{Representación gráfica y tabla de verdad de la puerta lógica NOT.}
       \label{boole-not}
     \end{figure}
+
+    Las puertas lógicas OR, AND y NOT son conocidas como funciones básicas (véanse figuras 
+    \ref{boole-or}, \ref{boole-and} y \ref{boole-not}), cuyas operaciones cumplen las siguientes 
+    propiedades:
+
+    \begin{itemize}
+      \item Conmutativa: $x+y=y+x$; $x\cdot y=y\cdot x$
+      \item Elemento identidad: $x+0=x$; $x\cdot1=x$
+      \item Propiedad distributiva: 
+        \[x\cdot(y+x)=x\cdot y + x\cdot z\]
+        \[x+(y\cdot z)=(x+y)\cdot(x+z)\]
+      \item Elemento complementario: $x+\overline{x}=1$; $x\cdot\overline{x}=0$
+      \item Propiedad de idempotencia: $x+x=x$; $x\cdot x=x$
+      \item Elemento nulo: $x+1=1$; $x\cdot 0=0$
+      \item Ley de convolución: $ \stackbin{=}{x}=x$
+      \item Ley de absorción: $x+x\cdot y=x$; $x\cdot(x+y)=x$
+      \item Propiedad asociativa: $x+(y+z)=(x+y)+z$; $x\cdot(y\cdot z)=(x\cdot y)\cdot z$
+      \item Teorema del consenso:
+        \[xy+\overline{x}z=xy+\overline{x}z+yz\]
+        \[(x+y)(\overline{x}+z)=(x+y)(\overline{x}+z)(y+z)\] 
+      \item Teorema de Morgan:
+        \[\overline{x+y}=\overline{x}\cdot\overline{y}\]
+        \[\overline{x\cdot y}=\overline{x}+\overline{y}\]
+        \[x+\overline{x}y=x+y\]
+        \[x\cdot(\overline{x}+y)=xy\]
+    \end{itemize}
+
+    Hay otras funciones que pueden realizarse como combinación de las funciones básicas, 
+    siendo muy útiles en el diseño de circuitos digitales. Estas funciones son denominadas
+    \textbf{funciones no básicas} (véanse figuras \ref{boole-nor}, \ref{boole-nand} y 
+    \ref{boole-xor}).
 
     \begin{figure}[htp]
       \centering
