@@ -129,5 +129,51 @@
       \label{boole-xor}
     \end{figure}
 
+	\subsection{Forma canónica de las funciones lógicas}
+
+		A partir de una función lógica podemos, mediante operaciones algebráicas, obtener 
+		otras funciones lógicas equivalentes. O lo que es lo mismo, una función lógica puede 
+		expresarse algebráicamente de muchas formas, siendo una de ellas la forma canónica.
+
+		\subsubsection{Suma de minterms}
+
+			La forma canónica de una función lógica expresada como suma de minterms\footnote{
+				Un \textit{minterm} es un producto de todas las variables (negadas o sin negar)
+				de una función lógica.
+
+				Para saber si un \textit{minterm} va negado o no debemos observar si la entrada 
+				es 0 ó 1; si es 0 la variable estará negado mientras que si es 1 la variable no 
+				estará negada.
+			} contiene la suma de todas las combinaciones de las entradas de tal forma que 
+			la salida sea igual a 1.
+
+		\subsubsection{Producto de maxterms}
+
+			La forma canónica de una función lógica expresada como un producto de maxterms\footnote{
+				Un \textit{maxterm} es una suma de todas las variables (negadas o sin negar) 
+				de una función lógica.
+			} contiene el producto de todas las combinaciones de las entradas que van a hacer que 
+			la salida sea 0.
+
+	\subsection{Simplificación de funciones lógicas}
+
+		La simplificación consiste en la búsqueda de la función lógica que minimice el uso 
+		de puertas lógicas. Una de las posibilidades consiste en utilizar los teoremas anteriormente 
+		vistos.
+
+		Ejemplo:
+		\begin{gather*} 
+			D = \overline{B}C + \overline{A}BC + ABC + \overline{A}B\overline{C} \\ 
+			D = \overline{B}C + \overline{A}B\overline{C} + BC(\overline{A} + A) \\
+			D = \overline{B}C + \overline{A}B\overline{C} + BC \\
+			D = \overline{A}B\overline{C} + C(\overline{B} + B) \\
+			D = \overline{A}B\overline{C} + C \\
+			D = \overline{A}B+ C
+		\end{gather*}
+
+	\subsubsection{Homogeneización de puertas}
+
+		Es posible implemnentar cualquier función lógica utilizando únicamente las puertas 
+		NAND y NOR.
 
 \end{document}
