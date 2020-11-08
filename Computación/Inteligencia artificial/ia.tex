@@ -119,27 +119,7 @@
     teniendo en cuenta las características expuestas:
 
     \begin{itemize}
-        \item \textbf{Esquemas de representación lógica}. 
-        
-            Los esquemas de representación lògica como el cálculo de proposiciones o la lógica 
-            de primer orden son muy utilizados en disciplinas como la Ingeniería del Conocimiento, 
-            utilizada para crear \textit{sistemas expertos}\footnote{
-                Un sistema experto, es un sistema informático que emula el razonamiento humano 
-                actuando tal y como lo haría un experto en un área de conocimiento. 
-            }.
-
-            La lógica está compuesta por cálculos, definiéndose como una estructura o sistemas 
-            de relaciones que conforman algo similar a un lenguaje, de tal forma que se 
-            compongan de:
-
-            \begin{itemize}
-                \item Símbolos, que representan cada parte de la información.
-                \item Reglasde formación de expresiones, que rigen la combinación de Símbolos 
-                para conformar expresiones.
-                \item Reglas de transformación, que conjuntan las directrices que indican el 
-                protocolo de transformación de una expresión a otra.
-            \end{itemize}
-
+        \item \textbf{Esquemas de representación lógica}. Véase sección \ref{esquemasrepresentacionlogica}.
         \item \textbf{Esquemas de representación procedural}. El conocimiento es representado 
         como un conjunto de instrucciones mediante las cuales se resuelven problemas.
         \item \textbf{Esquemas de representación en forma de malla o red}. El conocimiento 
@@ -149,5 +129,55 @@
         conceptual en forma de malla, permitiendo a cada nodo estructurarse de forma más 
         compleja, como una estructura de datos con un conjunto de atributos y valores.
     \end{itemize}
+
+    \subsection{Esquemas de representación lógica}\label{esquemasrepresentacionlogica}
+
+        Los esquemas de representación lògica como el cálculo de proposiciones o la lógica 
+        de primer orden son muy utilizados en disciplinas como la Ingeniería del Conocimiento, 
+        utilizada para crear \textit{sistemas expertos}\footnote{
+            Un sistema experto, es un sistema informático que emula el razonamiento humano 
+            actuando tal y como lo haría un experto en un área de conocimiento. 
+        }.
+
+        La lógica está compuesta por cálculos, definiéndose como una estructura o sistemas 
+        de relaciones que conforman algo similar a un lenguaje, de tal forma que se 
+        compongan de:
+
+        \begin{itemize}
+            \item Símbolos, que representan cada parte de la información.
+            \item Reglasde formación de expresiones, que rigen la combinación de Símbolos 
+            para conformar expresiones.
+            \item Reglas de transformación, que conjuntan las directrices que indican el 
+            protocolo de transformación de una expresión a otra.
+        \end{itemize}
+
+        \subsubsection{Lógica de enunciados}
+
+            La lógica de enunciados se presenta como la representación más simple dentro de la 
+            lógica formal. Trata el estudio de los enunciados a través de conectores, estudiando 
+            su veracidad o falsedad: según el \textit{principio de bivalencia} un enunciado 
+            no puede ser verdadero y falso a la vez.
+
+            Se forma por proposiciones, que son enunciados de los que se puede disponer de un 
+            criterio de veracidad o falsedad, y que deben estar por un lado bien formulados, 
+            y por otro debe haber una afirmación. De tal manera que los enunciados por oraciones
+            (representadas por simbolos como $p$, $q$, $r$, $s$, $t$, etc.) 
+            y partículas que enlazan dichas oraciones.
+
+            Por ejemplo, en la sentencia <<Si llueve, me mojo>>, se podría formalizar como 
+            $p$ (llover), $q$ (mojarse) y representar la oración tal que: <<Si $p$ entonces $q$>>
+
+            Por otro lado las oraciones necesitan conectivas que establezcan una relación entre 
+            los símbolos, como:
+
+            \begin{itemize}
+                \item Negación ($\neg$). P. Ej: Siendo $p$ <<llover>>; $\neg p$ es <<no llueve>>.  
+                \item Conjunción ó \textit{AND} ($\land$). P. Ej: $p\land q$ es <<llueve y me mojo>>.
+                \item Disyunción ó \textit{OR} ($\lor$). P. Ej: $p\lor q$ es <<llueve o estudio>>.
+                \item Implicación. Se produce cuando la ejecución de una acción lleva a otra relacionada.
+                P. Ej: $p\Rightarrow q$ puede entenderse como <<llueve, ergo me mojo>>, derivando $q$ 
+                de $p$.
+            \end{itemize}
+
 
 \end{document}
