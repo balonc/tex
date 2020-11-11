@@ -1,0 +1,44 @@
+\documentclass[a4paper, 11pt, titlepage]{article}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{imakeidx}
+\usepackage{makeidx}
+\usepackage{mathtools}
+\usepackage[spanish]{babel}
+\usepackage{eurosym}
+
+% Variables
+\newcommand{\nombre}{\emph{\textbf{Redes Privadas Virtuales}}}
+
+\title{\textbf{\nombre} \\ Infraestructura VPN}
+\author{Francisco Javier Balón Aguilar}
+\date{enero de 2019}
+
+% -------------------------------------------------------------------------------------------------------------------------------------
+
+\begin{document}
+\maketitle
+\renewcommand{\contentsname}{Índice}
+\tableofcontents
+\newpage
+
+\section{}
+
+
+% BIBLIOGRAFÍA Y REFERENCIAS
+\newpage
+\begin{thebibliography}{X}
+    \bibitem{} OpenVPN en Arch Wiki - wiki.archlinux.org/index.php/OpenVPN
+    \bibitem{} Easy-RSA en Arch Wiki - wiki.archlinux.org/index.php/Easy-RSA
+    \bibitem{} TUN/TAP Tunnels - rrendec.mindbit.ro/post/tun-tap-tunnels/
+    \bibitem{} TUN/TAP in Linux Documentation - github.com/torvalds/linux/blob/master/Documentation/networking/tuntap.txt
+    \bibitem{} Secure Computing in PKI - secure-computing.net/openvpn/howto.php\#pki
+    \bibitem{} James Yonan Interview - linuxsecurity.com/features/features/openvpn-an-introduction-and-interview-with-founder-james-yonan
+    \bibitem{} Repositorio del proyecto OpenVPN en Github - github.com/OpenVPN/openvpn
+    \bibitem{} Why TCP Over TCP Is A Bad Idea - sites.inka.de/bigred/devel/tcp-tcp.html
+    \bibitem{} Hardening Openvpn for DEFCON - agwa.name/blog/post/hardening\_openvpn\_for\_def\_con
+\end{thebibliography}
+
+\end{document}
