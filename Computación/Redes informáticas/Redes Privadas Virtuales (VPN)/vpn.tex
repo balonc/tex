@@ -1054,7 +1054,127 @@
             \label{fig:windows12}
         \end{figure}  
 
+\section{Diseño de redes y subredes cliente-servidor}
 
+    \subsection{Comunicación entre clientes}
+
+        Ya sabemos que al conectarnos a la red privada virtual el servidor asigna a cada 
+        clientes una dirección IP perteneciente a una subred predefinida (\textit{10.8.0.0/24}
+        en este caso concreto) mediante el protocolo DHCP). Sin embargo, y a pesar de que 
+        todos los clientes de una misma VPN poseen direcciones IP de una misma subred, por 
+        defecto no existe conectividad entre los mismos. Esto es una medida de seguridad
+        que implementa OpenVPN que permite la no exposición de estos nodos de la red a no
+        ser que indiquemos lo contrario. 
+
+        La solución a esto es muy sencilla. Simplemente añadimos \textit{client-to-client}
+        en el archivo de configuración del servidor OpenVPN. Esto indicará al servidor
+        la habilitación de conectividad entre clientes.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.5\textwidth]{resources/configs01.png}
+            \caption{Añadiendo la línea \textit{client-to-client} en \textit{/etc/openvpn/server/server.conf}.}
+            \label{}
+        \end{figure}  
+
+        Para prueba, realizamos ping entre el cliente \textit{terminator} y el cliente \textit{proyectapc}.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/configs02.png}
+            \caption{Ping entre clientes \textit{terminator} y \textit{proyectapc}.}
+            \label{}
+        \end{figure}  
+    
+        De esta forma tenemos una emulación perfecta de red local, permitiendo utilizar cualquier
+        protocolo para interacturar entre ellos. Por ejemplo, utilizaremos el protocolo RDP para
+        controlar remota y gráficamente el cliente Windows desde el cliente GNU/Linux desde una
+        red completamente diferente pero ambos en la misma red VPN que hemos levantado (figura \ref{fig:configs03}).
+    
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/configs03.png}
+            \caption{Control remoto RDP de cliente \textit{proyectapc} desde \textit{terminator}.}
+            \label{fig:configs03}
+        \end{figure} 
+    
+        \newpage
+
+    \subsection{Elevando múltiples instancias de OpenVPN en diferentes puertos del servidor físico}
+
+        Podemos, utilizando las mismas claves criptográficas levantar tantos servidores OpenVPN en tantos
+        puertos de la máquina física servidora como queramos (dentro de las limitaciones de puertos y de las
+        características de nuestra máquina).
+
+        Para ello simplemente debemos crear un nuevo archivo de configuración de servidor, o bien
+        copiar el ya existente con el objetivo de realizar los cambios oportunos, que generalmente 
+        son mínimos. En este caso hemos realizado 3 cambios (figura \ref{fig:configs04}):
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.7\textwidth]{resources/configs04.png}
+            \caption{Copia realizada a fichero de configuración.}
+            \label{fig:configs04}
+        \end{figure} 
+
+        \begin{itemize}
+            \item El puerto utilizado 1194 pasa a ser el 443.
+            \item El protocolo pasa de UDP a TCP.
+            \item La subred pasa de 10.8.0.0/24 a 10.8.1.0/24.
+        \end{itemize}
+
+        Finalmente vemos en nuestro servidor 2 interfaces TUN denominadas \textit{tun0} y \textit{tun1},
+        respectivamente, haciendo de servidores de sus respectivas subredes VPN (figura \ref{fig:configs05}).
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/configs05.png}
+            \caption{Configuración de red de servidor.}
+            \label{fig:configs05}
+        \end{figure} 
+
+        \newpage
+    \subsection{Múltiples redes en clientes}
+
+        Del mismo modo, un cliente puede encontrarse en diferentes redes VPN sin necesidad de estar
+        estas unidas entre sí ni tener nada que ver. 
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/configs06.png}
+            \caption{Configuración de red de cliente con múltiples clientes VPN.}
+            \label{fig:configs05}
+        \end{figure} 
+
+\section{Resumen de securización y hardening de la red VPN}
+
+    Para finalizar, documentaremos el proceso de securización y hardening de la red VPN. Pero
+    no habrá nada nuevo que no se haya tratado ya. Todos los puntos que serán expuestos en este 
+    apartado no serán más que recuerdos de lo que ya se ha hecho. 
+
+    El hardening se ha realizado durante todo el proceso, ya que la seguridad de la red no es 
+    un producto estático, sino un proceso dinámico que evoluciona y cambia.
+
+    Por ello recordamos:
+    
+    \begin{itemize}
+        \item El uso de protocolos seguros para la transferencia y comunicación entre equipos
+        durante la edificación de la red VPN, tales como SCP y SSH, respectivamente. La razón 
+        es sencilla: evitar escuchas no deseadas o sniffer que puedan robar nuestras claves
+        para suplantar en el futuro a un cliente de nuestra red o tener acceso a ella. 
+        Es importante realizar todas las operaciones mediante métodos certificados y seguros, 
+        con una capa criptográfica como mínimo.
+        \item TSL para las comunicaciones VPN.
+        \item Criptografía de curva elíptica, para hacer más cómodo y seguro el intercambio de
+        información de sesión.
+        \item Del mismo modo, el uso de Hash-based Message Authentication Code (HMAC) key para 
+        la autenticación de clientes.
+        \item Hemos realizado además el proceso de hardening de la configuración del servidor,
+        para robustecer el mismo ante distintos tipos de ataques.
+        \item No habilitamos compresión para evitar ataques vectoriales.
+        \item TCP sobre UDP para mayor seguridad siempre que sea posible.
+    \end{itemize}
+    
 % BIBLIOGRAFÍA Y REFERENCIAS
 \newpage
 \begin{thebibliography}{X}
