@@ -592,7 +592,135 @@
                 \caption{Movemos en el cliente el certificado firmado a \textit{/etc/easy-rsa/pki/signed}.}
                 \label{ca22}
             \end{figure}
+
+    \newpage
+    \newpage
+    \newpage
+    \subsection{Configuración del servidor}
+
+        Una vez llegados a este punto, en el lado del servidor VPN deberemos tener los siguientes
+        4 ficheros en la ruta \textit{/etc/openvpn/server/}:
+
+        \begin{itemize}
+            \item ca.crt
+            \item servername.crt
+            \item servername.key
+            \item ta.key
+        \end{itemize}
+
+        \subsubsection{Configuración básica de enrutamiento en la capa de red (capa 3 en el modelo
+        OSI)}
+
+            Lo primero que debemos hacer es obtener un fichero de configuración (\textit{server.conf}) que define
+            los diferentes parámetros y, como su nombre indica, configuraciones del servidor OpenVPN. Podemos crear 
+            uno desde cero manualmente o bien partir de uno de los ficheros de ejemplo para editarlo y adecuarlo a 
+            nuestras necesidades.
+        
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=1\textwidth]{resources/openvpn04.png}
+                \caption{Copia de fichero de configuración de ejemplo en el directorio del servidor.}
+                \label{}
+            \end{figure}
+        
+            En cuanto a la configuración destacamos las líneas \textit{dh none} y \textit{ecdh-curve secp521r1}, que
+            indica al servidor que estamos utilizando TLS con curvas elípticas. El archivo de parámetros DH no será
+            necesario por el mismo motivo.
+        
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=1\textwidth]{resources/openvpn05.png}
+                \caption{Configuración base del servidor OpenVPN.}
+                \label{}
+            \end{figure}    
     
+    
+        \subsubsection{Hardening del servidor}
+
+            Para mejorar la seguridad y <<endurecer>> y robustecer el servidor podemos utilizar configuraciones 
+            adicionales que incluye: limitar el servidor para usar un método de cifrado y autenticación seguro y 
+            (opcionalmente) limitar el conjunto de cifrados TLS habilitados a los cifrados más nuevos. Para
+            ello podemos añadir las siguientes líneas a nuestro archivo de configuración:
+        
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=1\textwidth]{resources/openvpn06.png}
+                \caption{Líneas para mejorar la seguridad del servidor robusteciendo su cifrado.}
+                \label{}
+            \end{figure} 
+        
+            Pero, debido a que estamos en una versión superior a \textit{OpenVPN 2.4} la seguridad utilizada
+            por defecto es suficiente para tener un alto nivel de seguridad, utilizando el cifrado 
+            \textit{AES-256-GCM}\footnote{
+                GCM (Galois Counter Mode) es un modo de operación para cifrados de bloques criptográficos de
+                claves simétricas. GCM es ideal para proteger paquetes de datos porque tiene baja latencia 
+                y una sobrecarga de operación mínima.
+            }
+            por defecto.
+        
+            Con el objetivo de mantener un nivel de robustez elevado, una configuración esencial, siempre que
+            sea posible, es utilizar el protocolo UDP en nuestro servidor.
+            TCP sobre TCP es una mala idea. % TODO http://sites.inka.de/bigred/devel/tcp-tcp.html
+            Por ello se recomienda usar OpenVPN sobre UDP.
+    
+        \subsubsection{Posible desviación de puertos y protocolos}
+        
+            Algunas redes pueden no permitir conexiones OpenVPN en el puerto y/o protocolo predeterminados. 
+            Una estrategia para eludir esto es imitar el tráfico HTTPS que probablemente no esté obstruido.
+            
+            Para lograr ello símplemente deberíamos configurar el puerto como 443 (usado por HTTPS) y 
+            el protocolo TCP, en sus parámetros \textit{port 443} y \textit{proto tcp} en el archivo de
+            configuración con el que estamos tratando (\textit{/etc/openvpn/server/server.conf}). Pero teniendo
+            en cuenta los parámetros de hardening no es recomendable realizar esta acción a no ser que sea
+            estrictamente necesario.
+            
+    \subsection{Elevación del servidor}
+
+        Una vez se haya configurado el servidor podremos levantar el servicio para probar su correcta
+        configuración. Como podemos observar en la figura \ref{openvpn08} la configuración ha funcionando
+        correctamente y el servidor se ha levantado sin problemas.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/openvpn08.png}
+            \caption{Log de inicio del servidor OpenVPN.}
+            \label{openvpn08}
+        \end{figure}   
+
+        Para estar aún más seguros de ello podemos comprobar mediante \textit{ifconfig}. observaremos
+        las dos tarjetas de red base que tenía el servidor, como vienen a ser \textit{lo}\footnote{
+            La interfaz de bucle invertido o \textit{Loopback, lo}; no representa ningún hardware 
+            real, pero existe para que las aplicaciones que se ejecutan en el equipo siempre puedan
+            conectar a esta tarjeta ficticia sin necesidad de hardware funcional o configuración de 
+            red hablitada en otras interfaces. Podemos decir que es la que habilita \textit{localhost} o
+            su dirección local \textit{127.0.0.1}.
+        }
+        y \textit{etho}, siendo esta segunda la interfaz principal (\textit{0}) de la tarjeta de red 
+        \textit{Ethernet}, con información de ésta como su dirección física (MAC) y su configuración de 
+        red IPv4 e IPv6.
+        
+        Pero junto a ellas podemos observar una nueva interfaz denominada \textit{tun0}, que corresponde 
+        a la interfaz creada por \textit{TUN}, tal y como vimos en puntos anteriores. Del mismo modo que
+        \textit{lo}, o en especial \textit{eth0} observamos la configuración de direcciones IPv4 e IPv6;
+        siendo éstas las direcciones configuradas previamente la configuración del 
+        servidor OpenVPN en el parámetro \textit{server}, con la red \textit{10.8.0.0/24} ó
+        \textit{10.8.0.0 255.255.255.0} (véase fichero de configuración del servidor 
+        \textit{/etc/openvpn/server/server.conf}).
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/openvpn09.png}
+            \caption{Demostración de funcionamiento de tarjetas de red con servidor OpenVPN levantado 
+            (tun0 levantado).}
+            \label{}
+        \end{figure}   
+
+        Debido a que es el primer equipo de la red (natural, siendo su servidor)
+        \textit{10.8.0.0} y de acuerdo a su máscara de red \textit{255.255.255.0}, el DHCP 
+        propio de OpenVPN ha asignado a éste la dirección \textit{10.8.0.1}.
+
+
+
 % BIBLIOGRAFÍA Y REFERENCIAS
 \newpage
 \begin{thebibliography}{X}
