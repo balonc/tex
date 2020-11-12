@@ -718,7 +718,341 @@
         Debido a que es el primer equipo de la red (natural, siendo su servidor)
         \textit{10.8.0.0} y de acuerdo a su máscara de red \textit{255.255.255.0}, el DHCP 
         propio de OpenVPN ha asignado a éste la dirección \textit{10.8.0.1}.
+        
+\section{Implementación de clientes, método \textit{.conf}}
 
+    \subsection{Cliente Arch Linux, GNU/Linux x86\_64}
+
+        Una vez tenemos nuestro servidor funcional y operativo, es el momento de asignarle el primer 
+        cliente VPN. Éste será el ya configurado \textit{terminador}. Recordemos que \textit{terminator}
+        es un servidor físico Arch Linux que hará de proveedor de algunos servicios en la red al 
+        resto de clientes. Pero aún tratándose de un servidor de cara a la configuración de
+        esta estructura es cliente de este servicio.
+
+        Lo primero que haremos es trasladar los archivos \textit{ca.crt}, \textit{terminator.crt}
+        y \textit{terminator.key} al directorio \textit{/etc/openvpn/client/}, del mismo modo que 
+        con el servidor. También copiaremos (del fichero de pruebas \textit{/usr/share/openvpn/examples/client.conf})
+        o bien lo creamos manualmente.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/openvpn10.png}
+            \caption{Obtención de ficheros necesarios para configuración de cliente.}
+            \label{}
+        \end{figure}   
+
+        La configuración del fichero \textit{client.conf} constará de los siguientes elementos,
+        expuestos en la figura \ref{openvpn11}. La configuración del cliente debe concordar,
+        evidentemente con la del servidor en protocolo y seguridad; si este segundo no estuviera
+        bien definido no podríamos autenticar el cliente correctamente. A destacar los parámetros
+        \textit{ca}, \textit{cert} y \textit{key} que deberán apuntar a los ficheros que hemos
+        traído en los puntos anteriores. Finalmente es necesario indicar la dirección del servidor
+        en el parámetro \textit{remote}, de forma que el cliente apunte a éste\footnote{
+            Si en lugar de la dirección IP quisiéramos indicar un nombre de dominio debemos
+            cercionarnos que el servidor DNS esté adecuadamente configurado para que no se 
+            den errores en la traducción de nombres.
+        }. El puerto, lógicamente será el configurado en el servidor.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/openvpn11.png}
+            \caption{Fichero de configuración de cliente OpenVPN.}
+            \label{openvpn11}
+        \end{figure}   
+
+        Del mismo modo que el servidor, si queremos iniciar el cliente llegados a este punto 
+        para probar que la configuración esté correcta, se realizará mediante el comando propio
+        \textit{openvpn} seguido del fichero de configuración.
+
+        Como vemos en la figura \ref{openvpn12}, algo no ha ido bien. El cliente OpenVPN no 
+        ha sido levantado y en el log de inicio podemos ver una descripción del error que lo ha 
+        impedido: \textit{<<--tls-crypt fails with ta.key: No such file or directory>>}. El 
+        error está claro, no tenemos el fichero \textit{ta.key} del servidor para la configuración
+        del cifrado TLS entre el cliente y el servidor.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/openvpn12.png}
+            \caption{Prueba fallida de inicio de cliente OpenVPN.}
+            \label{openvpn12}
+        \end{figure}   
+
+        Para solucionar esto, nos traemos al cliente una copia del servidor mediante el protocolo
+        SCP. Y éste lo enviamos al directorio con el resto de ficheros.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/openvpn13.png}
+            \caption{Obtención por parte del cliente de \textit{ta.key} del servidor.}
+            \label{}
+        \end{figure}   
+
+        De esta forma, podemos volver a probar la configuración iniciando el servicio, que como
+        observamos en la figura \ref{openvpn14}, todo ha ido correctamente y el servicio se ha 
+        iniciado. \textbf{Tenemos cliente activo en la red VPN}.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/openvpn14.png}
+            \caption{Log de inicio satisfactorio de cliente OpenVPN.}
+            \label{openvpn14}
+        \end{figure}   
+
+        Si nos dirigimos a la configuración de red de nuevo, tal y como hicimos con el servidor
+        pero en este caso en el cliente observaremos su configuración de redes propia:
+
+        \begin{itemize}
+            \item \textit{enp1s0f1}. Tarjeta de red Ethernet.
+            \item \textit{lo}. Tarjeta de red \textit{Loopback}.
+            \item \textit{wlp2s0}. Tarjeta de red Wi-Fi.
+            \item \textit{tun0}. Y finalmente, el túnel TUN creado para el cliente. Sin entrar 
+            a explicar todo, pues funciona de la misma forma que en el servidor, podemos ver la
+            configuración de túnel \textit{10.8.0.6/24}; dirección asignada por el DHCP propio.
+        \end{itemize}
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/openvpn15.png}
+            \caption{Configuración de red del cliente OpenVPN. A destacar la creación de \textit{tun0}.}
+            \label{}
+        \end{figure}   
+
+        La prueba más elemental que haremos ahora será probar la comunicación entre ambos mediante
+        \textit{ping}. Evidentemente utilizaremos las direcciones de la red VPN. Esto lo podemos
+        observar en las imágenes \ref{fig:openvpn1617}.
+
+        \begin{figure}[htp]
+        \centering
+            \begin{subfigure}[b]{1\linewidth}
+            \includegraphics[width=1\textwidth]{resources/openvpn16.png}
+            \caption{Ping de cliente (\textit{10.8.0.6}) a servidor (\textit{10.8.0.1}).}
+            \end{subfigure}
+
+            \begin{subfigure}[b]{1\linewidth}
+            \includegraphics[width=1\textwidth]{resources/openvpn17.png}
+            \caption{Ping de servidor (\textit{10.8.0.1}) a cliente (\textit{10.8.0.6}).}
+            \end{subfigure}
+        \caption{Comunicación entre cliente y servidor.}
+        \label{fig:openvpn1617}
+        \end{figure}
+
+    \newpage
+    \newpage
+    \subsection{Cliente Raspberry Pi 4 (Raspbian, GNU/Linux ARM)}
+
+        La instalación de OpenVPN como cliente en una máquina Raspberry Pi en su modelo <<4>>
+        es similar a la creación de cualquier cliente Linux. El primer paso es el que de ahora 
+        en adelante veremos como común y típico; la creación de los ficheros de cliente en el
+        servidor CA y su posterior recepción por parte de éste último (figura \ref{fig:raspy0102}).
+
+        \begin{figure}[htp]
+        \centering
+            \begin{subfigure}[b]{1\linewidth}
+            \includegraphics[width=1\textwidth]{resources/raspy01.png}
+            \caption{Generación de certificados para cliente \textit{raspy4}.}
+            \end{subfigure}
+
+            \begin{subfigure}[b]{1\linewidth}
+            \includegraphics[width=1\textwidth]{resources/raspy02.png}
+            \caption{Firma de certificados de \textit{raspy4} por \textit{CA}.}
+            \end{subfigure}
+        \caption{Generación y firma de certificados.}
+        \label{fig:raspy0102}
+        \end{figure}
+
+        El siguiente paso lo podemos observar en la figura \ref{fig:raspy0306}, consistente en 
+        la unificación y envío de los archivos necesarios al cliente. Estos, como de costumbre
+        en este documento son los archivos \textit{ca.crt}, \textit{client.conf}, \textit{client.crt}
+        y \textit{Client.key} y \textit{ta.key}.
+
+        \begin{figure}[htp]
+        \centering
+            \begin{subfigure}[b]{0.8\linewidth}
+            \includegraphics[width=1\textwidth]{resources/raspy03.png}
+            \caption{Preparación de archivos de cliente \textit{raspy4}.}
+            \end{subfigure}
+
+            \begin{subfigure}[b]{1\linewidth}
+            \includegraphics[width=1\textwidth]{resources/raspy04.png}
+            \caption{Descarga del servidor OpenVPN \textit{ta.key}.}
+            \end{subfigure}
+                
+            \begin{subfigure}[b]{0.6\linewidth}
+            \includegraphics[width=1\textwidth]{resources/raspy05.png}
+            \caption{Archivos de cliente necesarios agrupados.}
+            \end{subfigure}
+
+            \begin{subfigure}[b]{0.6\linewidth}
+            \includegraphics[width=1\textwidth]{resources/raspy06.png}
+            \caption{Archivos en cliente.}
+            \end{subfigure}
+        \caption{Intercambio de archivos en cliente.}
+        \label{fig:raspy0306}
+        \end{figure}
+
+        Posteriormente únicamente queda levantar el servicio en el lado del cliente y observar la
+        correcta recepción de la configuración por parte del servidor. Podemos ver en la figura 
+        \ref{fig:raspy07} el log de puesta en marcha del servicio OpenVPN elevado.
+
+        \begin{figure}[htp]
+        \centering
+        \includegraphics[width=1\textwidth]{resources/raspy07.png}
+        \caption{Log de puesta en marcha de OpenVPN en \textit{raspy4}.}
+        \label{fig:raspy07}
+        \end{figure}  
+
+        Lo que dará como resultado la nueva interfaz \textit{TUN} que observamos en la configuración
+        de redes del dispositivo \textit{Raspberry Pi 4}. Podemos observarlo en la figura \ref{fig:raspy08},
+        habiendo recibido la dirección IP \textit{10.8.0.14}. Y finalizamos la configuración probando la 
+        conectividad con el servidor (figura \ref{fig:raspy09}).
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/raspy08.png}
+            \caption{Configuración de redes de \textit{raspy4}.}
+            \label{fig:raspy08}
+        \end{figure}  
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/raspy09.png}
+            \caption{Prueba de conectividad con servidor OpenVPN a través del túnel VPN creado.}
+            \label{fig:raspy09}
+        \end{figure}  
+
+    \subsection{Cliente Microsoft Windows 10}
+
+        No entraremos en la descarga e instalación de OpenVPN en el sistema operativo de
+        Microsoft debido a que no se trata de hacer un tutorial de instalación sino una 
+        documentación de la propia infraestructura. Simplemente añadiremos la configuración
+        necesaria para su funcionamiento.
+
+        La generción y firma de certificados la podemos ver en la figura \ref{fig:windows0102}.
+
+        \begin{figure}[htp]
+        \centering
+            \begin{subfigure}[b]{1\linewidth}
+            \includegraphics[width=1\textwidth]{resources/windows01.png}
+            \caption{Generación de certificados para cliente \textit{proyectapc}.}
+            \end{subfigure}
+
+            \begin{subfigure}[b]{1\linewidth}
+            \includegraphics[width=1\textwidth]{resources/windows02.png}
+            \caption{Firma de certificados de \textit{proyectapc} por \textit{CA}.}
+            \end{subfigure}
+        \caption{Generación y firma de certificados.}
+        \label{fig:windows0102}
+        \end{figure}
+
+        Posteriormente obtendremos los archivos necesarios y los copiamos en el cliente. Podemos
+        reutilizar el archivo \textit{conf} del cliente \textit{terminator}, ya configurado, de forma
+        que no tendremos que generarlo de nuevo y la configuración sería mínima.
+
+        \begin{figure}[htp]
+        \centering
+            \begin{subfigure}[b]{1\linewidth}
+            \includegraphics[width=1\textwidth]{resources/windows03.png}
+            \caption{Unificamos los archivos necesarios para el cliente OpenVPN.}
+            \end{subfigure}
+
+            \begin{subfigure}[b]{0.8\linewidth}
+            \includegraphics[width=1\textwidth]{resources/windows04.png}
+            \caption{Copiamos la configuración del cliente \textit{terminator} para reutilizar
+            código en \textit{proyectapc}.}
+            \end{subfigure}
+
+            \begin{subfigure}[b]{0.7\linewidth}
+            \includegraphics[width=1\textwidth]{resources/windows05.png}
+            \caption{Configuración \textit{client.conf} de \textit{proyectapc}.}
+            \end{subfigure}
+        \caption{Intercambio de archivos en cliente.}
+        \label{fig:windows0305}
+        \end{figure}
+
+        Para algunos clientes, como Microsoft Windows o Android podemos generar el archivo rápido
+        \textit{ovpn}. Éste guarda en sí mismo todos los archivos anteriores y facilita aún más, si 
+        cabe, la configuración. Podremos utilizar indistintivamente el archivo \textit{conf} o 
+        \textit{ovpn} sin ningún problema, pues es prácticamente similar.
+
+        En el caso de la distribución utilizada por el servidor CA se encuentra en el repositorio 
+        AUR, por lo que utilizaremos la herramienta \textit{aurman} para instalar el script 
+        denominado \textit{ovpngen}. Esto lo podemos observar en la figura \ref{fig:windows06}.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.7\textwidth]{resources/windows06.png}
+            \caption{Instalación de \textit{ovpngen} desde \textit{aurman}.}
+            \label{fig:windows06}
+        \end{figure}  
+
+        La generación con \textit{ovpngen} es sencilla, simplemente le pasaremos como parámetros las
+        rutas de los distintos archivos que componen el conjunto de la configuración del cliente,
+        y en la ruta y con el nombre elegido será generado el archivo \textit{ovpn} (figura \ref{fig:windows07}).
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.9\textwidth]{resources/windows07.png}
+            \caption{Generación de \textit{ovpn}.}
+            \label{fig:windows07}
+        \end{figure}  
+
+        Una vez finalizado, enviaremos los archivos necesarios al sistema cliente, que en este caso
+        es un Microsoft Windows 10. Podemos observar la prueba en la figura \ref{fig:windows08}.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/windows08.png}
+            \caption{Archivos \textit{proyectapc} en cliente.}
+            \label{fig:windows08}
+        \end{figure}  
+
+        Utilizando el software OpenVPN para Microsoft Windows, simplemente le indicaremos dónde
+        se encuentran los ficheros de configuración. Deberemos indicarle también si queremos 
+        utilizar el archivo \textit{conf} o el archivo \textit{ovpn} que generamos previamente
+        (\ref{fig:windows09}).
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.6\textwidth]{resources/windows09.png}
+            \caption{Configuración de OpenVPN GUI.}
+            \label{fig:windows09}
+        \end{figure}  
+
+        Y simplemente lanzamos el cliente OpenVPN (\ref{fig:windows10}).
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.6\textwidth]{resources/windows10.png}
+            \caption{Conexión con servidor OpenVPN.}
+            \label{fig:windows10}
+        \end{figure}  
+
+        \newpage
+        Finalmente y como hemos hecho en el resto de clientes, comprobamos la correcta inicialización
+        y configuración del cliente. Observamos primero la configuración de red del cliente \textit{proyectapc}
+        en la figura \ref{fig:windows11}.
+        En la misma observamos cómo el servidor DHCP del servidor OpenVPN nos ofrece la dirección 
+        \textit{10.8.0.6}\footnote{
+            El documento se ha desarrollado en diferentes días, por lo que es posible que la dirección
+            IP dada por el servidor en un momento concreto coincida con la de otro cliente, como se ha 
+            dado el caso. Aunque coincidan en la documentación, no sería posible así en la red.
+        }.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/windows11.png}
+            \caption{Comprobación de IP obtenida por DHCP.}
+            \label{fig:windows11}
+        \end{figure}  
+
+        Probamos además la comunicación con el servidor (figura \ref{fig:windows12}).
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/windows12.png}
+            \caption{Comprobación de ping al servidor mediante el túnel creado.}
+            \label{fig:windows12}
+        \end{figure}  
 
 
 % BIBLIOGRAFÍA Y REFERENCIAS
