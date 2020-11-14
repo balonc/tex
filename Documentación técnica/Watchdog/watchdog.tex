@@ -1,0 +1,130 @@
+\documentclass[a4paper, 11pt, titlepage]{article}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{imakeidx}
+\usepackage{makeidx}
+\usepackage{mathtools}
+\usepackage[spanish]{babel}
+\usepackage{eurosym}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\title{\textbf{Watchdog}\\ Documentación técnica}
+\author{Francisco Javier Balón Aguilar}
+
+\begin{document}
+
+\maketitle
+\renewcommand{\contentsname}{Índice}
+\tableofcontents
+\newpage
+
+\section{Watchdog}
+
+    El watchdog (perro guardían o vigilante) del kernel de Linux se utiliza para 
+    monitorizar y vigilar un sistema que se está ejecutando, de forma que pueda 
+    ser reiniciado automáticamente en caso de fallo de software irrecuperables.
+
+    El módulo de watchdog es específico para el hardware o chip que se utiliza.
+
+    Los usuarios, por norma general, no necesitan de vigilancia en sus sistemas, 
+    pues pueden ellos mismos restablecer el sistema manualmente; así está pensado
+    para dispositivos críticos que requieran de restablecimientos sin intervención
+    humana, por ejemplo servidores en una ubicación remota o equipos integrados 
+    en naves espaciales.
+
+    En su intervención es necesario proceder con precaución, ya que configuraciones
+    incorrectas o erróneas podrían provocar:
+
+    \begin{itemize}
+        \item Bucles infinitos de reinicios.
+        \item Corrupción de archivos debido al hard reset.
+        \item Reinicios aleatorios impredecibles.
+    \end{itemize}
+
+    Por lo que es preferible evitar el uso de servidores en vivo para probar el 
+    funcionamiento de watchdog.
+
+    \subsection{Watchdog module}
+
+        La funcionalidad de watchdog sobre hardware configura un temporizador 
+        que agota el tiempo de espera después de un período predeterminado.
+        El software de watchdog actualiza periódicamente el temporizador del 
+        hardware, y si éste deja de actualizarse luego del período establecido 
+        el temporizador realizará un restablecimiento de hardware del dispositivo.
+        Para que un temporizador watchdog sea funcional, el fabricante de la placa 
+        base tiene que permitir esta funcionalidad en el chip.
+
+        A menudo, la documentación del fabricante de hardware no deja claro 
+        sobre si se implementó o no esta funcionalidad. En ese caso hay que 
+        testearlo directamente.
+
+        Además es necesario el módulo del kernel de vigilancia correcto, que será 
+        cargado en el sistema Linux. Diferentes chips utilizan diferentes módulos,
+        por ejemplo:
+
+        \begin{itemize}
+            \item Intel utiliza \textit{iTCO\_wdt}.
+            \item El hardware de HP utiliza \textit{hpwdt}.
+            \item Los mainframes de IBM utilizan \textit{vmwatchdog}.
+            \item Xen VM utiuliza \textit{xen\_wdt}.
+        \end{itemize}
+
+        Una vez corroborado la carga del módulo es posible verificar \textit{/dev/watchdog}
+        en el sistema Linux. Si el archivo está presente, significa que se cargó el controlador.
+        El sistema escribe periódicamente a \textit{/dev/watchdog} (esta acción
+        suele llamarse coloquialmente <<patear o alimentar al perro guardián>> / <<kicking
+        or feeding the watchdog>>). Si el sistema falla y no patea o alimenta al 
+        perro, el sistema se restablecerá completamente.
+
+    \subsection{Watchdog daemon}
+
+        El demonio de watchdog abre el dispositivo y proporciona la actualización 
+        necesaria para evitar que el sistema se restablezca. Éste puede comprobar 
+        el espacio de la tabla de procesos, el uso de memoria (memory usage), la 
+        accesibilidad de archivos, la carga de trabajo, desbordamientos en la tabla de 
+        archivos, ping a direcciones IP, tráfico de interfaz de red, temperatura, 
+        procesos en ejecución, etc. Como ya hemos visto, si las pruebas fallan 
+        el perro provocará el apagado.
+
+    \subsection{Iniciando y parando el demonio de watchdog}
+
+        El demonio de watchdog debería iniciarse en el momento del arranque. 
+        Podemos verificar si está iniciado con:
+
+        \begin{lstlisting}[language=bash]
+    ps -af | grep watch*\end{lstlisting}
+
+        Si el kernel no estuviera compilado con \textit{CONFIG\_WATCHDOG\_NOWAYOUT}
+        y cerramos correctamente \textit{/dev/watchdog} no habrá reinicio. Podemos 
+        escribir un carácter $V$ en \textit{/dev/watchdog} y luego cerrar el archivo;
+        lo que detendrá al perro guardián.
+
+        \subsubsection{Testeando watchdog} Si queremos comprobar que el control de 
+        hardware está funcionando, podemos lanzar la siguiente orden con privilegios 
+        root:
+
+        \begin{lstlisting}[language=bash]
+    cat >> /dev/watchdog\end{lstlisting}
+
+        Una vez haya pasado el tiempo esperado, dependiendo de la configuración 
+        del kernel, el sistema realizará el hard reboot.
+
+    \subsection{Configuración del demonio de watchdog}
+
+        Una vez conocemos watchdog, podemos iniciar su configuración. El fichero de 
+        configuración de watchdog se encuentra en \textit{/etc/watchdog.conf} 
+        (es posible que haya que instalar el paquete \textit{watchdog} en la distribución 
+        utilizada).
+
+        \begin{lstlisting}[language=bash]
+    # cat /etc/watchdog.conf
+    realtime = yes
+    priority = 1\end{lstlisting}
+
+\end{document}
