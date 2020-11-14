@@ -1,0 +1,92 @@
+\documentclass[a4paper, 11pt, titlepage]{article}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{imakeidx}
+\usepackage{makeidx}
+\usepackage{mathtools}
+\usepackage[spanish]{babel}
+\usepackage{eurosym}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\title{\textbf{emacs}\\ Documentación técnica}
+\author{Francisco Javier Balón Aguilar}
+
+\begin{document}
+
+\maketitle
+\renewcommand{\contentsname}{Índice}
+\tableofcontents
+\newpage
+
+\section{emacs}
+
+    GNU emacs posiblemente sea el editor de textos más potente que exista 
+    para sistemas UNIX, lo cual es tanto como decir que se trata del 
+    editor de textosmás potente que existe en términos absolutos.
+
+    Tiene una serie de características que lo hacen único:
+
+    \subsubsection{Reconocimiento de formatos} Es una herramienta esencial en 
+    el editor. Esta característica permite a emacs detectar que cierto fichero 
+    sigue determinadas convenciones de sintaxis, generalmente correspondiente a 
+    un lenguaje de programación o un lenguaje de marcas, de tal modo que, una vez 
+    reconocido emacs pueda proporcionar una serie de comandos y mandatos útiles 
+    para este tipo de documento, así como resaltar mediante procedimientos gráficos 
+    la sintaxis, distinguiendo las instrucciones y los datos; e incluso 
+    diferenciando entre distintas categorías de instrucciones.
+
+    Si bien es cierto que muchos editores actuales han implementado esta habilidad, 
+    emacs, que fue de los primeros en implementarla, sigue siendo capaz de reconocer 
+    más formatos que la mayoría. Además su diseño basado en <<modos mayores de edición>>
+    se ajusta de manera más natural al manejo de diferentes tipos de ficheros.
+
+    \subsubsection{Flexibilidad de configuración y personalización} Podemos decir, 
+    que en emacs prácticamente todo es personalizable. Podemos crear nuevos comandos, 
+    asignar nuevas combinaciones de teclas, alterar variables propias que nutren el 
+    funcionamiento del editor, etc. 
+
+    \subsubsection{Extensibilidad} La facilidad de configurar emacs queda ampliamente 
+    superada por su extensibilidad. Decir que emacs es extensible significa que 
+    cualquiera que sepa emacs Lisp\footnote{emacs Lisp es un dialecto de Lisp en el que está escrito 
+    la mayor parte del propio emacs.} puede escribir nuevos comandos de emacs, incorporarlos al 
+    sistema, sobre la marcha, sin necesidad de reinstalar o reiniciar el propio editor.
+
+    Esta facilidad para extender y ampliar el sistema se traduce en que existen numerosos 
+    paquetes de ampliación que permiten reconocer nuevos formatos, o le dotan de comandos 
+    concretos para ciertos formatos o ciertos usos; haciendo que, en definitiva, emacs 
+    sea útil para todo. Existen paquetes que convierten emacs en un lector de correo, 
+    un lector de noticias, un entorno integrado de desarrollo, un calendario, etc.
+
+    \subsubsection{Dura curva de aprendizaje} Sin embargo, emacs no es un programa sencillo.
+    Su extremada potencia hace que sean muchas las funciones y comandos que hay que aprender.
+    Además emacs es muy peculiar, siendo un software de la vieja escuela, lo que hace que 
+    su terminología y conceptos no se asemejen a los de otras aplicaciones y estándares de 
+    finalidad similar.
+
+    \subsubsection{Los comandos emacs} emacs, como mencionamos anteriormente, 
+    funciona mediante la ejecución de comandos: abrir o cerrar un fichero, insertar 
+    texto o borrarlo, desplazar el cursor, buscar en el texto... Todo se realiza 
+    mediante comandos. Incluso escribir una letra es fruto de un comando.
+
+    Desde el punto de vista interno los comandos de emacs son funciones, generalmente 
+    escritas en Elisp; pero desde el punto de vista del usuario son comandos propiamente 
+    denominados, es decir, acciones que se realizan al pulsar determinada combinación de 
+    teclas o seleccionamos una opción de menú.
+
+    \paragraph{Formas de invocar comandos} Existen básicamente tres formas de ejecutar 
+    un comando:
+    
+    \begin{enumerate}
+        \item Invocar el comando por su nombre.
+        \item Pulsar en el teclado la combinación de teclas a la que cierto mandato esté 
+        asociada.
+        \item Seleccionar el mandato del menú o de la barra de herramientas.
+    \end{enumerate}
+
+\end{document}
