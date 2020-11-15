@@ -274,28 +274,6 @@ showstringspaces=false}
     # para un nivel de optimizacion 3 y para AMD Zen 2
     gcc -O3 -march=znver2 hola.c -o hola \end{lstlisting}
 
-    \subsection{Diferencia entre \textit{\#include \textless filename\textgreater} e \textit{\#include ``filename''}}
-
-        Cuando utilizamos \textit{\#include \textless filename\textgreater}, estamos indicando al compilador
-        que busque este encabezado en su directorio \textit{includes}. Podemos resumirlo en 
-        que buscará este archivo en los propios archivos de C y el compilador.  
-
-        Por el contrario, cuando utilizamos \textit{\#include ``filename"} le indicamos al compilador que busque
-        este encabezado en el directorio actual (\textit{.}). Por ello es usado para los encabezados
-        creados por el programador.
-
-        \begin{lstlisting}[language=C,numbers=left]
-    #include <stdio.h>
-    #include "my_header.h"\end{lstlisting}
-
-        Podemos usar el parámetro $-I$ de gcc para indicarle que, al encontrar una inclusión 
-        entre \textit{\textless\textgreater} también debe buscar encabezados en el directorio 
-        posterior al parámetro. De esta forma, gcc tratará al directorio parametrizado como 
-        si se tratase del directorio \textit{includes}.
-        
-        \begin{lstlisting}[language=bash]
-    gcc hola.c -I .\end{lstlisting}
-
 \section{La herramienta make y el makefile}\label{make}
 
     Make es una herramienta de gestión de dependencias usada en entornos de la familia UNIX. 
@@ -2645,4 +2623,28 @@ showstringspaces=false}
 
             % TODO Continuación arboles AVL
 
+\section{Cuestiones varias}
+
+    \subsection{Diferencia entre \textit{\#include \textless filename\textgreater} e \textit{\#include ``filename''}}
+
+        Cuando utilizamos \textit{\#include \textless filename\textgreater}, estamos indicando al compilador
+        que busque este encabezado en su directorio \textit{includes}. Podemos resumirlo en 
+        que buscará este archivo en los propios archivos de C y el compilador.  
+
+        Por el contrario, cuando utilizamos \textit{\#include ``filename"} le indicamos al compilador que busque
+        este encabezado en el directorio actual (\textit{.}). Por ello es usado para los encabezados
+        creados por el programador.
+
+        \begin{lstlisting}[language=C,numbers=left]
+    #include <stdio.h>
+    #include "my_header.h"\end{lstlisting}
+
+        Podemos usar el parámetro $-I$ de gcc para indicarle que, al encontrar una inclusión 
+        entre \textit{\textless\textgreater} también debe buscar encabezados en el directorio 
+        posterior al parámetro. De esta forma, gcc tratará al directorio parametrizado como 
+        si se tratase del directorio \textit{includes}.
+        
+        \begin{lstlisting}[language=bash]
+    gcc hola.c -I .\end{lstlisting}
+    
 \end{document}
