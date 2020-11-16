@@ -252,5 +252,76 @@
             $\forall x \rceil P(x)$ ó <<ningún elemento $x$ cumple $P$>>. P. Ej: 
             $\exists x, rio(x) \land \rceil suena(x)$ ó <<algunos ríos no suenan>>.
 
+    \subsection{Esquemas de representación basados en redes semánticas}
+        
+        En el modelo de red semántica\footnote{
+            Las redes semánticas se utilizan para representar mapas conceptuales, relacionando 
+            unos conceptos con otros.
+
+            Surgieron a través de los trabajos de Novak en la Universidad de Cornell.
+        } los conceptos y las relaciones entre ellos quedan 
+        representados a través de un grafo, pudiendo entonces plasmarse generalmente en forma 
+        de árbol o grafos dirigidos.
+
+        Este modelo tiene como núcleo el modo de relación entre los objetos y no la veracidad 
+        o falsedad de una proposición. Así, la representación conceptual consta de una serie de 
+        nodos (objetos) y una serie de arcos (relaciones) que contienen el nombre de la relación
+        (véase figura \ref{graforedsemantica}), y creando una jerarquía que vaya desde las 
+        formas de definición más generalistas hasta las más particulares.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/graforedsemantica.png}
+            \caption{Ejemplo de grafo funcional en red semántica.}
+            \label{graforedsemantica}
+        \end{figure}    
+
+\section{Procesos basados en reglas}
+
+    \subsection{Razonamiento en Inteligencia Artificial}
+
+        Como hemos visto anteriormente, el objetivo de los sistemas de representación lógica, es 
+        generar nueva información a través de la obtenida en función de los enunciados. Esta capacidad 
+        de aprendizaje mediante conocimiento obtenido se denomina \textbf{estrategia de inferencia}.
+
+        El \textbf{razonamiento} se puede definir como el mecanismo por el cual dadas unas 
+        condiciones iniciales, se obtiene una serie de conclusiones o hechos a través de un proceso 
+        de deducción o inferencia. Estos modelos de razonamiento forman parte de los sistemas 
+        lógicos y constan de un conjunto de reglas bien definidas que se utilizarán como argumentos 
+        en los procesos de inferencia.
+
+    \subsection{Cálculo lógico}
+
+        El cálculo lógico se define como el proceso que permite obtener nuevos enunciados a 
+        partir de otros verdaderos, de tal forma que un proceso de inferencia sea una operación (o 
+        aplicación de una serie de operaciones lógicas) que obtenga una conclusión a partir de las 
+        premisas dadas y mediante las reglas de inferencia ya establecidas.
+
+        \subsubsection{Inferencia mediante deducción natural y relaciones de equivalencia}
+
+            Este método utiliza dos reglas de inferencia para cada conectiva, sirviendo una para 
+            insertarla y otra para eliminarla.
+
+            Existen numerosas relaciones de equivalencia que se pueden aplicar para resolver 
+            o simplificar enunciados, siendo las más importantes:
+
+            \paragraph{Complemento $\neg(\neg A) = A$} ó <<la negación de una negación da como 
+            resultado una afirmación>>. P. Ej: $-(-1) = 1$.
+
+            \paragraph{Idempotente, $A \lor A = A; A \land A$} Esta relación se aplica cuando 
+            aparece la conjunción o disyunción del mismo enunciado, por lo que se obtendrá como 
+            resultado la validez del mismo. P. Ej: siendo $p=$ estar vivo y $\neg q$ como estar muerto;
+
+            \[p \lor \neg (\neg p)\]
+
+            Que aplicando el complemento, quedaría:
+
+            \[p \lor p\]
+
+            Y aplicando la operación idempotente, obtendríamos como resultado $q$.
+
+            \paragraph{Leyes de DeMorgan: Primera ley de DeMorgan $\neg (A \land B) = \neg A \lor \neg B$}
+            
+
 
 \end{document}
