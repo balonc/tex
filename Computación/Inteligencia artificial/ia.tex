@@ -227,4 +227,30 @@
         de forma genérica y a través de variables un enunciado, el cual cobrará sentido una vez se 
         identifique el valor de las variables.
 
+        \paragraph{Funciones de enunciado}
+
+            Dentro de la lógica de predicados existen las funciones de enunciado, donde éstos son 
+            expresados de forma genérica y a través de variables, y en la que cada variable representa 
+            un individuo. Dependiendo de los valores por los que se sustituyan la variable, el enunciado 
+            será verdadero o falso.
+
+            Dentro de las expresiones formalizadas pueden aparecer \textit{cuantificadores}, 
+            modificadores lingüisticos que indican el número de individuos que comparten cierta propiedad.
+
+            En el presente documento estudiaremos dos tipos de cuantificadores:
+
+            \begin{itemize}
+                \item Cuantificador universal. Se representa con el símbolo $\forall$ y se traduce como 
+                <<para todo>> o <<todo>>. P. Ej: $\forall x hombre(x)\Rightarrow mortal(x)$ ó <<todos los hombres 
+                son mortales>>, simplificado como <<los hombres son mortales>>.
+                \item Cuantificador existencial. Se representa con el símbolo $\exists$ y se traduce como 
+                <<algunos>> o <<no todos>>. P. Ej: $\exists x hombre(x) \land bueno(x)$ ó <<algunos hombres 
+                son buenos>>, o dicho de otro modo <<no todos los hombres son buenos>>.
+            \end{itemize}
+
+            Cabe destacar que el símbolo que se utiliza para negar cuantificadores es $\rceil$, siendo 
+            $\forall x \rceil P(x)$ ó <<ningún elemento $x$ cumple $P$>>. P. Ej: 
+            $\exists x, rio(x) \land \rceil suena(x)$ ó <<algunos ríos no suenan>>.
+
+
 \end{document}
