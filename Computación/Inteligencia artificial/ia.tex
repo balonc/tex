@@ -290,7 +290,7 @@
         lógicos y constan de un conjunto de reglas bien definidas que se utilizarán como argumentos 
         en los procesos de inferencia.
 
-    \subsection{Cálculo lógico}
+    \subsection{Cálculo lógico}\label{calculologico}
 
         El cálculo lógico se define como el proceso que permite obtener nuevos enunciados a 
         partir de otros verdaderos, de tal forma que un proceso de inferencia sea una operación (o 
@@ -349,5 +349,35 @@
 
             \paragraph{Regla de la cadena} Si se tienen varias implicaciones de tal manera que $A \Rightarrow B$, 
             y a su vez $B \Rightarrow C$, entonces se infiere conclusión que $A \Rightarrow C$.
+
+    \subsection{Métodos de demostración}
+
+        En particular, el objeto de estudio serán los métodos deductivos, fundamentadas en una 
+        serie de hipótesis partiendo de un conocimiento global y general, y particularizadas para 
+        un caso dado.
+
+        En los métodos deductivos, las premisas se denominan \textit{axiomas}, y son enunciados 
+        o proposiciones verdaderas en sus afirmaciones. Estos métodos están formados por 
+        \textit{silogismos}\footnote{
+            Dado por Aristóteles, se define como una forma de razonamiento deductivo que está 
+            formado por dos o más proposiciones como premisas y otra que se deriva de las anteriores 
+            como conclusión.
+        }
+
+        \subsubsection{Demostración por el método directo}
+
+            Dado un conjunto de premisas, suponemos una hipótesis (\textit{hipótesis auxiliar}), a 
+            partir de la cual y tomando como referencia las reglas del razonamiento lógico (véase 
+            sección \ref{calculologico}), se puede establecer una conclusión (o la validez de una 
+            proposición dada).
+
+        \subsubsection{Demostración por el método de reducción al absurdo}
+
+            Se introduce como premisa la negación de aquello que se quiere demostrar, de tal 
+            forma que si se obtiene como conclusión una contradicción, se demuestra que la premisa 
+            que hemos introducido es falsa, por lo tanto su negación será verdadera.
+
+            Es un método de resolución indirecto, ya que debemos partir de una suposición.
+
 
 \end{document}
