@@ -379,5 +379,39 @@
 
             Es un método de resolución indirecto, ya que debemos partir de una suposición.
 
+    \subsection{Métodos de encadenamiento hacia delante y hacia atrás}
+
+        \subsubsection{Ecadenamiento hacia delante (Forward chaining)}
+
+            Se parte de una serie de hechos iniciales, donde a través del conjunto de reglas se 
+            obtienen nuevas conclusiones, estando condicionadas éstas por los datos iniciales.
+
+            Los hechos se almacenan en la memoria de trabajo. Las reglas del sistema representan 
+            posibles acciones que se pueden disparar cuando se cumplen determinadas condiciones
+            en los hechos de la memoria de trabajo, y cada acción disparada suele implicar la adición 
+            o supresión de loshechos en la memoria de trabajo. De esta forma, el sistema primero 
+            localiza aquellas reglas relacionadas con los hechos, seleccionando una y ejecutando la 
+            acción reflejada en la regla. Esta selección de la regla a disparar no es trivial y 
+            pueden exstir numerosos factores que condicionen el orden de ejecución (prioridades), 
+            por lo que existen estrategias de resolución de conflictos.
+
+        \subsubsection{Encadenamiento hacia atrás (Backwards chaining)}
+
+            Siendo éste el proceso inverso, se parte de un conjunto de síntomas y se buscan 
+            las causas que las provocan.
+
+            Se parte de una hipótesis que se trata de validar reconstruyendo la cadena de 
+            razonamiento en orden inverso, de tal forma que se van añadiendo nuevas hipótesis 
+            a validar hasta que se demuestre la hipótesis inicial.
+
+            Se suelen utilizar sistemas de diagnóstico, donde dadas unas hipótesis, se deben 
+            encontrar las reglas que las verifiquen.
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.8\textwidth]{resources/backwardschaining.png}
+                \caption{Ejemplo gráfico de razonamiento hacia atrás por el fallo de un pistón.}
+                \label{backwardschaining}
+            \end{figure}    
 
 \end{document}
