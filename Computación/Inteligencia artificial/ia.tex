@@ -305,47 +305,49 @@
             Existen numerosas relaciones de equivalencia que se pueden aplicar para resolver 
             o simplificar enunciados, siendo las más importantes:
 
-            \paragraph{Complemento $\neg(\neg A) = A$} ó <<la negación de una negación da como 
-            resultado una afirmación>>. P. Ej: $-(-1) = 1$.
+            \paragraph{Complemento, $\neg(\neg A) = A$} ó <<la negación de una negación da como 
+            resultado una afirmación>>; $-(-1) = 1$.
 
             \paragraph{Idempotente, $A \lor A = A; A \land A$} Esta relación se aplica cuando 
             aparece la conjunción o disyunción del mismo enunciado, por lo que se obtendrá como 
-            resultado la validez del mismo. P. Ej: siendo $p=$ estar vivo y $\neg q$ como estar muerto;
+            resultado la validez del mismo.
 
-            \[p \lor \neg (\neg p)\]
 
-            Que aplicando el complemento, quedaría:
-
-            \[p \lor p\]
-
-            Y aplicando la operación idempotente, obtendríamos como resultado $q$.
-
-            \paragraph{Primera Ley de DeMorgan $\neg (A \land B) = \neg A \lor \neg B$} Indica 
+            \paragraph{Primera Ley de DeMorgan, $\neg (A \land B) = \neg A \lor \neg B$} Indica 
             que <<la negación de una conjunción es equivalente a la disynción de cada uno de sus 
-            términos negados>>. 
+            términos negados>>.             
             
-            P. Ej: <<no es posible mojarse si llevo paraguas>>, siendo $p$ mojarse 
-            y $q$ llevar paraguas, siendo: 
-            
-            \[ \neg (p \land q) \]
-            
-            Aplicando la primera ley de DeMorgan quedaría como <<o no me mojo, o no llevo paraguas>>, 
-            es decir:
-
-            \[ \neg p \lor \neg q \] 
-            
-            
-            \paragraph{Segunda Ley de DeMorgan $\neg (A \lor B) = \neg A \land \neg B$} Indica que 
+            \paragraph{Segunda Ley de DeMorgan, $\neg (A \lor B) = \neg A \land \neg B$} Indica que 
             <<la negación de una disyunción es equivalente a la conjunción de cada uno de sus 
             términos negados>>.
 
-            P. Ej: <<los hombres no pueden volar o mantenerse bajo el agua indefinidamente>>, siendo 
-            $p$ volar y $q$ mantenerse bajo el agua; obtendríamos:
+            \paragraph{Distributiva, $P \lor (Q \land R) = (P \lor Q) \land (P \lor R)$} Afecta 
+            a una conjunción de enunciados, de tal forma que equivaldría a la conjunción de sus 
+            disyunciones.
 
-            \[ \neg (p \lor q) \]
+            \paragraph{Conmutativa, $P \lor Q = Q \lor P$} Se aplica a la conjunción y a la 
+            disyunción, no a las implicaciones.
 
-            Aplicando la segunda ley de DeMorgan se transformaría en:
+            \paragraph{Implicación, $A \Rightarrow B = \neg A \lor B$} En una implicación, 
+            siempre que se da el antecedente, se deriva el consecuente; por lo que en una 
+            situación dada, o se produce el antecedente y por tanto la implicación $A \Rightarrow B$,
+            se obtendría $B$ también, de lo contrario, no se habrá llegado a producir $A$, por lo 
+            que se debe dar o bien $A$, por lo que en todo caso se deber dar o bien $A$ 
+            (con lo que se obtendría $B$), o $\neg A$.
 
-            \[ \neg p \land \neg q \]
+            \paragraph{Implicación, $A \Rightarrow B = \neg B \Rightarrow \neg A$} Si un antecedente 
+            implica un consecuente, la negación del consecuente lleva asociado que no se ha producido 
+            el antecedente; su negación.
+
+            \paragraph{Modus Ponens, $(A \Rightarrow B) \land A = B$} Si en una implicación se tiene el 
+            antecedente, también se tiene el consecuente como resultado de la implicación. 
+
+            \paragraph{Modus Tollens, $(A \Rightarrow B) \land \neg B = \neg A$} Se refiere a la negación 
+            del consecuente en una implicación; si no se da el consecuente es porque el antecedente 
+            no se ha producido. De tal forma que, en una implicación, si se tiene además la negación 
+            del consecuente, se puede derivar la negación del antecedente.
+
+            \paragraph{Regla de la cadena} Si se tienen varias implicaciones de tal manera que $A \Rightarrow B$, 
+            y a su vez $B \Rightarrow C$, entonces se infiere conclusión que $A \Rightarrow C$.
 
 \end{document}
