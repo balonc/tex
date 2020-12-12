@@ -1,0 +1,46 @@
+\documentclass[a4paper, 11pt, titlepage]{article}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{imakeidx}
+\usepackage{makeidx}
+\usepackage{mathtools}
+\usepackage[spanish]{babel}
+\usepackage{eurosym}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\title{Robustecimiento y securización SSH}
+\author{Francisco Javier Balón Aguilar}
+
+\begin{document}
+
+\maketitle
+\renewcommand{\contentsname}{Índice}
+\tableofcontents
+\newpage
+
+\section*{Prólogo}
+\newpage
+
+\section{Introducción a SSH}
+\section{Configuración del servicio}
+    \subsection{Directivas básicas}
+    \subsection{Autenticación básica con clave}
+    \subsection{Autenticación mediante par de claves}
+    \subsection{Proceso de conexión}
+\section{Aplicaciones de SSH}
+    \subsection{SCP}
+    \subsection{SFTP}
+    \subsection{SSHFS}
+    \subsection{X11 forwarding}
+    \subsubsection{Fail2ban}
+\section{Tunneling}
+    \subsection{Túneles TCP/IP con port forwarding}
+\section{SOCKS}
+
+\end{document}
