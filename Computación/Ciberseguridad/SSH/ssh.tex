@@ -52,6 +52,51 @@
     documento.
 
 \section{Visión técnica del protocolo}
+
+    Una vez introducido el protocolo, podemos arremangarnos y entrar en barro. El protocolo 
+    SSH trabaja sobre el protocolo TCP/IP. Por ello, en primer lugar se realiza la conexión 
+    TCP, realizando el \textit{three-way handshake}\footnote{
+        \textit{Three-way handshake} o \textit{triple apretón de manos} es un método 
+        utilizado en una red TCP/IP para crear una conexión entre un cliente local y 
+        un servidor.
+
+        Es un método de tres pasos en ambas direcciones simultáneamente diseñado para 
+        permitir que ambos extremos de comunicación inicien y negocien los parámetros 
+        de la conexión de socket TCP antes de que se transmitan datos.
+
+        \[SYN, SYN+ACK, ACK\]
+    }. Después de abrir la conexión, cliente y servidor se envían la versión disponible 
+    del protocolo\footnote{
+        Actualmente existen dos versiones del protocolo SSH; la versión 1 y la 2. La primera 
+        es actualmente desaconsejable por motivos de seguridad, que son suplidos en la segunda 
+        versión.
+    }. Después, se utilizará el par de claves, pública y privada, de RSA. El servidor enviará 
+    su clave pública de \textit{host} al cliente, de forma que éste pueda cifrar lo que necesite 
+    enviar al servidor. El cliente comparará la clave pública de \textit{host} con la que 
+    tenga almacenada del servidor en el archivo \textit{known\_host}, si lo hubiera. 
+
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[width=0.8\textwidth]{resources/ssh00.png}
+        \caption{Capas del protocolo SSH.}
+        \label{ssh00}
+    \end{figure}
+
+    Una vez el cliente dispone de la clave pública del \textit{host} del servidor, este 
+    generará una clave de sesión aleatoria y seleccionará un algoritmo de cifrado simétrico.
+    Con esta clave de sesión, que se generará por defecto cada 3600 segundos, se cifrará el 
+    túnel. El cliente enviará un mensaje que contiene la clave de sesión y el algoritmo de 
+    cifrado seleccionado, información que viajará cifrada mediante la clave pública de \textit{host},
+    al servidor. En este instante, el resto de la comunicación se utilizará el algoritmo de 
+    cifrado simétrico y la clave compartida de sesión, dando velocidad a la conexión (en técnicas 
+    de clave simétrica el cifrado y descifrado se hace más rápido), pero utilizando siempre 
+    primero el protocolo de \textit{Diffie-Hellman} para poder enviar de forma segura 
+    la clave compartida de sesión; y supliendo así la principal carencia en seguridad de los algoritmos 
+    de criptografía simétrica: el intercambio de claves.
+
+    Una vez tenemos el túnel creado, se llevará a cabo la autenticación del usuario en el 
+    servidor, pudiendo utilizar distintos métodos para llevar a cabo tal autenticación.
+
 \section{Configuración del servicio}
     \subsection{Directivas básicas}
     \subsection{Autenticación básica con clave}
