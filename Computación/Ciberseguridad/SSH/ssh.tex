@@ -40,8 +40,18 @@
     Generalmente se suele equiparar el protocolo SSH con el protocolo Telnet, ya que ambos 
     pretenden una funcionalidad similar. Aun así, existen diferencias notables, esencialmente 
     en la seguridad de las comunicaciones; ya que SSH utiliza técnicas criptográficas para 
-    proteger los datos intercambiados entre ambos nodos que conforman la conexión SSH.
+    proteger los datos intercambiados entre ambos nodos que conforman la conexión SSH. SSH 
+    utiliza un intercambio de claves basado en el protocolo criptográfico de \textit{Diffie-Hellman}, 
+    imprescindible en el robustecimiento de la capa de transporte.
 
+    Como vemos, SSH proporciona un sistema, a priori, seguro. Con una configuración con un 
+    nivel aceptable de seguridad por defecto. Pero en función de la configuración del 
+    servicio puede llevar al sistema a un estado de inseguridad. Por ello, es importante 
+    entender el funcionamiento del protocolo, las funcionalidades que presenta y la configuración
+    óptima en función de las necesidades del administrador. Este será el núcleo del presente 
+    documento.
+
+\section{Visión técnica del protocolo}
 \section{Configuración del servicio}
     \subsection{Directivas básicas}
     \subsection{Autenticación básica con clave}
