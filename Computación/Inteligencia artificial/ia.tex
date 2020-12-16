@@ -517,17 +517,30 @@
                     \centering
                     \includegraphics[width=0.8\textwidth]{resources/arbol-decision.png}
                     \caption{Ejemplo de árbol de decisión.}
-                    \label{arbol-decision}
+                    \label{arboldecision}
                 \end{figure}    
         
-                En la creación de un árbol de decisión (véase figura \ref{arbol-decision}), se tiene un 
+                En la creación de un árbol de decisión (véase figura \ref{arboldecision}), se tiene un 
                 nodo raiz, nodos intermedios, y hojas. Cada hoja del árbol contiene un conjnto de ejemplos 
                 representados por una sola clase\footnote{
                     Dentro de una hoja puede haber ruido, o ejemplos que no cumplan las características 
                     al $100\%$.
-                . La clase se establece en función de la mejor separación donde pertenezcan la mayoría, 
+                }. La clase se establece en función de la mejor separación donde pertenezcan la mayoría, 
                 o un número elevado de ejemplos.
 
             \end{itemize}
-                    
+
+        \subsubsection{Algoritmo ID3}
+
+            El algoritmo ID3 (\textit{Induction Decision Trees}) fue creado por \textit{Ross Quinlan} en 
+            1986. Este algoritmo se basa en el principio denominado <<navaja de Occam>>, es decir, la solución 
+            más simple y evidente es la acertada. De tal forma que crea árboles de decisión lo más compactos 
+            posible en función de unos criterios de coste y bondad.
+
+            Como desventaja fundamental que presenta, es que favorece la elección de aquellos atributos que contienen 
+            muchos valores, lo que no siempre es lo más útil.
+
+            El algoritmo de ID3 es proceso recursivo, que se repite de manera iterativa hasta que llegar a un punto 
+            de parada.
+            
 \end{document}
