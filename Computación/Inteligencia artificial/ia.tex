@@ -509,6 +509,25 @@
                     \item \textbf{Ramas de un nodo o arcos}. Interconexiones del grafo entre los nodos.
                 \end{itemize}
                 
+                Es necesario establecer un criterio para escoger un atributo dentro del conjunto que sirva como 
+                separador, de tal forma que, a través de sucesivas iteraciones, se va formando el árbol. 
+                Utilizando los separadores como nodos y los ejemplos como hojas de éste.
+
+                \begin{figure}[htp]
+                    \centering
+                    \includegraphics[width=0.8\textwidth]{resources/arbol-decision.png}
+                    \caption{Ejemplo de árbol de decisión.}
+                    \label{arbol-decision}
+                \end{figure}    
+        
+                En la creación de un árbol de decisión (véase figura \ref{arbol-decision}), se tiene un 
+                nodo raiz, nodos intermedios, y hojas. Cada hoja del árbol contiene un conjnto de ejemplos 
+                representados por una sola clase\footnote{
+                    Dentro de una hoja puede haber ruido, o ejemplos que no cumplan las características 
+                    al $100\%$.
+                . La clase se establece en función de la mejor separación donde pertenezcan la mayoría, 
+                o un número elevado de ejemplos.
+
             \end{itemize}
-            
+                    
 \end{document}
