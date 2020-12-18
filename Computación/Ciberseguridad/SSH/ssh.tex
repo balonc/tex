@@ -97,6 +97,26 @@
     Una vez tenemos el túnel creado, se llevará a cabo la autenticación del usuario en el 
     servidor, pudiendo utilizar distintos métodos para llevar a cabo tal autenticación.
 
+\section{Instalación de servidor y cliente}
+
+    La instalación tanto del cliente como del servidor es un proceso muy sencillo que no 
+    ocupará mucho en la práctica. Debido que estamos utilizando la distribución Arch GNU/Linux, 
+    utilizaremos el gestor de paquetes \textit{pacman}, en el que basa la distribución y que, 
+    en código, no es más que una pantalla que realiza instalaciones de códigos fuentes \textit{tarballs}
+    de forma automatizada. En caso de usar otra distribución, será necesario descargar el paquete 
+    \textit{deb} (en aquellas distribuciones basadas en Debian) o \textit{rpm} (en aquellas distribuciones 
+    basadas en Red Hat).
+
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[width=1\textwidth]{resources/ssh01.png}
+        \caption{Prueba de instalación de \textit{openssh} usando \textit{pacman}.}
+        \label{ssh01}
+    \end{figure}
+
+    El paquete donde se encuentra es \textit{openssh}, que nació como alternativa libre a \textit{SSH 
+    Communications Security} y que forma parte del proyecto OpenBSD.
+
 \section{Configuración del servicio}
     \subsection{Directivas básicas}
     \subsection{Autenticación básica con clave}
