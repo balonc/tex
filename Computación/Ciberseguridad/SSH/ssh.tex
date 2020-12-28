@@ -66,7 +66,7 @@
 
         \[SYN, SYN+ACK, ACK\]
     }. Después de abrir la conexión, cliente y servidor se envían la versión disponible 
-    del protocolo\footnote{
+    del protocolo\footnote{ \label{versiones}
         Actualmente existen dos versiones del protocolo SSH; la versión 1 y la 2. La primera 
         es actualmente desaconsejable por motivos de seguridad, que son suplidos en la segunda 
         versión.
@@ -190,16 +190,49 @@
             servidor enviará un mensaje a través del canal solicitando respesta del cliente.
             \item \textbf{ClientAliveCountMax}. Se especifica el número de mensajes que el servidor puede enviar al cliente 
             solicitando respuesta, antes de cerrar la conexión. 
+            \item \textbf{TCPKeepAlive}. Deshabilitar esta directiva permite prevenir ataques de 
+            suplantación, ataques de tipo \textit{spoofing}.
+            \item \textbf{DenyGroups}. Similar a \textit{AllowGroups} pero con un enfoque inverso, de negación. Los usuarios 
+            que pertenezcan los grupos incluidos en la directiva no tendrán permitido el acceso.
+            \item \textbf{DenyUsers}. Similar a \textit{AllowUsers} pero con un enfoque inverso, de negación. Los usuarios 
+            incluidos en la directiva no tendrán permitido el acceso.
+            \item \textbf{LogLevel}. Esta directiva es interesante para depurar y monitorizar lo que ocurre en el servicio.
+            Los posibles valores son \textit{QUIET}, \textit{FATAL}, \textit{ERROR}, \textit{INFO}, \textit{VERBOSE} y 
+            \textit{DEBUG}. De forma predeterminada se indica \textit{INFO}.
+            \item \textbf{HostKey}. Indica en qué ruta se encuentra la clave privada, RSA o DSA, del host.
+            \item \textbf{UsePrivilegeSeparation}. Permite la separación de privilegios, es decir, divide los procesos del 
+            servidor para prevenir la explotación y la posible escalada de privilegios.
+            \item \textbf{Protocol}. Indica la versión del protocolo que se usará. Es importante que se encuentre sólo activada 
+            la versión 2 (esto fue adelantado en el apéndice \ref{versiones}), ya que hay versiones en las que esta directiva se 
+            especifica como \textit{protocol 2,1}, indicando que si el cliente no dispone de la versión 2 se utilizará la 1. 
+            Esto no es nada aconsejable, por lo qeu si el cliente no dispone de la versión 2, es más conveniente denegar la 
+            conexión hasta que no actualice su configuración.
+            \item \textbf{PubkeyAuthentication}. Permitirá al servidor la autenticación de usuarios mediante el intercambio 
+            de clave pública. En entornos críticos es altamente recomendable habilitar este método y deshabilitar otros menos
+            seguros (véase para más información técnica la sección \ref{PubkeyAuthentication}).
+            \item \textbf{AuthorizedKeysFile}. Indica, si cambiáramos de directorio, dónde se encuentran almacendas 
+            las claves públicas de los usuarios.
+            \item \textbf{PasswordAuthentication}. Si esta directiva se encuentra en valor verdadero \textit{yes}, el servidor 
+            permitirá la autenticación de usuarios mediante clave o contraseña. Esto no es recomendable en entornos críticos, en cuyo 
+            caso se deberá indicar bajo el valor booleano falso, o \textit{no} en este caso (para más información 
+            técnica véase sección \ref{PasswordAuthentication}).
+            \item \textbf{X11Forwarding}. Indica si se permite el reenvío de \textit{X11} a través de la conexión SSH (para mayor detalle 
+            técnico véase sección \ref{X11Forwarding}).
+            \item \textbf{ListenAddress}.
+            \item \textbf{ServerKeyBits}.
+            \item \textbf{KeyRegenerationInterval}.
+            \item \textbf{Banner}.
+            \item \textbf{PrintLastLog}.
         \end{itemize}
 
-    \subsection{Autenticación básica con clave}
-    \subsection{Autenticación mediante par de claves}
+    \subsection{Autenticación básica con clave}\label{PasswordAuthentication}
+    \subsection{Autenticación mediante par de claves}\label{PubkeyAuthentication}
     \subsection{Proceso de conexión}
 \section{Aplicaciones de SSH}
     \subsection{SCP}
     \subsection{SFTP}
     \subsection{SSHFS}
-    \subsection{X11 forwarding}
+    \subsection{X11 forwarding}\label{X11Forwarding}
     \subsubsection{Fail2ban}
 \section{Tunneling}
     \subsection{Túneles TCP/IP con port forwarding}
