@@ -179,6 +179,13 @@
             interesante decidir qué departamentos pueden iniciar sesión o qué grupo de usuarios con privilegios 
             pueden realizr dicha acción.
 
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.8\textwidth]{resources/ssh02.png}
+                \caption{Diagrama de ficheros componentes del demonio \textit{sshd}.}
+                \label{ssh02}
+            \end{figure}        
+
             Una vez habilitada esta directiva se restringe el acceso a todos los usuarios, a excepción de los que
             pertenezcan a un grupo habilitado.
             \item \textbf{AllowUsers}. Similar a \textit{AllowGroups}, en ésta se indican directamente los usuarios 
@@ -209,15 +216,15 @@
             conexión hasta que no actualice su configuración.
             \item \textbf{PubkeyAuthentication}. Permitirá al servidor la autenticación de usuarios mediante el intercambio 
             de clave pública. En entornos críticos es altamente recomendable habilitar este método y deshabilitar otros menos
-            seguros (véase para más información técnica la sección \ref{PubkeyAuthentication}).
+            seguros (para mayor detalle técnico véase la sección \ref{PubkeyAuthentication}).
             \item \textbf{AuthorizedKeysFile}. Indica, si cambiáramos de directorio, dónde se encuentran almacendas 
             las claves públicas de los usuarios.
             \item \textbf{PasswordAuthentication}. Si esta directiva se encuentra en valor verdadero \textit{yes}, el servidor 
             permitirá la autenticación de usuarios mediante clave o contraseña. Esto no es recomendable en entornos críticos, en cuyo 
-            caso se deberá indicar bajo el valor booleano falso, o \textit{no} en este caso (para más información 
-            técnica véase sección \ref{PasswordAuthentication}).
-            \item \textbf{X11Forwarding}. Indica si se permite el reenvío de \textit{X11} a través de la conexión SSH (para mayor detalle 
-            técnico véase sección \ref{X11Forwarding}).
+            caso se deberá indicar bajo el valor booleano falso, o \textit{no} en este caso (para mayor detalle técnico véase la sección
+            \ref{PasswordAuthentication}).
+            \item \textbf{X11Forwarding}. Indica si se permite el reenvío de \textit{X11} a través de la conexión SSH (para mayor 
+            detalle técnico véase la sección \ref{X11Forwarding}).
             \item \textbf{ListenAddress}.Indica por cuál interfaz/dirección se deben escuchar las peticiones. Puede que el 
             servidor donde se encuentre el servicio SSH cuente con varias tarjetas de red, y que por seguridad sólo se requiera acceso 
             con la interfaz de red que comunica el servidor con una red interna concreta, por ejemplo.
@@ -230,6 +237,30 @@
             \item \textbf{Banner}. Muestra el texto de advertencia (por ejemplo advirtiendo temas legales sobre un posible 
             acceso no autorizado). El contenido por defecto en caso de no haber la directiva se encuentra en \textit{/etc/issue.net}.
             \item \textbf{PrintLastLog}. Se registra el último inicio de sesión del usuario.
+        \end{itemize}
+
+        Una vez estudiadas las directivas principales del servicio o demonio \textit{sshd}, veremos a continuación las del 
+        lado del cliente (recordamos que el cliente SSH se configura en \textit{ssh\_config}). Por la propia naturaleza del 
+        cliente y como es de esperar, las configuraciones de seguridad son menores; puesto que el núcleo a robustecer es 
+        el servidor.
+
+        \begin{itemize}
+            \item \textbf{Host}. Actúa como divisor de secciones. De tal forma que, puedan ser configuradas distintas directivas 
+            para distintas conexiones con servidores.
+            \item \textbf{Port}. Indica el puerto al que se conectará en el servidor.
+            \item \textbf{Protocol}. Indica la versión del protocolo a usar por el cliente. Evidentemente, ésta por razones de 
+            seguridad debe ser 2.
+            \item \textbf{IdentifyFile}. Indica dónde se encuentra almacenada la clave privada.
+            \item \textbf{PubkeyAuthentication}. Indica al cliente si se puede autenticar contra el servidor mediante 
+            autenticación de clave pública (para mayor detalle técnico véase la sección \ref{PubkeyAuthentication}). 
+            \item \textbf{StrictHostKeyChecking}. Define qué realizará el cliente al conectarse con un servidor del cual no 
+            se dispone de clave pública de host. En caso booleano verdadero, el cliente aceptará automáticamente la clave recibida; 
+            en caso contrario, rechazará la clave del servidor, cerrando la conexión (será necesario añadir manualmente la clave 
+            pública para poder conectar). Un tercer valor, \textit{ask}, pide confirmación al usuario en el momento de la 
+            conexión.
+            \item \textbf{Ciphers}. Lista de algoritmos de cifrado simétrico que puede utilizar el cliente.
+            \item \textbf{PasswordAuthentication}. Indica si el cliente puede autenticarse contra el servidor mediante contraseña 
+            (para mayor detalle técnico véase la sección \ref{PasswordAuthentication}).
         \end{itemize}
 
     \subsection{Autenticación básica con clave}\label{PasswordAuthentication}
@@ -249,6 +280,8 @@
 \newpage
 \begin{thebibliography}{X}
     \bibitem{} Hardening de servidores GNU/Linux, Carlos Álvarez Martín \& Pablo González Pérez, Ed. 0xWord
+    \bibitem{} sshd\_config - SSH Server Configuration \\ \url{https://ssh.com/ssh/sshd_config/}
+    \bibitem{} ssh\_config - SSH Config File \\ \url{https://www.ssh.com/ssh/config/}
     \bibitem{} SSHFS: Mounting a remote file system over SSH \\ \url{https://www.redhat.com/sysadmin/sshfs}
     \bibitem{} SSH password automation in Linux with sshpass \\ \url{https://www.redhat.com/sysadmin/ssh-automation-sshpass}
     \bibitem{} Eight ways to protect SSH access on your system \\ \url{https://www.redhat.com/sysadmin/eight-ways-secure-ssh}
