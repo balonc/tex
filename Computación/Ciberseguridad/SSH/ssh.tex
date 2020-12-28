@@ -150,6 +150,48 @@
     integridad de la conexión, asegurando que nos conectamos al mismo servidor y no a uno suplantado.
 
     \subsection{Directivas básicas}
+
+        A continuación especificaremos las directivas básicas para la configuración y robustecimiento 
+        del servidor SSH, también el cliente. Estas directivas son informadas en los directorios 
+        \textit{sshd\_config} y \textit{ssh\_config}.
+
+        En primer lugar, estas son algunas de las directivas referentes al fichero \textit{sshd\_config}, 
+        cuya configuración mejoraría notablemente la seguridad del servidor.
+
+        \begin{itemize}
+            \item \textbf{Port}. Esta directiva indica el puerto donde se colocará la escucha del servidor 
+            SSH. Por defecto, es el puerto 22. Es interesante de cara a la seguridad no usar el puerto por defecto, 
+            de forma que un posible atacante no lo encuentre con tanta facilidad. Se recomienda utilizar puertos en 
+            rangos altos, para aumentar el tiempo de búsqueda y esquivar escaneos simples.
+            \item \textbf{PermitRootLogin}. Con esta directiva se prohíbe que un usuario se loguee en el servidor
+            como \textit{root}, de tal modo que se evita ataques por fuerza bruta al usuario \textit{root}, o 
+            bien se haya obtenido anteriormente las claves de acceso a éste; evitando que pueda acceder con 
+            los máximos privilegios.
+            \item \textbf{MaxAuthTries}. Esta directiva evita que los ataques de fuerza bruta puedan estar probando 
+            credenciales indefinidamente, limitando los intentos a un número bajo. Si una vez superado el número de 
+            intentos informados el usuario no logra autenticarse correctamente, el sistema abortará la conexión.
+            \item \textbf{LoginGraceTime}. Indica el tiempo máximo, en segundos, para introducir las credenciales de 
+            autenticación. Es aconsejable utilizar un tiempo bajo, en torno a los 30 segundos (en función claro, de los 
+            elementos de seguridad que haya entre cliente y servidor). Evidentemente, no debe ser demasiado bajo 
+            ya que podría ocasionar problemas a los usuarios legítimos para acceder.
+            \item \textbf{AllowGroups}. De esta forma se le indica al servidor el nombre de los grupos a los que 
+            pertenecen los usuarios que tienen permitido el acceso al servidor. En un entorno corporativo, puede ser 
+            interesante decidir qué departamentos pueden iniciar sesión o qué grupo de usuarios con privilegios 
+            pueden realizr dicha acción.
+
+            Una vez habilitada esta directiva se restringe el acceso a todos los usuarios, a excepción de los que
+            pertenezcan a un grupo habilitado.
+            \item \textbf{AllowUsers}. Similar a \textit{AllowGroups}, en ésta se indican directamente los usuarios 
+            que tienen permitido el acceso. Cabe destacar que se pueden usar metacaracteres, como \$ ó ?, permitiendo 
+            la construcción de patrones.
+            \item \textbf{Ciphers}. Especifica los cifrados que admitirá el protocolo, por ejemplo 
+            \textit{aes128-cbc} ó \textit{blowfish-cbs}.
+            \item \textbf{ClientAliveInternal}. Si el servidor no recibe datos del cliente conectado en $x$ tiempo, el 
+            servidor enviará un mensaje a través del canal solicitando respesta del cliente.
+            \item \textbf{ClientAliveCountMax}. Se especifica el número de mensajes que el servidor puede enviar al cliente 
+            solicitando respuesta, antes de cerrar la conexión. 
+        \end{itemize}
+
     \subsection{Autenticación básica con clave}
     \subsection{Autenticación mediante par de claves}
     \subsection{Proceso de conexión}
