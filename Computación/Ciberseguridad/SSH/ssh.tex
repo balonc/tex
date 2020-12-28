@@ -121,7 +121,33 @@
 
     Podemos clasificar la configuración de SSH en dos grupos: el directorio \textit{/etc/ssh} y el demonio 
     \textit{sshd}. El servidor o demonio cuenta con un fichero de configuración propio (\textit{/etc/ssh/sshd\_config}), 
-    mientras que el cliente cuenta con otro en el mismo directorio (\textit{/etc/ssh/ssh\_config}).
+    mientras que el cliente cuenta con otro en el mismo directorio (\textit{/etc/ssh/ssh\_config}). Es necesario 
+    destacar que, en el caso del cliente, si un usuario dispone de un archivo de configuración 
+    en su directorio \textit{\$HOME}, será este último preferente y será la configuración que se 
+    cargue. Esto permite a una misma máquina tener tantas configuraciones como usuarios en el sistema.
+    
+    En las siguientes líneas estudiaremos brevemente distintos archivos, al menos los de uso 
+    general y los que más nos interesan en la presente práctica; siendo éstos los archivos referentes a 
+    la seguridad.
+
+    El primer archivo a tener en cuenta es \textit{moduli}, situado en la ruta \textit{/etc/ssh}. Contiene 
+    grupos de \textit{Diffie-Hellman}, los cuales son usados para el intercambio de claves, como 
+    ya vimos anteriormente y cuyo procedimiento es imprescindible para la creación de una capa segura 
+    de transporte.
+
+    En esta ruta anterior, o bien en la ruta personal de cada usuario (\textit{\$HOME/.ssh/}) encontramos 
+    los pares de claves (o una sóla). Estos son los archivos que referencian a la clave privada, 
+    y lo que referencian a las claves públicas alojadas (generalmente bajo la extensión \textit{.pub}).
+
+    En la ruta \textit{\$HOME/.ssh/} podemos encontrar además al archivo \textit{Authorized\_keys}, que 
+    contiene un listado de claves públicas para la autenticación contra sus servidores, reflejando las 
+    claves públicas autorizadas por el usuario\footnote{
+        Cuando un cliente se conecta a un servidor, y la autenticación se realiza mediante intercambios 
+        de pares de claves, se chequea el valor de la clave pública en el listado de \textit{Authorized\_keys}.
+        Si el cliente dispone de la clave privada se autenticará el sistema.
+    }. También destaca el archivo \textit{Known\_hosts}, que contiene las claves públicas de hosts de los 
+    servidores a los que se ha conectado un cliente. Este fichero es importante para asegurarse de la 
+    integridad de la conexión, asegurando que nos conectamos al mismo servidor y no a uno suplantado.
 
     \subsection{Directivas básicas}
     \subsection{Autenticación básica con clave}
