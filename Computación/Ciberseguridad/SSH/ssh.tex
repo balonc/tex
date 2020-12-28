@@ -218,11 +218,18 @@
             técnica véase sección \ref{PasswordAuthentication}).
             \item \textbf{X11Forwarding}. Indica si se permite el reenvío de \textit{X11} a través de la conexión SSH (para mayor detalle 
             técnico véase sección \ref{X11Forwarding}).
-            \item \textbf{ListenAddress}.
-            \item \textbf{ServerKeyBits}.
-            \item \textbf{KeyRegenerationInterval}.
-            \item \textbf{Banner}.
-            \item \textbf{PrintLastLog}.
+            \item \textbf{ListenAddress}.Indica por cuál interfaz/dirección se deben escuchar las peticiones. Puede que el 
+            servidor donde se encuentre el servicio SSH cuente con varias tarjetas de red, y que por seguridad sólo se requiera acceso 
+            con la interfaz de red que comunica el servidor con una red interna concreta, por ejemplo.
+            \item \textbf{ServerKeyBits}. Indica el tamaño de la clave de sesión. Es altamente recomendable utilizar un tamaño de 
+            clave mayor de 786 bits, valor por defecto en muchas versiones del aplicativo. Valores recomendados serían 
+            1024 ó 2048 bits.
+            \item \textbf{KeyRegenerationInterval}. Indica el tiempo, en segundos, que transcurrirá hasta que se genere una nueva 
+            clave de sesión. Por defecto se utiliza un valor de 3600 segundos (1 hora). Este valor por defecto es aceptable en niveles 
+            de seguridad, pero si queremos manejar una mayor seguridad podríamos bajarlo más.
+            \item \textbf{Banner}. Muestra el texto de advertencia (por ejemplo advirtiendo temas legales sobre un posible 
+            acceso no autorizado). El contenido por defecto en caso de no haber la directiva se encuentra en \textit{/etc/issue.net}.
+            \item \textbf{PrintLastLog}. Se registra el último inicio de sesión del usuario.
         \end{itemize}
 
     \subsection{Autenticación básica con clave}\label{PasswordAuthentication}
