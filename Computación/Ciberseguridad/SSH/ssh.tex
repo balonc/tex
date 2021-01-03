@@ -263,8 +263,20 @@
             (para mayor detalle técnico véase la sección \ref{PasswordAuthentication}).
         \end{itemize}
 
-    \subsection{Autenticación básica con clave}\label{PasswordAuthentication}
+    \subsection{Autenticación básica con contraseña}\label{PasswordAuthentication}
+
+        El método más común y utilizado para autenticación de servicios SSH es el de autenticación con contraseña. Es además 
+        el método más sencillo y que menos código e infraestructura requiere; por eso es considerado como la autenticación 
+        básica, dando nombre a la presente sección.
+
+        Por razones obvias, existen determinados entornos en los que esta autenticación no debe estar aprobada ni permitida 
+        por razones de seguridad, ya que en circunstancias normales y defectuosas, este método permite divesos ataques, en especial 
+        ataques de fuerza bruta a usuarios y contraseñas, ataques de diccionario, usuarios con keyloggers...
+
     \subsection{Autenticación mediante par de claves}\label{PubkeyAuthentication}
+
+        
+
     \subsection{Proceso de conexión}
 \section{Aplicaciones de SSH}
     \subsection{SCP}
