@@ -306,6 +306,61 @@
         o valoraciones a respuestas del usuario. La recopilación de datos se hará directamente recibiendo los 
         valores de respuesta del usuario.
 
+        Por ejemplo, podríamos concluir en la creación de dos variables de entrada a partir de los datos 
+        ofrecidos por el experto para configurar los conjuntos difusos. Serían:
+
+        \paragraph{Frecuencia cardíaca} La frecuencia cardíaca, es decir, el número de latidos del corazón 
+        en un minuto. La fórmula que con más frecuencia se utiliza para establecer la frecuencia cardíaca 
+        máxima de un sujeto es la \textit{fórmula de Astrand}\footnote{
+            La \textit{fórmula de Astrand} se basa en restar la edad del sujeto a 220. Por ejemplo, un 
+            paciente de 40 años debería tener una frecuencia cardíaca máxima de 180 latidos por minuto.
+
+            Sin embargo, la primera referencia documentada contra la fórmula data de 1971 por parte de 
+            \textit{S.M. Fox III}, que realizó un estudio que concluyó que la fórmula $220-e$, donde $e$ 
+            corresponde a la edad del sujeto podría definir una línea <<no demasiado lejana>> a los datos 
+            recogidos, reconociendo la inexactitud de la fórmula universalmente usada hasta entonces. 
+            
+            El rango que se empleó para la frecuencia cardiaca fue de 40 a 150 latidos  
+            por minuto teniendo en cuenta un rango bajo y alto, lo que daría lugar a un escenario ideal para el 
+            uso de lógica difusa.
+        }.
+
+        Los conjuntos o números difusos utilizados para la variablede entrada serían dos: bajo, de tipo $Z$ y 
+        alto, de tipo $S$. 
+
+        Todas las variables de entrada, se analizarán por el difusor Singleton\footnote{
+            Singleton o instancia única es un patrón de diseño que permite restringir la creación de objetos 
+            pertenecientes a una clase o el valor de un tipo a un único objeto.
+        } con un punto de evaluación por 
+        simplicidad y rapidez de cálculo.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.7\textwidth]{resources/frecuenciacardiaca.png}
+            \caption{Conjuntos difusos de la frecuencia cardíaca.}
+            \label{frecuenciacardiaca}
+        \end{figure}
+    
+        \paragraph{Frecuencia respiratoria} La frecuencia respiratorio corresponde al número de veces que 
+        un sujeto respira por minuto. La frecuencia normal es de 12/14 a 20/22. 
+        
+        La determinación de la frecuencia respiratoria consiste  en  precisar  la  cantidad  de  ciclos 
+        respiratorios  que  se producen  en  el  término  de  un  minuto,  observando  el  tórax  de  la  
+        persona  para apreciar la profundidad de sus movimientos\footnote{
+            Para controlar la respiración, se debe contar  los  movimientos  respiratorios  (inspiración  y  
+            espiración)  como  una  sola respiración.
+        }.
+
+        Los conjuntos o números difusos utilizados para la variablede entrada serían dos: bajo, de tipo $Z$ y 
+        alto, de tipo $S$. Todas las variables de entrada, se analizarán por el difusor Singleton.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.7\textwidth]{resources/frecuenciarespiratoria.png}
+            \caption{Conjuntos difusos de la frecuencia respiratoria.}
+            \label{frecuenciarespiratoria}
+        \end{figure}
+
         La fusificación en este caso será directa, es decir, caad síntoma tiene un valor de pertenencia difusa
         independientemente de si lo posee <<mucho>> o no. Esto se ha realizado así para simplificar el concepto 
         a tratar. Si lo posee, indicará el grado de pertenencia a la enfermedad; si no, será 0. Estas variables 
