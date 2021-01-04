@@ -1,0 +1,169 @@
+\documentclass[a4paper, 11pt, titlepage]{article}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{imakeidx}
+\usepackage{makeidx}
+\usepackage{mathtools}
+\usepackage[spanish]{babel}
+\usepackage{eurosym}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% \setcounter{secnumdepth}{5}
+% \setcounter{tocdepth}{5}
+
+\title{Sistemas expertos en combinación con lógica difusa}
+\author{Francisco Javier Balón Aguilar}
+
+\begin{document}
+
+\maketitle
+\renewcommand{\contentsname}{Índice}
+\tableofcontents
+\newpage
+
+\section*{Prólogo}
+
+\section{Introducción}\label{introduccion}
+
+    Generalmente, se considera a alguien un experto en un problema cuando éste tiene
+    conocimiento especializado sobre dicho problema, o en otras palabras, tiene dominio 
+    sobre éste.  También en el área de la inteligencia artificial se conoce como 
+    sistemas expertos a aquellos con conocimiento especializado sobre dicho problema, así 
+    como conocimiento sobre el dominio.
+
+    Los sistemas expertos buscan la emulación o imitación del razonamiento humano, 
+    restringiéndose a un espacio de conocimiento limitado, razonando como lo harían
+    --siguiendo una serie de pasos pertinentes-- un experto humano de diversas materias 
+    o disciplinas, como médico, analista, empresario, etc. Su uso será rápidamente en el 
+    futuro debido principalmente a su uso en industria y medicina, principalmente.
+
+    La lógica difusa proporciona una serie de mecanismos de inferencia que permite simular 
+    procesos de razonamiento humano, al igual que un sistema experto (lo que permite su 
+    fácil adopción y aplicación en éste). La lógica difusa proporciona un marco matemático 
+    que permite modelar la incertidumbre de los procesos cognitivos [evidentemente humanos]
+    de forma que puedan ser computazionables.
+
+\section{Sistemas expertos}
+
+    Como ya hemos adelantado en la introducción (véase sección \ref{introduccion}), un sistema 
+    experto es un software que imita el comportamiento de un experto en la solución de un problema, 
+    generalmente en un campo o disciplina concreta, aplicando deducción lógica y una serie de 
+    pasos en la solución de éste.
+
+    Un sistema experto trae consigo determinadas limitaciones a tener en cuenta:
+    
+    \begin{itemize}
+        \item El conocimiento en sí es difícil de extraer y normalizar de los expertos.
+        \item La aproximación de cada experto a un determinado problema evaluado puede ser diferente.
+        \item Tienen una noción limitada a su campo y acerca del contexto del problema.
+    \end{itemize}
+
+    Aun así presentando una serie de ventajas con respecto a los sistemas tradicionales de 
+    resolución de problemas basados en algoritmos:
+
+    \begin{itemize}
+        \item Presentan capacidad de toma de decisiones.
+        \item Calculan resultados, basados en heurísticas.
+        \item Ofrecen explicaciones de sus resultados.
+        \item Usan reglas de inferencia.
+        \item Proporcionan bases de conocimiento (deductivo).
+        \item Manejan conocimiento impreciso, contradictorio e incompleto.
+        \item Usan datos y lenguajes simbólicos.
+    \end{itemize}
+
+    \subsection{Arquitectura de un sistema experto}
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.7\textwidth]{resources/sistemaexperto.jpg}
+            \caption{Arquitectura de un sistema experto.}
+            \label{sistemaexperto}
+        \end{figure}
+
+        Un sistema experto se compone de los siguientes elementos constituyentes:
+
+        \begin{itemize}
+            \item \textbf{Base de conocimiento}. Contiene el conocimiento sobre el 
+            dominio, que se obtiene del conocimiento del experto y se codifican en ésta.
+            La forma más clásica de representación del conocimiento son las reglas\footnote{
+                Una regla es una estructura condicional que relaciona lógicamente la 
+                información contenida en parte del antecedente con otra información 
+                contenida en la parte del consecuente.
+            }.
+            \item \textbf{Base de hechos} o memoria de trabajo. Contiene los hechos sobre 
+            un problema ya descubierto previamente, que se introduce en la base de hechos 
+            durante una consulta con el sistema experto. El sistema empareja esta información  
+            con el conocimiento disponible en la base de conocimientos para deducir nuevos 
+            hechos.
+            \item \textbf{Motor de inferencia}. El razonamiento humano es modelado como proceso 
+            con un módulo como el motor de inferencia, que trabaja con la información contenida 
+            en la base de hechos para deducir nuevos hechos y contrastando hechos particulares 
+            de la base de conocimientos para obtener conclusiones acerca del problema.
+            \item \textbf{Interfaz de usuario}. La interfaz que comunica al software con el usuario, 
+            generalmente en lenguaje natural, buscando ser interactiva e imitando la conversación
+            entre humanos.
+        \end{itemize}
+
+
+\section{Lógica difusa}
+
+    Como ya hemos adelantado en la introducción (véase sección \ref{introduccion}), la lógica difusa, 
+    también conocida como lógica borrosa, se basa en lo relativo de lo observado como posición 
+    diferencial. Toma dos valores aleatorios, pero contextualizados y referidos entre sí.
+
+    Trae una serie de ventajas tales como:
+
+    \begin{itemize}
+        \item Facilidad de implementación.
+        \item Buenos resultados contrastables, en procesos no lineales y de difícil modelación.
+        \item Modo de comportamiento similar al comportamiento humano.
+        \item Velocidad en la resolución de problemas.
+        \item Abstracción del modelo matemático.
+    \end{itemize}
+
+    Que, sin embargo, contrasta con una serie de desventajas a tener en cuenta:
+
+    \begin{itemize}
+        \item Múltiples definiciones de operadores y reglas de inferencia difusas.
+        \item Dificultad de interpretación de valores difusos, es decir, una semántica no clara.
+        \item No hay una buena justificación operadores difusos.
+        \item Requiere de tiempo y datos previos al aprendizaje.
+    \end{itemize}
+
+    \subsection{Arquitectura de un sistema de lógica difusa}
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.7\textwidth]{resources/logicadifusa.png}
+            \caption{Arquitectura de un sistema basado en lógica difusa.}
+            \label{logicadifusa}
+        \end{figure}
+
+        Un sistema basado en lógica difusa se compone de los siguientes elementos constitutivos:
+
+        \begin{itemize}
+            \item \textbf{Difusor}. El ingreso del bloque difusor está constituido por los 
+            datos de las variables de interés para el estudio. El proceso, conformado por 
+            los grados de pertenencia de estas variables de entrada, implica conocer y/o 
+            asumir las respectivas funciones de pertenencia.
+            \item \textbf{Motor de inferencia}. Inferir consiste en obtener una conclusión 
+            o deducir algo de otra cosa, estando relacionado con la implicación, entendida como 
+            repercusión o consecuencia. En términos proposicionales se escribe para para indicar 
+            que el cumplimiento de una proposición tiene como consecuencia el cumplimiento de otra.
+            Se expresa como el condicional \textit{if} (si... entonces...).
+            \item \textbf{Desfusificador}. La salida del bloque de inferencia continúa siendo difuso,
+            pero ya relacionado con la variable de entrada. Debe expresarse en resultados concretos.
+        \end{itemize}
+
+\section{Combinación entre sistemas}
+
+% BIBLIOGRAFÍA Y REFERENCIAS
+\newpage
+\begin{thebibliography}{X}
+    \bibitem{} Desarrollo de un sistema expertocon lógica difusa, Jorge Franco Herrera y Angélica Franco Arias \\ \url{https://ingsistycomp.files.wordpress.com/2017/09/proyecto-1-sistema-experto-difuso.pdf}
+\end{thebibliography}
+
+\end{document}
