@@ -512,7 +512,7 @@
         Cabe destacar que también podemos realizar copias seguras entre máquinas remotas, no necesariamente 
         debe ser una origen o destino local:
         
-        \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+        \begin{lstlisting}[language=bash,basicstyle=\tiny]
     $ scp root@10.101.5.3:/root/origen root@192.121.6.233:/etc/destino\end{lstlisting}
 
     \subsection{SFTP}
@@ -530,8 +530,28 @@
     Connected to 10.101.5.3-
     sftp> \end{lstlisting}
         
-
     \subsection{SSHFS}
+
+        El protocolo SSH dispone de la posibilidad de gestionar el sistema de archivos de manera remota y segura 
+        utilizando SSHFS o \textit{Secure Shell File System}. En el equipo local donde se realiza el montaje de 
+        SSHFS, la implementación hace uso del módulo del kérnel \textit{FUSE}.
+
+        La sintaxis es sencilla, tal y como se aprecia en la figura \ref{ssh04}. Se debe ejecutar el comando 
+        \textit{sshfs} seguido de la ruta remota que se quiere montar localmente y, por último, la ruta local que 
+        se utilizará como punto de montaje.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.4\textwidth]{resources/ssh04.png}
+            \caption{Conexión SSHFS.}
+            \label{ssh04}
+        \end{figure}
+
+        Una vez realizado el montaje, se puede utilizar cualquier tipo de operación como si la ruta fuera local.
+        También podemos utilizar sobre el punto de montaje cualquier software, como un gestor de archivos gráfico
+        para desempeñar el trabajo que sea. Todas las acciones remotas las hará de forma transparente al usuario 
+        y mediante un túnel seguro SSH.
+
     \subsection{X11 forwarding}\label{X11Forwarding}
     \subsubsection{Fail2ban}
 \section{Tunneling}
