@@ -412,8 +412,57 @@
         Una vez finalizado, podremos realizar comunicaciones SSH entre el cliente y 
         el servidor directamente usando las claves RSA, ganando seguridad y comodidad 
         en las comunicaciones.
-        
+
+        \subsubsection{¿Dónde almacenar las claves?}
+
+            La clave pública, tal y como hemos visto se puede repartir por todos los servidores o máquinas 
+            a los que el usuario quiera acceder mediante este tipo de autenticación. Por el contrario, la 
+            clave privada debe ser protegida, además de un fichero con las mínimas copias posibles; es decir, 
+            un backup bajo control y cifrado. Convendría en muchos casos que ésta sea almacenada en un medio 
+            extraíble y protegido bajo cifrado, lo que evitaría el acceso a ésta en caso de robo o pérdida.
+
+            Es realmente importante proteger la clave privada, ya que si no se le aplica una contraseña o pin 
+            (algo recurrente cuando se usa en scripts de automatización de ciertos procesos mediante SSH), al 
+            menos que sea protegida mediante su almacenamiento. Como es lógico, también deberemos aplicar protección 
+            mediante otros elementos y capas de defensa, fundamentales para proteger la seguridad de los usuarios, 
+            tales como firewalls, IDS, IPS, accesos no permitidos, protección física... Que complementan y 
+            fortalecen el modelo de defensa en profundidad (\textit{Depth In Defense}).
+
     \subsection{Proceso de conexión}
+
+        Mediante el parámetro \textit{verbose} o $-v$ aplicado al lanzamiento del comando \textit{ssh} podemos 
+        visualizar y verificar todas las acciones que se realizan por partde del servidor y el cliente en una 
+        conexión de este tipo.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/ssh03.png}
+            \caption{Conexión SSH en modo \textit{verbose} para su análisis.}
+            \label{ssh03}
+        \end{figure}
+
+        En la figura \ref{ssh03} observamos cómo el cliente lee el fichero \textit{/etc/ssh/ssh\_config} antes 
+        de realizar la conexión al servidor 10.101.5.3 en su puerto por defecto 22. Tras esto, se crea la conexión 
+        TCP y, una vez se realiza el \textit{three-way handshake} entre cliente y servidor, la conexión queda 
+        establecida; pero aún no existe canal cifrado.
+
+        El cliente verifica la existencia de posibles claves privadas y verifica si se encuentra alguna en la 
+        lista negra. Una vez realizado este proceso, verifica también la versión del protocolo. Es en este instante 
+        en el que se intercambian la clave pública host del servidor al cliente, para que éste pueda generar y 
+        cifrar la clave simétrica, la cual será la encargada de cifrar el canal.
+
+        Una vez el cliente recibe la clave del host, la verifica en el fichero \textit{known\_hosts}. Si se encuenta, 
+        se verifica la identidad del ervidor. Si por el contrario no se encuentra mostraría un mensaje avisando de 
+        la posible suplantación (por defecto).
+
+        Tras aceptar el cliente al servidor, verificando la identidad de éste, se establece la conexión en un canal 
+        ya seguro. El servidor envía el \textit{banner} y el cliente lo muestra por pantalla. Despues, el servidor 
+        envía al cliente los métodos de autenticación para el usuario de los que se disponen y el cliente valorará 
+        su configuración previamente cargada para realizar la autenticación pertinente; en el caso de la figura estudiada 
+        \ref{ssh03}, esta es una autenticación básica basada en contraseña, por lo que muestra la \textit{TTY} al usuario 
+        pidiéndole la contraseña de éste. Tras autenticarse, se envían desde el servidor las variables de entorno 
+        de la sesión y proporciona el control de la shell en remoto.
+
 \section{Aplicaciones de SSH}
     \subsection{Automatización de contraseñas con \textit{sshpass}}
 
