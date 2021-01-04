@@ -482,6 +482,39 @@
     $ sshpass -p !4u2tryhack ssh user@host\end{lstlisting}
 
     \subsection{SCP}
+
+        SCP o \textit{Secure Copy} es un protocolo similar funcionalmente a RCP (\textit{Remote Copy}), cuyo 
+        objetivo es transferir archivos desde una máquina a otra. La diferencia entre ambos protocolos es que 
+        SCP utiliza el protocolo SSH para establecer sus comunicaciones, estableciendo un túnel cifrado por el 
+        que enviar dichos archivos, de tal forma que un \textit{sniffer} no pueda capturar esta transferencia.
+
+        La ejecución de SCP es realmente sencilla, contando con la sintaxis:
+
+        \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    $ scp [opciones] origen destino\end{lstlisting}
+
+        Donde el origen o destino local es la ruta, ya sea absoluta o relativa y el origen o destino remoto 
+        cumple con su propia sintaxis:
+
+        \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    usuario@host:<ruta_archivo_remoto>\end{lstlisting}
+        
+        De tal forma que para enviar un archivo a un servidor mantendríamos la sintaxis:
+      
+        \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    $ scp /home/balon/archivo root@10.101.5.3:/root/archivo\end{lstlisting}
+
+        Y siendo la forma inversa:
+
+        \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    $ scp root@10.101.5.3:/root/archivo2 /home/balon/archivo2\end{lstlisting}
+
+        Cabe destacar que también podemos realizar copias seguras entre máquinas remotas, no necesariamente 
+        debe ser una origen o destino local:
+        
+        \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    $ scp root@10.101.5.3:/root/origen root@192.121.6.233:/etc/destino\end{lstlisting}
+
     \subsection{SFTP}
     \subsection{SSHFS}
     \subsection{X11 forwarding}\label{X11Forwarding}
