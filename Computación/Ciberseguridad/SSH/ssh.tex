@@ -516,6 +516,21 @@
     $ scp root@10.101.5.3:/root/origen root@192.121.6.233:/etc/destino\end{lstlisting}
 
     \subsection{SFTP}
+
+        SSH \textit{File Transfer Protocol} o SFTP permite el envío de ficheros, a nivel de aplicación a través 
+        de SSH, utilizando las aplicaciones y los comandos propios del protocolo FTP. Es sabido que el protocolo 
+        FTP no es seguro en sí, debido a que tanto las credenciales de acceso como los ficheros intercambiados 
+        pueden ser interceptados y capturados debidos al medio por el que se transmiten, sin contar con cifrado.
+
+        La sintaxis es similar al protocolo FTP, manteniendo una vez establecida la conexión una cadena de conexión 
+        a nivel de aplciación similar a SSH.
+
+        \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    $ sftp root@10.101.5.3
+    Connected to 10.101.5.3-
+    sftp> \end{lstlisting}
+        
+
     \subsection{SSHFS}
     \subsection{X11 forwarding}\label{X11Forwarding}
     \subsubsection{Fail2ban}
