@@ -127,6 +127,14 @@
         \item Abstracción del modelo matemático.
     \end{itemize}
 
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[width=0.7\textwidth]{resources/logicadifusa2.jpg}
+        \caption{Diferenciación gráfica de la lógica difusa con respecto a la lógica clásica en el 
+        caso borroso de la definición de \textit{altura}.}
+        \label{logicadifusa2}
+    \end{figure}
+
     Que, sin embargo, contrasta con una serie de desventajas a tener en cuenta:
 
     \begin{itemize}
@@ -246,7 +254,7 @@
         con una o más afirmaciones objeto-valor conectadas mediante los operadores lógicos ‘y’, ‘o’, ó 
         ‘no’. 
 
-\section{Combinación entre sistemas}
+\section{Combinación entre sistemas}\label{combinacion}
 
     Como ya se ha ido prefigurando en secciones anteriores, tanto los sistemas expertos como la lógica 
     difusa buscan la imitación y emulación del comportamiento racional humano para llevar a cabo sus 
@@ -285,9 +293,58 @@
     en ambas lógicas o sistemas; para finalmente, terminar el proceso con la desfusificación y la comunicación 
     al usuario mediante lenguaje natural.
     
-    \subsection{Caso práctico}
+    \subsection{Caso práctico}\label{casopractico}
 
-        % TODO: https://ingsistycomp.files.wordpress.com/2017/09/proyecto-1-sistema-experto-difuso.pdf
+        Como caso práctico de un sistema combinado, siendo un sistema experto que emplea lógica difusa he 
+        decidido desarrollar, de forma conceptual, una simple implementación de diagnóstico médico, que 
+        recibiendo una serie de síntomas entrega un posible diagnóstico en base a su conocimiento previo, al igual 
+        que como lo haria un experto médico.
+
+        El primer paso según hemos documentado en la sección \ref{combinacion} será la entrevista con el 
+        experto [médico, en este caso] para obtener una base de conocimiento. Esta conformará una serie de 
+        funciones que representan las distintas enfermedades. Cada función almacenará una serie de preguntas 
+        o valoraciones a respuestas del usuario. La recopilación de datos se hará directamente recibiendo los 
+        valores de respuesta del usuario.
+
+        La fusificación en este caso será directa, es decir, caad síntoma tiene un valor de pertenencia difusa
+        independientemente de si lo posee <<mucho>> o no. Esto se ha realizado así para simplificar el concepto 
+        a tratar. Si lo posee, indicará el grado de pertenencia a la enfermedad; si no, será 0. Estas variables 
+        son asignadas en cada función de la base de conocimiento.
+
+        Así como un sistema experto sencillo, también podemos modelar uno usando la teoría de lógica difusa; 
+        la lógica difusa se encarga de dar valores diferentes de 0 ó 1 a un conjunto dado, como se muestra 
+        en las funciones anteriores.
+
+        En el problema presente se tienen un grupo de enfermedades y un grupo de síntomas; a cada síntoma 
+        se le da un grado de pertenencia a cierta enfermedad, por ejemplo la perdida de equilibrio pertenece 
+        en 0.2 al grupo de la enfermedad colesterol, así sucesivamente se van asignando las pertenencias de
+        cada síntoma a cada enfermedad y sencillamente realizamos un cálculo de probabilidad para realizar 
+        la inferencia del sistema experto.
+
+        Para la inferencia el sistema experto difuso utilizará los valores de pertenencia de cada síntoma 
+        a cada  enfermedad; multiplicando la entrada 1 ó 0 por el valor de pertenencia del síntoma. De tal 
+        forma que aseguramos que el sistema no tenga en cuenta el síntoma en caso de no poseerlo el paciente.  
+
+        Debido a que la lógica borrosa maneja valores probabilísticos entre 0 y 1, es necesario asegurar que el valor 
+        final no sobrepase 1. 
+
+\section{Conclusiones}
+
+    Como hemos podido comprobar a lo largo del documento, a diferencia de un sistema experto convencional, uno 
+    combinado con la lógica borrosa presenta una serie de ventajas aplicable a una gran multitud de disciplinas 
+    y dominios, de entre ellos el diagnóstico médico como hemos observado conceptualmente en el caso práctico 
+    (véase sección \ref{casopractico}).
+
+    En un sistema experto, los elementos serían descartados a medida se introdujeran los datos de entrada [no 
+    se padecía un síntoma]. Sin embargo, en un sistema experto difuso, no existe descarte sino que calcula 
+    la probabilidad en base a los datos de entrada, sin descartar [probabilidad de padecer una enfermedad], dando 
+    así una expectativa para cada elemento [enfermdad] de la base de conocimiento.
+    
+    Los sistemas expertos han permitido revolucionar diferentes áreas del conocimiento  (industria, militar, informática,
+    medicina). Si a éstos les sumamos o combinamos la aplicación de sistemas difusos se hace mucho más exacta la 
+    inferencia, ya que no solo diagnosticaría la presencia del dato [enfermedad] o no, sino que calcula la probabilidad 
+    para cada uno de ellos, ofreciendo precisión para casos en los cuales necesitemos un valor exacto.
+
 
 % BIBLIOGRAFÍA Y REFERENCIAS
 \newpage
@@ -296,6 +353,7 @@
     \bibitem{} Diseño de un Sistema Experto Difuso para la Determinación de la Densidad de Corriente en una Planta de Cromado, Carolina V. Ponce y Bayron Rojas \\ \url{https://scielo.conicyt.cl/scielo.php?script=sci_arttext&pid=S0718-07642019000200157}
     \bibitem{} Modelo basado en Lógica Difusa para el Diagnóstico Cognitivo del Estudiante \\ \url{https://scielo.conicyt.cl/scielo.php?script=sci_arttext&pid=S0718-50062012000100003}
     \bibitem{} Sistemas Expertos y Lógica Difusa \\ \url{http://catarina.udlap.mx/u_dl_a/tales/documentos/lmt/maza_c_ac/capitulo2.pdf}
+    \bibitem{} Sistema de Control Difuso para Unidades de Cuidados Intensivos (UCI), Jefferson Steven Soto Medellín \\ \url{https://repository.ucatolica.edu.co/bitstream/10983/1278/1/Sistemas%20de%20Control%20Difuso%20para%20Unidades%20de%20Cuidado%20Intensivo%20(Trabajo%20Final)%20701429%20Nuevo.pdf}
 \end{thebibliography}
 
 \end{document}
