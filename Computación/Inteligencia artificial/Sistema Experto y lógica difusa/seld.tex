@@ -158,12 +158,98 @@
             pero ya relacionado con la variable de entrada. Debe expresarse en resultados concretos.
         \end{itemize}
 
+    \subsection{Funcionamiento matemático/técnico de la lógica difusa}
+
+        La lógica difusa define el grado de pertenencia que tiene un 
+        objeto a una clase particular. Este grado de pertenencia es un valor entre cero y uno que 
+        indica la adherencia de un grupo a otro\footnote{
+            Zadeh, 1965
+        }. Los conjuntos difusos son una extensión 
+        de los conjuntos clásicos, donde se añade una función de pertenencia, es decir, que a cada 
+        elemento del universo se le asocia un grado de pertenencia, definido como un número real entre 
+        0 y 1\footnote{
+            Johansson,1993
+        }. Mientras el grado de pertenencia sea más cercano a 1, significa que el 
+        elemento pertenece en un mayor grado a dicho conjunto. Caso contrario ocurre si el valor se 
+        acerca a 0. Así es, cómo se introduce el concepto de conjunto o subconjunto difuso y se lo 
+        asocia a un determinado valor lingüístico, definido por una palabra o etiqueta lingüística, 
+        donde está el nombre del conjunto o subconjunto. 
+        
+        Por cada conjunto se define una función de 
+        pertenencia o membresía denominada $\mu A(x)$, que indica el grado en que la variable x está incluida 
+        en el concepto representado por la etiqueta $A (0 \leq \mu A(x) \leq 1)$. 
+
+        El concepto de lógica difusa define la base de reglas como la manera que tiene un sistema difuso 
+        de guardar el conocimiento lingüístico, el cual le permite resolver el problema para el cual ha 
+        sido diseñado. Estas reglas son del tipo “Si-Entonces” y asocian uno o más conjuntos difusos de 
+        entrada llamados antecedentes con un conjunto difuso de salida llamado consecuente. Para el caso 
+        del modelo propuesto, se asocian los conjuntos de entrada con el operador lógico \textit{AND} para tener 
+        un conjunto de salida o consecuente\footnote{
+            De Negri y De vito, 2006
+        }.
+
+        Una vez establecida la base de reglas para cada una de las fases del sistema experto difuso, 
+        es necesario, como ya vimos anteriormente en la arquitectura de ésta, definir el método de 
+        inferencia y agregación que determinan la salida o respuesta del sistema. Mediante el proceso de 
+        inferencia, se obtiene el conjunto difuso de salida. Este conjunto es calculado de acuerdo a las
+        reglas establecidas y al método de inferencia utilizado. Generalmente, se emplea el método de 
+        inferencia por mínimos (Min) de Mamdami definido según la ecuación\footnote{
+            Zadeh, 1965
+        }:
+
+        \[
+            min(\mu, \mu_w(z)) \forall z    
+        \]
+
+        Donde $\mu_w$ es la función de pertenencia del conjunto de salida $w$.
+
+        El método de agregado agrupa todos los conjuntos de salida, de cada una de las reglas establecidas, 
+        para obtener un único conjunto difuso. Para el modelo experto difuso propuesto, se utiliza el método 
+        de agregación por máximos (Max), descrito por la ecuación:
+        
+        \[
+            C' = [(z, \mu_C' (z) / z \in Z)]    
+        \]
+
+        Que agrupa los máximos valores, de cada regla asignada, que han sido obtenidos mediante el proceso 
+        de inferencia difuso. Y donde $Z$ es igual al universo del discurso de la variable de salida y:
+        
+        \[
+            \mu_C' (z) = Max(C1', C2',... Cn')    
+        \]
+
+        Finalmente, el proceso de defusificación consiste en un proceso matemático usado para convertir 
+        un conjunto difuso en un número real\footnote{
+            Llano et. al., 2007
+        }. El conjunto que se ha obtenido del proceso de inferencia y agregación, debe ser transformado 
+        en un valor numérico que pueda ser interpretado por elementos externos. Con el fin de determinar 
+        qué método de defusificación se emplearía en el modelo, se realizó un análisis previo, utilizando
+        un conjunto menor de datos. El resultado de este análisis arrojó que el método del centroide de 
+        área posee un error porcentual más bajo.
+
+        En este método, el centro de gravedad es aproximado por el centro de gravedad de un arreglo de 
+        masas puntuales, las cuales son el centro de gravedad de cada conjunto de salida correspondiente 
+        a cada regla, con masa igual al grado de pertenencia en ese punto de su centro de gravedad. Si 
+        se le llama $\varphi 1$ al centro de gravedad del conjunto difuso de salida $Bl$ de la $l$-ésima regla, el 
+        centro de gravedad queda determinado por la ecuación:
+
+        \[
+            \mu_d=\frac{\displaystyle\sum_{l=1}^{R} \varphi_1 {{\mu_B}_l(\varphi l)}}{\displaystyle\sum_{l=1}^{R}{{\mu_B}_l(\varphi l)}}
+        \]
+
+        Siendo $R$ es el número de reglas. Las reglas que rigen la base de conocimiento corresponden a 
+        afirmaciones lógicas que relacionan dos o más objetos e incluyen dos partes, la premisa y la 
+        conclusión. Cada una de estas partes consiste en una expresión lógica del tipo <<Si- entonces>>, 
+        con una o más afirmaciones objeto-valor conectadas mediante los operadores lógicos ‘y’, ‘o’, ó 
+        ‘no’. 
+
 \section{Combinación entre sistemas}
 
 % BIBLIOGRAFÍA Y REFERENCIAS
 \newpage
 \begin{thebibliography}{X}
     \bibitem{} Desarrollo de un sistema expertocon lógica difusa, Jorge Franco Herrera y Angélica Franco Arias \\ \url{https://ingsistycomp.files.wordpress.com/2017/09/proyecto-1-sistema-experto-difuso.pdf}
+    \bibitem{} Diseño de un Sistema Experto Difuso para la Determinación de la Densidad de Corriente en una Planta de Cromado, Carolina V. Ponce y Bayron Rojas \\ \url{https://scielo.conicyt.cl/scielo.php?script=sci_arttext&pid=S0718-07642019000200157}
 \end{thebibliography}
 
 \end{document}
