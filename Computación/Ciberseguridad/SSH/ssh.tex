@@ -553,6 +553,27 @@
         y mediante un túnel seguro SSH.
 
     \subsection{X11 forwarding}\label{X11Forwarding}
+
+        Esta opción del protocolo SSH permite al usuario conectarse a un servidor para levantar procesos 
+        que requieran de un servidor gráfico para su interacción. De tal modo que un administrador pueda, 
+        por ejemplo, ejecutar un navegador en un servidor remoto, y la presentación gráfica se realizará 
+        en la máquina local a pesar del proceso encontrarse ejecutando en la máquina remota. Evidentemente, 
+        toda comunicación cliente-servidor se realizará de manera segura mediante el protocolo SSH, por lo que 
+        los datos de presentación del proceso viajarán por la red bajo este protocolo.
+
+        Recordamos que apra poder redirigir la salida de las ventanas de los procesos que se ejecutan, el servidor 
+        debe habilitar la directiva \textit{X11Forwarding} en su fichero \textit{sshd\_config} (véase 
+        figura \ref{ssh05}).
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/ssh05.png}
+            \caption{Ejecución de programa gráfico a través del servidor gráfico remoto Xorg por medio 
+            de la directiva \textit{X11Forwarding} del protocolo SSH.}
+            \label{ssh05}
+        \end{figure}
+
+
     \subsubsection{Fail2ban}
 \section{Tunneling}
     \subsection{Túneles TCP/IP con port forwarding}
