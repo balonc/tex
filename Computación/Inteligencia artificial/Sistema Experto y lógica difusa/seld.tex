@@ -106,7 +106,10 @@
             generalmente en lenguaje natural, buscando ser interactiva e imitando la conversación
             entre humanos.
         \end{itemize}
+        
+    \subsection{Funcionamiento matemático}
 
+        % TODO
 
 \section{Lógica difusa}
 
@@ -158,7 +161,7 @@
             pero ya relacionado con la variable de entrada. Debe expresarse en resultados concretos.
         \end{itemize}
 
-    \subsection{Funcionamiento matemático/técnico de la lógica difusa}
+    \subsection{Funcionamiento matemático}
 
         La lógica difusa define el grado de pertenencia que tiene un 
         objeto a una clase particular. Este grado de pertenencia es un valor entre cero y uno que 
@@ -245,11 +248,53 @@
 
 \section{Combinación entre sistemas}
 
+    Como ya se ha ido prefigurando en secciones anteriores, tanto los sistemas expertos como la lógica 
+    difusa buscan la imitación y emulación del comportamiento racional humano para llevar a cabo sus 
+    operaciones y funciones. Lo que significa que no debería haber problema a la hora de unificar ambos 
+    conceptos, para funcionar conjuntamente en determinadas tareas específicas de un campo (sistema 
+    experto) donde los límites entre valores se encuentran borrosos (lógica difusa).
+
+    Para la unificación de ambos conceptos será necesario unir criterios en el diseño y desarrollo del 
+    sistema. En la figura \ref{diagramaflujoexperto} podemos observar el resultado de esta unificación; 
+    que da lugar a un diagrama de flujo con los pasos a seguir. 
+
+    Tal y como se haría con un sistema experto simple, comenzaríamos con la entrevista con el experto y 
+    la recopilación de datos. 
+
+    Por otro lado, será necesario realizar una identificación y categorización de las variables de entrada 
+    y de salida, y tal como lo define el concepto 
+    de la lógica difusa, es necesario definir cada uno de los parámetros, rangos y funciones de 
+    pertenencia que modelarán el proceso que queremos simular. Mediante la tabulación del total de datos 
+    obtenidos, se determinan los rangos mínimos y máximos de los conjuntos que conforman cada 
+    variable seleccionada.
+
+    A partir de un análisis gráfico de la agrupación de los datos tabulados, se determinan tanto los 
+    rangos de los subconjuntos difusos, como también las funciones de pertenencia. Cada una de 
+    estas funciones debe llevar su respectiva etiqueta lingüística, que cuantifican el valor de dicha 
+    función a partir del uso del lenguaje natural o coloquial. 
+
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[width=0.7\textwidth]{resources/diagramaflujoexperto.png}
+        \caption{Diagrama de flujo para la obtención de un sistema experto difuso.}
+        \label{diagramaflujoexperto}
+    \end{figure}
+
+    Estos datos confluirán en la construcción de reglas (base de conocimiento) y una memoria de trabajo 
+    (base de hechos), propios del sistema experto base. También contará con un motor de inferencia, común 
+    en ambas lógicas o sistemas; para finalmente, terminar el proceso con la desfusificación y la comunicación 
+    al usuario mediante lenguaje natural.
+    
+    \subsection{Caso práctico}
+
+        % TODO: https://ingsistycomp.files.wordpress.com/2017/09/proyecto-1-sistema-experto-difuso.pdf
+
 % BIBLIOGRAFÍA Y REFERENCIAS
 \newpage
 \begin{thebibliography}{X}
     \bibitem{} Desarrollo de un sistema expertocon lógica difusa, Jorge Franco Herrera y Angélica Franco Arias \\ \url{https://ingsistycomp.files.wordpress.com/2017/09/proyecto-1-sistema-experto-difuso.pdf}
     \bibitem{} Diseño de un Sistema Experto Difuso para la Determinación de la Densidad de Corriente en una Planta de Cromado, Carolina V. Ponce y Bayron Rojas \\ \url{https://scielo.conicyt.cl/scielo.php?script=sci_arttext&pid=S0718-07642019000200157}
+    \bibitem{} Modelo basado en Lógica Difusa para el Diagnóstico Cognitivo del Estudiante \\ \url{https://scielo.conicyt.cl/scielo.php?script=sci_arttext&pid=S0718-50062012000100003}
     \bibitem{} Sistemas Expertos y Lógica Difusa \\ \url{http://catarina.udlap.mx/u_dl_a/tales/documentos/lmt/maza_c_ac/capitulo2.pdf}
 \end{thebibliography}
 
