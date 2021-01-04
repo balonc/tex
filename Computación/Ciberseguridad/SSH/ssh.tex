@@ -279,6 +279,23 @@
 
     \subsection{Proceso de conexión}
 \section{Aplicaciones de SSH}
+    \subsection{Automatización de contraseñas con \textit{sshpass}}
+
+        La utilidad \textit{sshpass} permite cierta automatización a los administradores a la hora de 
+        gestionar conexiones SSH desde otros programas y/o scripts. Esta utilidad sólo funcionará con 
+        el modelo de autenticación básica con contraseña (véase sección \ref{PasswordAuthentication}).
+
+        La utilidad sshpass está diseñada para ejecutar SSH utilizando el modo de autenticación de 
+        contraseña interactiva de teclado, pero de una manera no interactiva, utilizando acceso TTY 
+        directo para garantizar que la contraseña sea emitida por un usuario de teclado interactivo, 
+        engañando a SSH haciéndole creer que está obteniendo la contraseña de un usuario interactivo.
+
+        Su modo de uso es tan sencillo como indicar previamente a la comunicación con el servidor SSH 
+        la clave de éste tras el comando propio de \textit{sshpass}:
+
+        \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    $ sshpass -p !4u2tryhack ssh user@host\end{lstlisting}
+
     \subsection{SCP}
     \subsection{SFTP}
     \subsection{SSHFS}
