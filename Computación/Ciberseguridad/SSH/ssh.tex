@@ -578,7 +578,50 @@
     El tunneling es un proceso por el que se utiliza el protocolo SSH para fortificar la comunicación entre 
     otros protocolos inseguros, por ejemplo para realizar peticiones HTTP, SMTP, etc. 
 
+    Los túneles pueden ser locales o remotos. En los túneles locales, la máquina del administrador o cliente 
+    redirecciona un puerto local hacia un puerto de la máquina remota, a la que se disponga de acceso. En los 
+    túneles remotos se redirecciona un puerto remoto dela máquina remota, a la que se disponga de aacceso, a un 
+    puerto de la máquina local, donde se encuentra el administrador.
+
     \subsection{Túneles TCP/IP con port forwarding}
+
+        Esta técnica cuenta con una serie de configuraciones muy interesantes, siendo los escenarios más usuales:
+
+        \begin{itemize}
+            \item Usar un túnel externo para atraversar el firewall y acceder a un recurso que ofrece un equipo 
+            de la intranet:
+
+            \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    $ ssh -L 7900:localhost:5900 usuario@internal\end{lstlisting}
+
+            \item Usar un túnel externo para atravesar el firewall y acceder a un recurso de una intranet.
+            Pero además cualquier equipo puede conectarse a dicho equipo de la intranet a través de una 
+            conexión con el equipo externo:
+
+            \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    $ ssh -L 0.0.0.0:7900:localhost:5900 usuario@internal\end{lstlisting}
+            
+            \item Usar un túnel interno para que los equipos de fuera de la red se conecten al interior. 
+            Esta acción se realizará mediante túneles remotos:
+
+            \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    $ ssh -R 7900:localhost:5900 usuario@internal\end{lstlisting}
+            
+            \item Túnel interno para que equipos de fuera de la red se conecten al interior, pero además que 
+            otros equipos del exterior puedan conectarse a travñes del externo remoto:
+
+            \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    $ ssh -R 0.0.0.0:7900:localhost:5900 usuario@internal\end{lstlisting}
+
+            \item Utilizar un túnel para que desde una máquina externa se pueda atravesar el firewall y 
+            realizar el forwarding en una máquina interna, y que esta reenvíe el tráfico a la segunda 
+            máquina interna:
+
+            \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    $ ssh -L 7900:internal2:5900 usuario@internal\end{lstlisting}
+    
+        \end{itemize}
+
 \section{SOCKS}
 
 % BIBLIOGRAFÍA Y REFERENCIAS
