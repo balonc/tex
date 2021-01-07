@@ -583,7 +583,30 @@
     túneles remotos se redirecciona un puerto remoto dela máquina remota, a la que se disponga de aacceso, a un 
     puerto de la máquina local, donde se encuentra el administrador.
 
-    \subsection{Túneles TCP/IP con port forwarding}
+    \subsection{Túnel local}
+
+        La sintaxis para la creación de un túnel local hacia el puerto remoto de la máquina remota es la 
+        siguiente:
+        
+        \begin{lstlisting}[language=bash,basicstyle=\tiny]
+    $ ssh -L [direccion de escucha:]puerto escucha:maquina remota: puerto remoto 
+      usuario@host\end{lstlisting}
+        
+        El escenario idea para la utilización de túneles SSH es el siguiente:
+
+        \begin{itemize}
+            \item Máquina $A$ con conexión a Internet requiere conexión a máquina $C$, que se encuentra detrás 
+            de un servidor que impide el paso. En otras palabras, la máquina $C$ no es accesible desde Internet.
+            \item El usuarioo de la máquina $A$ dispone de cuenta en una máquina $B$. La máquina $B$ es el servidor 
+            que proporciona la salida a Internet a la máquina $C$. La máquina $A$ creará un túnel con la máquina $B$ 
+            y a través del forwarding (véase sección \ref{sshforwarding} para más detalle) de la máquina $B$ llegará 
+            a la máquina $C$.
+            \item Lo importante es proteger la comunicación en Internet entre la máquina $A$ y $B$. La comunicación 
+            entre $B$ y $C$ puede ir sin cifrar, ya que se encentra en una Intranet. Aunque también puede ser altamente 
+            recomendable fortificar dicha comunicación.
+        \end{itemize}
+
+    \subsection{Túneles TCP/IP con port forwarding}\label{sshforwarding}
 
         Esta técnica cuenta con una serie de configuraciones muy interesantes, siendo los escenarios más usuales:
 
@@ -619,10 +642,8 @@
 
             \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
     $ ssh -L 7900:internal2:5900 usuario@internal\end{lstlisting}
-    
-        \end{itemize}
 
-\section{SOCKS}
+        \end{itemize}
 
 % BIBLIOGRAFÍA Y REFERENCIAS
 \newpage
