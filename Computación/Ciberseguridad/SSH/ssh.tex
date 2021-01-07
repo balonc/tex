@@ -606,6 +606,24 @@
             recomendable fortificar dicha comunicación.
         \end{itemize}
 
+    \subsection{Túnel remoto}
+
+        El túnel remoto generará un socket a la escucha en un servidor remoto, el cual al recibir una petición 
+        reenviará el tráfico mediante SSH a la máquina local donde se encuentre el administrador. La sintaxis es 
+        sencilla:
+
+        \begin{lstlisting}[language=bash,basicstyle=\footnotesize]
+    $ ssh -R puerto local:maquina remota:puerto remoto\end{lstlisting}
+        
+        Un ejemplo sería querer que una máquina en Internet llegase al interior de la Intranet a través de una 
+        máquina puente de la propia red nuestra, con una interfaz hacia Internet. El escenario sería el siguiente:
+
+        \begin{itemize}
+            \item Máquina $A$, la máquina se encuentra en una red interna.
+            \item Máquina $B$, máquina con conectividad con $A$ e interfaz en Internet.
+            \item Máquina $C$, máquina externa con conectividad con $B$, pero no con $A$.
+        \end{itemize}
+
     \subsection{Túneles TCP/IP con port forwarding}\label{sshforwarding}
 
         Esta técnica cuenta con una serie de configuraciones muy interesantes, siendo los escenarios más usuales:
