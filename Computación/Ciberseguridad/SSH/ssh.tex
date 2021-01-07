@@ -44,6 +44,16 @@
     utiliza un intercambio de claves basado en el protocolo criptográfico de \textit{Diffie-Hellman}, 
     imprescindible en el robustecimiento de la capa de transporte.
 
+    \begin{figure}[htp]
+        \centering
+        \includegraphics[width=1\textwidth]{resources/telnetssh.png}
+        \caption{Mejora en el tiempo de la seguridad de las comunicaciones por la implementación 
+        de SSH, en sustitución paulatina del protocolo inseguro \textit{telnet}. Fuente: isc.sans.edu
+        (véase referencia \cite{st}).}
+        \label{telnetssh}
+    \end{figure}
+
+
     Como vemos, SSH proporciona un sistema, a priori, seguro. Con una configuración con un 
     nivel aceptable de seguridad por defecto. Pero en función de la configuración del 
     servicio puede llevar al sistema a un estado de inseguridad. Por ello, es importante 
@@ -303,6 +313,13 @@
             \item El servidor comprueba que el número devuelto es el que mandó cifrado, en caso afirmativo, el 
             usuario se ha autenticado y se le permite la sesión de shell.
         \end{enumerate}
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/keyauth.png}
+            \caption{Visión gráfica de proceso de autenticación por medio de par de claves.}
+            \label{keyauth}
+        \end{figure}        
 
         Como observamos, en ningún momento se envían claves por Internet (más que el envío 
         de la clave pública al servidor en el primer contacto, para que éste la conozca). Por 
@@ -606,6 +623,13 @@
             recomendable fortificar dicha comunicación.
         \end{itemize}
 
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/localtunneling.png}
+            \caption{Ejemplo visual de una conexión basada en túnel SSH local.}
+            \label{localtunneling}
+        \end{figure}
+
     \subsection{Túnel remoto}
 
         El túnel remoto generará un socket a la escucha en un servidor remoto, el cual al recibir una petición 
@@ -623,6 +647,13 @@
             \item Máquina $B$, máquina con conectividad con $A$ e interfaz en Internet.
             \item Máquina $C$, máquina externa con conectividad con $B$, pero no con $A$.
         \end{itemize}
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=1\textwidth]{resources/remotetunneling.png}
+            \caption{Ejemplo visual de una conexión basada en túnel SSH remoto.}
+            \label{remotetunneling}
+        \end{figure}
 
     \subsection{Túneles TCP/IP con port forwarding}\label{sshforwarding}
 
@@ -675,6 +706,8 @@
     \bibitem{} Using ssh-keygen and sharing for key-based authentication in Linux \\ \url{https://www.redhat.com/sysadmin/configure-ssh-keygen}
     \bibitem{} Set up SSH access with session recording and containerized bastion servers \\ \url{https://www.redhat.com/sysadmin/secure-session-recording}
     \bibitem{} Setting up containerized SSH servers for session recording with tlog \\ \url{https://www.redhat.com/sysadmin/session-recording-tlog}
+    \bibitem{} Más seguridad a SSH usando claves RSA, Follow the White Rabbit \\ \url{https://fwhibbit.es/mas-seguridad-a-ssh-usando-claves-rsa}
+    \bibitem{st} Secure vs. cleartext protocols - couple of stats \\ \url{https://isc.sans.edu/forums/diary/Secure+vs+cleartext+protocols+couple+of+interesting+stats/25854/}
 \end{thebibliography}
 
 \end{document}
