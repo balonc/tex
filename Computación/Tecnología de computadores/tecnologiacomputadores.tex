@@ -331,5 +331,40 @@
 		
 		\[00110100 \xrightarrow[]{\text{paridad par}} 001101001 \xrightarrow[]{\text{transmisión}} 001100101 \rightarrow ok\] 
 
+	\subsection{Multiplexores}
+
+		Un multiplexor es un circuito que transmite los datos digitales procedentes de una de sus líneas 
+		de entrada a una única línea de salida, según se especifique en sus líneas de control.
+
+		Funcionalmente se pueden representar mediante una operación de conmutación electrónica, que secuencialmente 
+		conecta cada una de las líneas de entrada a la línea de salida; es un distribuidor de las entradas hacia 
+		una única salida (encaminador).
+
+		Para un multiplexor de $n$ líneas de control el número de entradas será $2^n$.
+
+		\begin{figure}[htp]
+			\centering
+			\includegraphics[width=0.7\textwidth]{resources/multiplexor.png}
+			\caption{Representación de un multiplexor de dos entradas.}
+			\label{multiplexor}
+		\end{figure}
+
+		La figura \ref{multiplexor} es la representación de un multiplexor de dos entradas, que posee una 
+		entrada habilitadora que, cuando está activa, permite al multiplexor funcionar correctamente; en caso 
+		contrario el valor de salida es 0.
+
+	\subsection{Demultiplexores}
+
+		Un demultiplexor realiza la función inversa de un multiplexor; transmitiendo los datos digitales de una 
+		línea de entrada a una de varias líneas de salida, según la selección realizada.
+
+		\begin{figure}[htp]
+			\centering
+			\includegraphics[width=0.7\textwidth]{resources/demultiplexor.png}
+			\caption{Representación de un demultiplexor de dos entradas.}
+			\label{demultiplexor}
+		\end{figure}
+
+		Un demultiplexor de $n$ salidas tiene una entrada de datos y $c$ entradas de control, donde $n=2^c$.
 
 \end{document}
