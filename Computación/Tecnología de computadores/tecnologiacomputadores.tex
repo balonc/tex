@@ -171,9 +171,138 @@
 			D = \overline{A}B+ C
 		\end{gather*}
 
-	\subsubsection{Homogeneización de puertas}
+		\subsubsection{Homogeneización de puertas}
 
-		Es posible implemnentar cualquier función lógica utilizando únicamente las puertas 
-		NAND y NOR.
+			Es posible implemnentar cualquier función lógica utilizando únicamente las puertas 
+			NAND y NOR.
+    
+		\subsubsection{Mapas de Karnaugh}
+
+			Los mapas de Karnaugh permiten simplificar funciones lógicas de una forma gráfica, sencilla 
+			y sistemática, representando en una tabla (mapa) con características de la tabla de verdad de 
+			una función. Debe tener las siguientes características:
+
+			\begin{enumerate}
+				\item Las posibles combinaciones de variables de entrada se colocan en filas y columnas. 
+				Entre las combinaciones de entradas de dos filas o dos columnas consecutivas no debe 
+				variar más de un bit.
+				\item En cada celda de la tabla resultante debemos colocar el valor de la función lógica 
+				para la combinación de entradas correspondientes. 
+			\end{enumerate}
+
+\section{Circuitos combinaciones. Elementos aritméticos}
+
+	\subsection{Diseño de circuitos combinacionales}
+
+		Los circuitos combinacionales son aquellos en los que las salidas sólo dependen de las entradas del 
+		mismo instante. El proceso de diseñó consta de las siguientes etapas:
+
+		\begin{enumerate}
+			\item Construcción de la tabla de verdad para la función lógica que se pretende implementar.
+			\item Simplificación de tabla previamente construida.
+			\item Implementación de la función.
+		\end{enumerate}
+
+		Una línea de control permite que, en función del valor de las entradas el circuito se comportará de 
+		una forma u otra. En función del nivel de la señal que se escoja para establecer la activación o no de 
+		un determinado comportamiento, existen dos tipos de líneas de control:
+
+		\begin{itemize}
+			\item Activas a bajo nivel (cero lógico). El valor de la línea es 0.
+			\item Activas a alto nivel (uno lógico). Es valor de la línea es 1.
+		\end{itemize}
+
+	\subsection{Circuitos airitméticos}
+
+		Las operaciones aritméticas son fundamentales en cualquier computador, siendo parte importante del procesamiento de 
+		la información. Los circuitos que realizan operaciones de este tipo son conocidos como circuitos aritméticos y son 
+		parte fundamental de las unidades aritmético-lógicas, que forman a su vez parte de las CPUs. Estas operaciones se 
+		realizan en binario.
+
+		\subsubsection{Sumadores}
+
+			La suma es la operación más importante de la aritmética binaria, basándose el resto de operaciones en ella.
+
+			\[0 + 0 = 0\]
+			\[0 + 1 = 1\]
+			\[1 + 0 = 1\]
+			\[1 + 1 = 10\]
+
+			En ésta última el resultado es 0 y se produce un acarreo, que posteriormente se procesará, almacenará o desechará.
+
+			\paragraph{Semisumador binario} La función del semisumador es sumar dos bits de entrada ($A$ y 
+			$B$), generar una suma ($S$) y un acarreo de salida ($C_{out}$).
+
+			\paragraph{Sumador completo} Un sumador completo tiene tres entradas, siendo la tercera la posibilidad 
+			de sumar una erntrada de acarreo $C_{in}$. Esta entrada adicional permite encadenar varios sumadores, de 
+			tal forma que se implementan sumadores de más de un bit; el acarreo vendría a sumar el bit anterior.
+
+			\paragraph{Sumador de más de un bit} Para implementar la suma de números binarios se requieren tantos 
+			sumadores completos como bits tengan los números que se quieren sumar, ya sea mediante acarreo 
+			serie\footnote{
+				El acarreo resultante de la suma de un bit se utiliza como entrada para el sumador del bit de 
+				orden superior. De tal forma que para calcular la suma del bit de orden $n$ sea necesario completar 
+				la suma de los $n-1$ anteriores bits. 
+
+				Por eso, estos sumadores son poco escalables, ya que cuantos más bits tengamos, más lento será el sumador.
+			} o acarreo anticipado.
+
+		\subsubsection{Restadores}
+
+			Para restar en binario debemos considerar las combinaciones posibles:
+
+			\[0 - 0 = 0\]
+			\[0 - 1 = 1\]
+			\[1 - 0 = 1\]
+			\[1 - 1 = 0\]
+
+			En el caso de $0 - 1$ obtendremos un acarreo.
+
+		\subsubsection{Multiplicaciones y divisiones}
+
+			Antiguamente, la multiplicación y división se obtenía en descomposición del problema en 
+			sumas y restas, con el consiguiente aumento de tiempo de cálculo. Actualmente se incluyen 
+			circuitos específicos que realizan estas operaciones aritméticas. 
+			
+			Estos circuitos pueden ser combinacionaleso secuenciales.
+
+	\subsection{Comparadores}
+
+		La comparación de magnitudes se realiza mediante un circuito lógico denominado comparador.
+
+		Un número en formato binario se introduce en la entrada $A$ y otro en la entrada $B$. Las salidas 
+		$E$, $G$ y $L$ indican la relación entre los dos números, produciendo un nivel alto en la línea 
+		de salida correspondiente; $E = 1$ si $A = B$, $G = 1$ si $A > B$ y $L = 1$ si $A < B$. 
+
+	\subsection{Unidades aritmético-lógicas}
+
+		La unidad aritmético-lógica (ALU) es un circuito combinacional capaz de realizar una amplia serie de 
+		operaciones aritméticas y lógicas entre dos palabras de $n$ bits. El tipo de operaciones a realizar 
+		entre ambas palabras es elegido mediante unas entradas de control de la ALU.
+
+		\begin{figure}[htp]
+			\centering
+			\includegraphics[width=0.7\textwidth]{resources/alu2bits.png}
+			\caption{Unidad aritmético-lógica de dos bits.}
+			\label{alu2bits}
+		\end{figure}
+
+		La figura \ref{alu2bits} representa una ALU de dos bits. Las entradas $A0$ y $B0$ se corresponden 
+		con el bit menos significativo de los números de entrada; a diferencia de las entradas $A1$ y $B1$, 
+		que corresponden con el bit más significativo.
+
+		Las entradas $A$ y $B$ se dirigen hacia las cuatro puertas: XOR, AND, OR y XOR. Por último se realiza 
+		una multiplexación para seleccionar la salida de qué operación se quiere dar como salida de la ALU. 
+		La entrada $OP0-2$ determina cuál de las funciones se van a realizar:
+
+		\begin{itemize}
+			\item $OP = 000 \Rightarrow XOR$
+			\item $OP = 001 \Rightarrow AND$
+			\item $OP = 010 \Rightarrow OR$
+			\item $OP = 011 \Rightarrow $ Suma
+		\end{itemize}
+  
+		Estas entradas son las líneas de control de la ALU y sirven para seleccionar qué operación queremos que 
+		realice.
 
 \end{document}
