@@ -190,7 +190,7 @@
 				para la combinación de entradas correspondientes. 
 			\end{enumerate}
 
-\section{Circuitos combinaciones. Elementos aritméticos}
+\section{Circuitos combinaciones}
 
 	\subsection{Diseño de circuitos combinacionales}
 
@@ -304,5 +304,32 @@
   
 		Estas entradas son las líneas de control de la ALU y sirven para seleccionar qué operación queremos que 
 		realice.
+
+	\subsection{Generadores y comprobadores de paridad}
+
+		La paridad es un método de validación de la información codificada en binario. Consiste en añadir 
+		un bit que hace que el número de 1s que aparece en la información sea par (paridad par) o impar 
+		(paridad impar). Por ejemplo, en caso de utilizar paridad par:
+
+		\[00110100 \rightarrow 001101001\]
+		\[10011100 \rightarrow 100111000\]
+
+		Y en el caso de utilizar paridad impar:
+
+		\[00110100 \rightarrow 001101000\]
+		\[10011100 \rightarrow 100111001\]
+
+		De esta forma podemos detectar un error en la información, si este error se produce en un único bit y 
+		sólo permite detectar errores, no corregirlos.
+
+		Este tipo de comprobación suele usarse en transmisiones de información seguras; o de almacenamiento de 
+		información (en memoria principal, por ejemplo) al que quiere dotársele de una seguridad muy alta:
+
+		\[00110100 \xrightarrow[]{\text{paridad par}} 001101001 \xrightarrow[]{\text{transmisión}} 00110001 \rightarrow err\] 
+
+		Sin embargo, hay que tener en cuenta que si hay un error en más de un bit puede no haber detección:
+		
+		\[00110100 \xrightarrow[]{\text{paridad par}} 001101001 \xrightarrow[]{\text{transmisión}} 001100101 \rightarrow ok\] 
+
 
 \end{document}
