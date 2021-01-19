@@ -492,9 +492,125 @@
 			\label{clocksignal}
 		\end{figure}
 	
-
 		\item \textbf{Circuitos asíncronos}. El estado y la salida cambian cuando hay un cambio en las entradas.
 	\end{itemize}
 
+	\subsection{Biestables}
+
+		Un biestable es un circuito lógico que posee dos estados estables, denominados SET (1) y RESET (0), en 
+		los cuales se puede mantener indefinidamente, permitiendo el almacenamiento de un bit. Son implementados 
+		mediante puertas lógicas y son bloques básicos de construcción de contadores, registros... También 
+		son empleados en ciertos tipos de memorias.
+
+		\subsubsection{Biestable RS}\label{biestablers}
+
+			Siendo RS = RESET-SET con entrada activa a nivel alto, es un tipo de dispositivo lógico con 
+			dos salidas $Q$ y $\overline{Q}$, siendo una complementaria de la otra. El funcionamiento es el 
+			siguiente:
+
+			\begin{enumerate}
+				\item Si dos entradas están a 0 la salida permanece igual.
+				\item Si la entrada $S$ está a 1 y la entrada $R$ a 0 (SET) la entrada $Q$ 
+				estará a 1 y la complementaria a 0.
+				\item Si la entrada $S$ está a 0 y la entrada $R$ está a 1 (RESET) la entrada 
+				$Q$ estará a 0 y la complementaria a 1.
+				\item Si ambas entradas están a 1 ambas salidas estarán a 0\footnote{
+					Esto no concuerda con las deficiniones dadas para las salidas, siendo que una 
+					es complementaria a la otra, por lo que se dice que es un estado erróneo.
+				}.
+			\end{enumerate}
+
+			\begin{figure}[htp]
+				\centering
+				\includegraphics[width=0.8\textwidth]{resources/biestablesrsnor.jpg}
+				\caption{Biestable RS-NOR. Implementación posible usando puertas NOR.}
+				\label{biestablesrsnor}
+			\end{figure}
+	
+		\subsubsection{Biestable D}
+
+			Dispone únicamente de una entrada para realizar operaciones de SET y RESET, disponiendo 
+			también de entrada de habilitación (véase figura \ref{biestabled}).
+
+			\begin{figure}[htp]
+				\centering
+				\includegraphics[width=0.3\textwidth]{resources/biestabled.jpg}
+				\caption{Representación simbólica del biestable D.}
+				\label{biestabled}
+			\end{figure}
+
+			Una posible implementación utilizando puertas NAND sería la observada en la 
+			figura \ref{biestabled2}.
+
+			\begin{figure}[htp]
+				\centering
+				\includegraphics[width=0.7\textwidth]{resources/biestabled2.png}
+				\caption{Diagrama de un biestable D.}
+				\label{biestabled2}
+			\end{figure}
+
+		\subsubsection{Biestable JK}
+
+			Con un funcionamiento similar al biestable RS (véase sección \ref{biestablers}), 
+			salvo que soluciona el problema de tener una salida errónea cuando las entradas se 
+			encuentran activas a la vez si es activo por flanco. La entrada $J$ es la equivalente 
+			a la entrada $S$. y la entrada $K$ a la $R$ (véase figura \ref{biestablejk}).
+
+			Este biestable hace que la salida cambie al valor contrario cuando las dos entradas 
+			se colocan a nivel alto, denominándose \textbf{basculación}.
+
+			\begin{figure}[htp]
+				\centering
+				\includegraphics[width=0.3\textwidth]{resources/biestablejk.jpg}
+				\caption{Representación simbólica del biestable JK.}
+				\label{biestablejk}
+			\end{figure}
+
+		\subsubsection{Entradas asíncronas en los biestables}
+
+			En muchas salidas resulta útil poder poner la salida de un biestable a un determinado 
+			valor independientemente del reloj y de las entradas. Es por esto que muchos dispositivos 
+			tienen entradas adicionales para ello. Estas entradas reciben el nombre de entradas 
+			asíncronas ya que no dependen del reloj. Las dos más típicas son:
+
+			\begin{itemize}
+				\item PRESET (PRE). Coloca la salida a nivel alto.
+				\item CLEAR (CLR). Coloca la salida a bajo nivel.
+			\end{itemize}
+
+			En la figura \ref{entradasasincronas} se observa un biestable JK con entradas asíncronas.
+
+			\begin{figure}[htp]
+				\centering
+				\includegraphics[width=0.2\textwidth]{resources/entradasasincronas.png}
+				\caption{Biestable JK con entradas asíncronas.}
+				\label{entradasasincronas}
+			\end{figure}
+
+		\subsubsection{Parámetros temporales}
+
+			Existen una serie de parámetros temporales a tener en cuenta a la hora de diseñar 
+			circuitos secuenciales:
+
+			\begin{itemize}
+				\item \textbf{Tiempo de propagación ($t_{co}$)}. Es el tiempo que transcurre
+				desde que llega un pulso de reloj o se activa una entrada asíncrona hasta que 
+				la salida toma el valor correspondiente.
+				\item \textbf{Tiempo de setup ($t_{su}$)}. Es el tiempo que transcurre desde que 
+				se activa una entrada hasta que llega la señal de reloj que habilita el circuito.
+				\item \textbf{Tiempo de hold ($t_{t_h}$)}. Es el tiempo que transcurre desde que 
+				llega la señal de reloj que habilita el circuito hasta que se desactiva una entrada.
+			\end{itemize}
+
+			\begin{figure}[htp]
+				\centering
+				\includegraphics[width=0.2\textwidth]{resources/partemp.png}
+				\caption{Parámetros temporales.}
+				\label{partemp}
+			\end{figure}
+
+	\subsection{Registros}
+
+	\subsection{Contadores}
 
 \end{document}
