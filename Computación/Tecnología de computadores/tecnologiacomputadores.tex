@@ -367,4 +367,73 @@
 
 		Un demultiplexor de $n$ salidas tiene una entrada de datos y $c$ entradas de control, donde $n=2^c$.
 
+	\subsection{Codificadores}
+
+		Un código es un conjunto de bits ordenados de acuerdo a un modelo, empleado para representar información.
+		Un convertidor de código cambia el formato de una información codificada a otro formato de código, implementándose 
+		mediante un circuito denominado codificador.
+
+		Estos circuitos disponen de $2n$ entradas y $n$ salidas, tal y como vemos en la figura \ref{codificador}.
+
+		\begin{figure}[htp]
+			\centering
+			\includegraphics[width=0.7\textwidth]{resources/codificador.jpg}
+			\caption{Representación de un codificador binario.}
+			\label{codificador}
+		\end{figure}
+
+		\subsubsection{Codificador binario}
+
+			Muestra en la salida el valor binario del número de la entrada seleccionada.
+
+		\subsubsection{Codificador decimal-BCD con prioridad}
+
+			Realiza la misma función y además puede emplearse para detectar prioridad\footnote{
+				La función de prioridad significa que cuando hay varias entradas decimales activas, el 
+				codificador producirá la salida BCD correspondiente al dígito decimal de entrada de más 
+				alto orden que se encuentre activo, e ignorará cualquier otra entrada activa.
+
+				Por ejemplo: para las entradas activas $6$ y $3$, la salida BCD será $0110$ ($6$ en binario).
+			}.
+	\subsection{Decodificadores}
+
+		Un decodificador es un circuito combinacional que convierte la información codificada en otra información 
+		no codificada. Uno de sus usos más habituales es el direccionamiento de la memoria del computador. 
+
+		Un decodificador de $n$ entradas es capaz de direccionar $2^n$ direcciones.
+
+		\subsubsection{Decodificador binario/decimal}
+
+			Genera una salida para cada combinación de entrdas, siendo ésta la entrada pero decodificada.
+			Para poder decodificar todas las posibles combinaciones de las entradas son necesarias $2^n$
+			salidas, siendo $n$ el número de entradas.
+
+		\subsubsection{Decodificador BCD/decimal}
+
+			Convierte código BCD en uno de los diez posibles dígitos decimales. Frecuentemente se le denomina 
+			decodificador de 4 líneas a 10 líneas.
+
+		\subsubsection{Decodificador BCD/7 segmentos}
+
+			Acepta código BCD en sus entradas y proporciona salidas capaces de excitar un display de 7 
+			segmentos para mostrar un dígito decimal, donde cada segmento puede encenderse o apagarse de 
+			forma individual, denominados cada uno con una letra.
+
+			\begin{figure}[htp]
+				\centering
+				\includegraphics[width=0.4\textwidth]{resources/7segmentos.jpg}
+				\caption{Display de 7 segmentos.}
+				\label{7segmentos}
+			\end{figure}
+
+			Para representar un número es necesario encender los segmentos adecuados (véase figura 
+			\ref{7segmentos}), por ejemplo, para representar el número 2 es necesario encender los 
+			segmentos $a$, $b$, $g$, $e$ y $d$.
+
+		\subsubsection{Conexión en cascada}
+
+			Es posible conectar varios decodificadores en cascada para aumentar el número de entradas y 
+			salidas.
+	
+
 \end{document}
