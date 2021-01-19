@@ -540,7 +540,80 @@
             Como desventaja fundamental que presenta, es que favorece la elección de aquellos atributos que contienen 
             muchos valores, lo que no siempre es lo más útil.
 
-            El algoritmo de ID3 es proceso recursivo, que se repite de manera iterativa hasta que llegar a un punto 
-            de parada.
+            El algoritmo de ID3 es un proceso recursivo, que se repite de manera iterativa hasta que llegar a un punto 
+            de parada. Siendo sus características principales:
+
+            \begin{itemize}
+                \item El objetivo es producir un árbol de decisión que clasifique corréctamente 
+                todos los ejemplos en subconjuntos de elementos del conjunto de entrenamiento.
+                \item El árbol se genera dividiendo sucesivamente el conjunto de aprendizaje en 
+                subconjuntos de ejemplos cada vez más pequeños hasta conseguir conjuntos de elementos 
+                suficientemente puros.
+                \item Es una partición recursiva del espacio de entradas en zonas homogéneas o puras 
+                a la que se asocia una clase.
+                \item El conjunto es bastante puro cuando casi todos sus ejemplos pertenecen a una sola
+                clase.
+            \end{itemize}
+
+            Para conseguir el mejor separador, se deben tener en cuenta además las siguientes 
+            consideraciones:
+
+            \begin{itemize}
+                \item Un separador es un solo atributo, otorgando significado físico y sencillez 
+                de interpretación. Cada atributo dará lugar a un nodo intermedio donde sus hojas 
+                son las clases.
+                \item Es necesario usar una medida de distinción entre candidatos. 
+                \item Esta medida se basa en la entropía.
+            \end{itemize}
+
+            La entropía se puede definir como la cantidad de información que hay dentro de un nodo, 
+            siendo necesario el cálculo de entropía de cada uno de los posibles separadores.
+
+            \[I(N)=-\displaystyle\sum_{i=1,Nclases} p(N,C_i) log_2 [p(N,C_i)]\]
+
+            Donde $N$ es el número de clases diferentes en el nodo y $p(N, C_i)$ es la proporción 
+            de ejemplos en el nodo perteneciente a la clase $C_i$.
+
+            Cuanto más homogéneo sea el grupo más proporción de elementos de una sola clase habrá en él, 
+            y por lo tanto menor será su entropía; siendo la entropía ideal de un nodo terminal 0.
+
+            De tal forma, la selección del separador va a estar marcada por el que reduzca --en 
+            mayor medida-- la impureza del nodo analizado.
+
+            \[\Delta I(N,S)=I(N)-\displaystyle\sum_{i=1,Nhijos} p (Nh_i) I (Nh_i)\]
+
+            Este será el decremento de la imporeza del nodo $N$ cuando aplicamos el separador $S$, donde:
             
+            \begin{itemize}
+                \item $I(N)$ es la entropía o impureza del nodo.
+                \item $Nh$ es el número de hijos generados al aplicar $S$.
+                \item $p(Nh_i)$ es la proporción de ejemplos del nodo $N$ que quedan en el nodo hijo $_i$.
+            \end{itemize}
+
+            En otras palabras, es el resultado de restar a la entropía del nodo el sumatorio de las 
+            entropías de los valores del atributo.
+            
+\section{Sistemas expertos}
+
+    Generalmente, se considera a alguien un experto en un problema cuando éste tiene
+    conocimiento especializado sobre dicho problema, o en otras palabras, tiene dominio 
+    sobre éste.  También en el área de la inteligencia artificial se conoce como 
+    sistemas expertos a aquellos con conocimiento especializado sobre dicho problema, así 
+    como conocimiento sobre el dominio.
+
+    Los sistemas expertos buscan la emulación o imitación del razonamiento humano, 
+    restringiéndose a un espacio de conocimiento limitado, razonando como lo harían
+    --siguiendo una serie de pasos pertinentes-- un experto humano de diversas materias 
+    o disciplinas, como médico, analista, empresario, etc. Su uso será rápidamente en el 
+    futuro debido principalmente a su uso en industria y medicina, principalmente.
+
+    Existen tres tipos de sistemas expertos:
+
+    \begin{itemize}
+        \item \textbf{Basados en reglas}. Aplican reglas y comparan resultados.
+        \item \textbf{Basados en casos}. Se basa en soluciones de otros problemas [cotidianos].
+        \item \textbf{Basados en redes bayesianas}. Se basa en la probabilidad donde se relacionan 
+        un conjunto de variables en un grafo y mediante teoremas de bayes.
+    \end{itemize}
+
 \end{document}
