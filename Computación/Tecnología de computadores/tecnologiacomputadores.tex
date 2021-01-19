@@ -435,5 +435,66 @@
 			Es posible conectar varios decodificadores en cascada para aumentar el número de entradas y 
 			salidas.
 	
+\section{Circuitos secuenciales}
+
+	Como hemos estudiado, en la lógica combinacional las salidas están determinadas sólo por el valor de las 
+	entradas, y las salidas no sólo están condicionadas por las entradas sino también por la secuencia de 
+	entradas precedentes\footnote{La secuencia de entradas anteriores define un estado de circuito}. Y para 
+	poder almacenar el estado en el que se encuentra el circuito es necesario que este disponga de memoria.
+
+	Por lo tanto, la salida de un sistema secuencial está determinada por las entradas presentes y por la 
+	información almacenada en los elementos de memoria.
+
+	\begin{figure}[htp]
+		\centering
+		\includegraphics[width=0.7\textwidth]{resources/circuitosecuencial.jpg}
+		\caption{Estructura general de un sistema secuencial.}
+		\label{circuitosecuencial}
+	\end{figure}
+
+	Como vemos en la figura \ref{circuitosecuencial}, el circuito se compone de dos partes fundamentales:
+
+	\begin{itemize}
+		\item Lógica combinacional que convierte las entradas y el estado actual del circuito en la salida
+		y el estado siguiente (estado en el que se queda el circuito).
+		\item Memoria\footnote{
+			La mayoría de los sistemas digitales necesitan almacenar información, de hecho suele ser la 
+			razón de ser del circuito. Algunos tipos de dispositivos de almacenamiento son: biestables, 
+			registros, memorias semiconductoras, discos magnéticos, cintas magnéticas y discos ópticos.
+		} que almacena el estado en el que se encuentra el circuito.
+	\end{itemize}
+
+	En lógica secuencial es importante el parámetro temporal, pudiendo ser:
+
+	\begin{itemize}
+		\item \textbf{Circuitos síncronos}. El estado y la salida cambian cuando se produce un evento de reloj
+		y en las entradas existen valores adecuados. Por lo tanto, existe una señal (en este caso un reloj que 
+		genera una señal cuadrada de periodo fijo) que controla la actividad del circuito.
+
+		Los eventos de reloj posibles son:
+
+		\begin{itemize}
+			\item Nivel alto de reloj (uno lógico).
+			\item Nivel bajo de reloj (cero lógico).
+			\item Flanco de subida (el valor de la señal pasa de cero lógico a uno lógico).
+			\item Flanco de bajada (el valor de la señal pasa de uno lógico a cero lógico).
+		\end{itemize}
+
+		Aunque la señal de reloj de forma ideal es cuadrada, realmente tiene la forma que podemos observar 
+		en la figura \ref{clocksignal}. Como observamos, los niveles lógicos son realmente intervalos de 
+		voltaje que hacen que se activen los elementos adecuados del circuito secuencial para que se genere 
+		la salida y el estado siguiente.
+
+		\begin{figure}[htp]
+			\centering
+			\includegraphics[width=0.8\textwidth]{resources/clocksignal.png}
+			\caption{Señal de reloj.}
+			\label{clocksignal}
+		\end{figure}
+	
+
+		\item \textbf{Circuitos asíncronos}. El estado y la salida cambian cuando hay un cambio en las entradas.
+	\end{itemize}
+
 
 \end{document}
