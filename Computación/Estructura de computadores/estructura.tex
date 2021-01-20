@@ -432,6 +432,37 @@
             CISC.
 
 \section{Memoria}\label{memoria}
+
+    \subsection{Aspectos físicos}
+
+        Las memorias tienen una serie de características físicas a tener en cuenta:
+
+        \begin{itemize}
+            \item \textbf{Volatilidad}. Capacidad de retener o perden la información almacenada en caso de 
+            corte de suministro eléctrico.
+            \item \textbf{Alertabilidad}. Posibilidad de alterar el contenido de una memoria.
+            \item \textbf{Permanencia de la información}. Relaciona la duración de la información almacenada.
+            \item \textbf{Almacenamiento estático/dinámico}. Una memoria es estática cuando su información 
+            permanece inalterable a lo largo del tiempo (véase SRAM); una memoria es dinámica cuando necesita 
+            realizar un ciclo de refresco para poder retener la información que almacena (DRAM).  
+        \end{itemize}
+
+        En función del tiempo de almacenamiento mencionado, se hará distinción en la volatilidad. Por el lado volátil 
+        observamos la memoria RAM dinámica (DRAM - que contiene los programas en ejecución y los datos con los que operan), 
+        la memoria caché (típicamente SRAM, más rápida que DRAM pero con mayor consumo energético y menor capacidad) y los 
+        registros del procesador. Estas memorias, junto a la ROM (no volátil) comprenden el denominado almacenamiento 
+        primario del ordenador.
+
+        Frente a él, el denominado almacenamiento secundario o almacenamiento masivo, que requiere el uso de buses 
+        de entrada/salida para acceder a la información, usualmente no volátil. Este tipo de almacenamiento tiene un 
+        tiempo de acceso mucho mayor que el primario, su capacidad de almacenamiento supera ampliamente la del almacenamiento 
+        principal.
+
+        En resumen, las características de la memoria principal son: electrónicas, con alta velocidad, tamaño limitado, 
+        volátil o no volátil, imprescindible y de elevado coste. Mientras que las de la memoria secundaria son: 
+        magnética u óptica, velocidad reducida en comparación, tamaño ilimitado, permanente y estática, opcional en el sistema 
+        y de bajo coste.
+
 \section{Módulo de Entrada y Salida}\label{entradasalida}
 \section{Buses}
 
