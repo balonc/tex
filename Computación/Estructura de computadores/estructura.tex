@@ -158,11 +158,278 @@
 
         \subsubsection{Tipo de instrucciones}
 
+            \begin{enumerate}
+                \item Pueden ser de procesado de datos, donde se realicen operaciones aritméticas u operaciones 
+                lógicas.
+                \item Pueden llevar a cabo instrucciones de transferencia de información, bidireccionalmente 
+                entre la memoria y el módulo de entrada y salida, o entre la memoria y los registros de la CPU.
+                \item Pueden ser de control de flujo, como comprobación de un resultado o la alteración de la secuencia 
+                normal.
+            \end{enumerate}
+
+            La representación de las instrucciones se realiza a através de una cadena de bits, cuyo conjunto se 
+            divide en campos, y cada campo indica un tipo de información; de tal forma que el formato de la 
+            instrucción determina el número de campos que debe tener esa instrucción, la longitud de cada campo, 
+            su contenido y la posición del campo dentro de la cadena de bits (véase figura \ref{formatoinstruccion}).
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.8\textwidth]{resources/formatoinstruccion.png}
+                \caption{Ejemplo de formato de instrucción.}
+                \label{formatoinstruccion}
+            \end{figure}
+
+            Dependiendo del tipo de instrucción que se procese, puede manejar unos tipos de datos diferentes, siendo:
+
+            \begin{itemize}
+                \item Direcciones.
+                \item Números.
+                \item Caracteres.
+                \item Datos lógicos (cadenas de $n$ bits manejados de forma individual).
+                \item Estructura de datos.
+            \end{itemize}
+
+            Otro aspecto a considerar dentro de las instrucciones es el tipo de operación que deben desarrollar, 
+            clasificadas en:
+
+            \begin{itemize}
+                \item De transferencia.
+                \item Aritméricas.
+                \item Lógicas.
+                \item De conversión.
+                \item De control de flujo.
+                \item Instrucciones de control del sistema.
+            \end{itemize}
+
     \subsection{La Unidad de Control}\label{unidadcontrol}
+
+        La unidad de control es un circuito secuencial cuyo objetivo es captar, interpretar y ejecutar 
+        las instrucciones almacenadas en memoria. Está formada por una serie de registros que gobiernan 
+        su funcionamiento, siendo los más importantes los registros de control y de estado, que se utilizan 
+        para mantener el control de los procesos. De entre ellos, los más importantes son:
+
+        \begin{itemize}
+            \item Registro contador de programa (CP), que contiene la dirección de la siguiente instrucción 
+            a ejecutar.
+            \item Registro de instrucción (RI), que contiene la instrucción captada más recientemente.
+        \end{itemize}
+
+        Dentro de cada instrucción debe existir un código de operación, que contenga el tipo de operación a 
+        realizar (CO), la longitud de la instrucción (LI), el modo de direccionamiento (MD) y el número de 
+        operandos.
+
+        El campo de direcciones (CD) puede contener un dato inmediato, una dirección inmediata o una dirección 
+        parcial. R1 y R2 es la identificación de los registros utilizaods en la instrucción.
+
+        La dirección final DF es la dirección efectiva cuyo contenido es el dato que se quiere procesar, obtenido
+        mediante el contenido de CD.
+
+        \begin{itemize}
+            \item \textbf{Registro de estado}. Contiene la información generada por el sistema.
+            \item \textbf{Registro de estado de un programa}. Contiene información de estado del sistema y códigos 
+            de condición sobre la última operación realizada en la ALU.
+            \item \textbf{Registro de interrupciones}. Contiene información sobre los dispositivos que han producido 
+            una interrupción.
+            \item \textbf{Registro de punteros}. Contiene direcciones específicas de procesos en segmentación, paginación\dots
+        \end{itemize}
+
+        Por otro lado, en la unidad de control debe existir un decodificador, un controlador y un reloj del 
+        sistema \footnote{
+            El reloj de la CPU es el que genera los pulsos de reloj, que marcan la velocidad del microprocesador. Un ciclo 
+            de CPU es un pulso electromagnético. En función del tipo de instrucción, se completará un número de pulsos 
+            determinados.
+        } (véase figura \ref{unidadcontrol} para mayor detalle).
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/unidadcontrol.jpg}
+            \caption{Esquema de la unidad de control.}
+            \label{unidadcontrol}
+        \end{figure}
+
+        Como salida, la unidad de control genera las microórdenes a través de los buses dirigidos a todos los 
+        componentes del sistema, trasferiendo información entre ellos, y por lo tanto la ejecución de $\mu$operaciones.
 
     \subsection{Unidad Aritmético-Lógica}
 
-    \subsection{Modos de direccionamiento}
+        Es un circuito combinacional que se encarga de realizar las operaciones con los datos, teniendo unas 
+        entradas (correspondientes a las $\mu$órdenes existentes) que indican el tipo de operación a realizar 
+        con los datos de entrada (véase figura \ref{alu}).
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/alu.jpg}
+            \caption{Esquema de la unidad aritmético-lógica.}
+            \label{alu}
+        \end{figure}
+
+        Consta de una base de registros para realizar las operaciones necesarias; siendo éstos de propósito general 
+        y visibles al programador de lenguaje máquina.
+
+        \subsubsection{Modos de direccionamiento}
+
+            Son los procesos que permiten conocer la localización de una instrucción o dato. Los modos de direccionamiento 
+            dependen de la arquitectura del computador. De entre los más comunes encontramos:
+
+            \paragraph{Direccionamiento inmediato} Se produce cuando el CD contiene un dato inmediato, y no la 
+            dirección en la que se encuentra el dato. Si la longitud de la instrucción es P1 (una palabra) se produce 
+            1 acceso a memoria; si por el contrario es P2 se producen 2 accesos a memoria (captura y ejecución).
+
+            \paragraph{Direccionamiento directo} Se produce cuando el CD contiene la dirección del dato a recuperar.
+            Si la longitud es P1, se producen 2 accesos a memoria (captura y ejecución); si por el contrario 
+            la longitud es P2 se producen 3 accesos a memoria (1 en captura y 2 en ejecución); si la longitud es P3 
+            (instrucciones con 2 operandos) se producen 5 accesos a memoria (1 en captura, 2 en ejecución y 2 en 
+            recuperación del dato contenido en las direcciones CD1 y CD2).
+
+            \paragraph{Direccionamiento indirecto} Se produce cuando el CD contiene una dirección cuyo contenido es otra 
+            dirección de memoria con el dato.
+
+            \paragraph{Direccionamiento mediante registros} En él, existe un trabajo (RT) que contiene el dato a procesar 
+            o su dirección. El código MD (modo de direccionamiento) indica el registro utilizado y el tipo de contenido.
+
+            \paragraph{Direccionamiento con desplazamiento} Siempre se referencian datos en la memoria principal; para obtener 
+            el CD de memoria es preciso efectuar una suma.
+
+            \paragraph{Direccionamiento por pilas} Se define su tamaño y permite incluir elementos en ella [la pila] 
+            hasta el valor máximo.
+
+    \subsection{Arquitectura CISC vs RISC}
+
+        \subsubsection{Introducción a la ISA}
+
+            Una ISA (Instruction Set Architecture) o arquitectura del conjunto de instrucciones es el repertorio de 
+            instrucciones\footnote{
+                Una instrucción no es más que un segmento de código que contiene implícita una operación que la CPU debe 
+                realizar.
+            } que puede entender y ejecutar la unidad de control de una determinada CPU. Eso no solo 
+            incluye las instrucciones (tipos, codificación,…) comprensibles por la CPU, sino también el tipo de 
+            datos aceptados de forma nativa, endianness, tamaño y cantidad de registros, arquitectura de la memoria, 
+            e interrupciones/excepciones, extensiones, branching, etc. 
+
+            En otras palabras, podríamos considerar a la ISA como la capa visible al programador a bajo nivel.
+
+            Una ISA puede ser implementada (cómo se van a procesar o tratar sus instrucciones y datos) sobre lo que se 
+            conoce como \textit{microarquitectura}\footnote{
+                No hay que confundir el término microarquitectura ($\mu$arch) con arquitectura. Ésta segunda engloba 
+                tanto la ISA como la microarquitectura, además de otros elementos y aspectos más amplios dentro del 
+                sistema en conjunto del computador, que son estudiados en esta asignatura.
+            }. Para ello será necesario contar con una serie de unidades funcionales
+            (multiplexores, ALU, FPU, registros, unidad de control y demás circuitería).
+
+            Diferentes microarquitecturas pueden ser compatibles con una misma ISA, pero una microarquitectura no 
+            podrá procesar otra ISA diferente para la que fue diseñada; al menos de forma nativa.
+
+            Dentro de las ISAs encontramos varios tipos, que diferenciándolas \textit{grosso modo} en el tamaño 
+            del repertorio de instrucciones y longitud obtenemos:
+
+        \subsubsection{CISC}
+        
+            Son las siglas de Complex Instruction Set Computer, es decir, un modelo de 
+            ISA complejo. Se compone de instrucciones largas, gran número de ellas y que pueden realizar 
+            bastantes operaciones complejas con los oprandos situados en la memoria o registros. Aparecieron 
+            antes que otros tipos, por eso CISC es un retrónimo. Algunos ejemplos de CISC son IBM System/370, 
+            Zilog Z80, Motorola 68k, National Semiconductor 32016, MOS Technology 6502, DEC PDP-11, DEC VAX, 
+            x86 (pre-x86, x86-8, x86-16, x86-32, x86-64), IBM z/Architecture, etc.
+
+            Algunas características propias de este tipo son:
+
+            \begin{itemize}
+                \item La complejidad hace que el coste y el tiempo invertido en la implementación sea mayor.
+                \item Suele tener una unidad de control microprogramada, más lenta y menos eficiente.
+                \item Dispone de pocos bancos de registros de propósito general.
+                \item Suelen ocupar más espacio en el silicio, lo que encarece su producción y baja el yield.
+                \item Tamaño variable y largo. Gran cantidad de instrucciones, llegando a las 500 en algunos casos. 
+                Necesitan varios ciclos de duración, por tanto el CPI es mayor, o lo que es lo mismo, el IPC es menor.
+                \item Tenemos más cantidad de modos de direccionamiento y complejos.
+                \item El tiempo de programación es menor, una de las pocas ventajas de CISC frente a RISC.
+                \item El compilador no es crítico y puede ser más sencillo.
+                \item El programa suele ser más compacto, ya que con pocas instrucciones complejas basta.
+                \item La abstracción es alta, siendo el software algo más independiente del hardware.
+            \end{itemize}
+
+        \subsubsection{RISC}\label{risc}
+        
+            Son las siglas de Reduced Instruction Set Computer, es decir, un modelo de 
+            ISA simple que surge para resolver algunos problemas destacados de los CISC. A finales de los 70 
+            se comenzó a ver un fenómeno curioso, y es que algunas versiones de arquitecturas CISC de gama 
+            baja a las que se le retiraban algunas de las instrucciones complejas para reducir costes en la 
+            implementación, en vez de ir peor mejoraban su rendimiento. Por ese motivo se comienzan a diseñar 
+            los primeros RISC con repertorios de instrucciones más reducidos e instrucciones simples. 
+            Ejemplos son el AMD 29000, ARM, DEC Alpha, RISC-V, MIPS, HP PA-RISC, IBM PowerPC/POWER, SPARC, 
+            etc.
+
+            Algunas características propias de este tipo son:
+
+            \begin{itemize}
+                \item El tiempo de desarrollo para una microarquitectura de este tipo es más bajo y el coste más reducido.
+                \item El tipo de unidad de control suele ser cableada, es decir, mucho más rápida y eficiente.
+                \item Suelen tener gran cantidad de registros de propósito general.
+                \item El espacio de integración es más bajo en igualdad de condiciones. Es decir, el dado o core tendrá 
+                menor superficie.
+                \item El tamaño de instrucciones es fija y corta. En cuanto a cantidad, suele ser reducido, normalmente 
+                inferior a las 128 instrucciones. Suelen durar solo un ciclo de duración.
+                \item La cantidad de modos de direccionamiento de memoria son pocos y simples.
+                \item El tiempo de programación es más elevado.
+                \item El compilador debe ser complejo y muy eficiente.
+                \item El tamaño del programa generado es hasta un 30\% mayor al necesitar de más instrucciones 
+                simples para realizar una misma tarea en comparación con CISC.
+                \item La abstracción software/hardware es baja. El software está muy ligado al hardware.
+            \end{itemize}
+
+            \paragraph{}{RISC-V} Dentro de las RISC existen muchas ISAs en actual uso, entre ellas las conocidas \textit{SuperH}, \textit{ARM} 
+            (con buena relación rendimiento/eficiencia energética), \textit{RISC} y \textit{MIPS} (las primeras de ellas, por 
+            ello llevan el nombre de RISC), etc.
+
+            Pero la más moderna y que merece mención especial es \textit{RISC-V}. Ésta se desarrolla sobre una licencia 
+            libre (\textit{BSD}). Iniciado por Berkeley con fondos del DARP, y actualmente participan en su creación multitud 
+            de miembros de la fundación
+
+        \subsubsection{Otros tipos}
+
+            Aunque CISC y RISC son los dos grandes tipos de ISA y más relevantes, existen otros:
+            
+            \begin{itemize}
+                \item \textbf{ZISC} Zero Instruction Set Computer no cuenta con un conjunto de instrucciones (en el sentido 
+                clásico). Se basa en la mera coincidencia de patrones, similar a los computadores analógicos donde tampoco 
+                existían, aunque aquí hablamos de computadoras digitales. Ha habido pocas implementaciones de este tipo, algún 
+                ejemplo sería el IBM ZISC35 o el ZISC78, e incluso algunos chips neuronales como el CM1K…
+                \item \textbf{SISC} Specific Instruction Set Computer es similar a RISC, de hecho se podría catalogar como tal, 
+                pero es aún más reducidopara optimizar el rendimiento para alguna aplicación específica. Empleado en algunos 
+                microcontroladores y ASIPs. Un ejemplo, algunos autores dicen que el DSP TMS320 de TI (Texas Instruments) es 
+                SISC y otros lo etiquetan como RISC…
+                \item \textbf{VISC} Virtual Instruction Set Computer es otro tipo introducido por Soft Machines.
+                \item \textbf{DISC} Dynamic Instruction Set Computer puede modificar el conjunto de instrucciones de forma dinámica 
+                según la demanda o exigencias del programa. Se suele usar para FPGAs reconfigurables.
+                \item \textbf{NISC} No Instruction Set Computer tiene una tecnología muy específica de compilador y se emplea en 
+                CPUs de alta eficiencia para algunas aplicaciones críticas, aceleradores por hardware, etc. No necesita de ROM de 
+                microcódigo, ni controladores sofisticados, ni decodificador de instrucciones, etc.
+                \item \textbf{MISC} Minimal Instruction Set Computer también es un conjunto muy reducido de instrucciones, pero a
+                diferencia de otros como SISC o RISC, los operandos se almacenan en la pila en vez de en los registros, reduciendo 
+                así el tamaño de los operandos y simplificando al máximo la microarquitectura. Funciona rápido y la unidad de 
+                decodificación de instrucciones es más pequeña.
+                \item \textbf{EDGE} Explicit Data Graph Execution intenta mejorar las carencias de CISC y evitar los problemas de 
+                cuello de botella. Contiene muchas instrucciones individuales en un grupo denominado hyperblock y puede ser 
+                ejecutado en paralelo.
+                \item \textbf{OISC} One Instruction Set Computer, también llamado URISC (Ultimate RISC). Usa solo una instruccion 
+                sin limitar las aplicaciones. Sus implementaciones se usan especialmente para la enseñanza. Imagina una instrucción 
+                SUBLEQ que reste el contenido de dos direcciones de memoria y almacene el resultado en otra dirección. Con esa única 
+                instrucción, ejecutandola secuencialmente se podrían conseguir los equivalentes a varias instrucciones. Por ejemplo, 
+                si se ejecuta SUBLEQ b, b + SUBLEQ a, Z + SUBLEQ Z, b + SUBLEQ Z, Z = MOV a, b.            
+            \end{itemize}
+
+        \subsubsection{Híbridos CISC-RISC (RISC-Like)}
+
+            Algunos diseñadores de microarquitecturas CISC han querido obtener las ventajas de RISC sin abandonar el modelo CISC o sin 
+            perjudicar a la compatibilidad del software escrito para su ISA. Eso sería el caso de x86. CISC es un modelo antiguo y con 
+            carencias, pero ¿cómo pasarse a RISC sin crear una nueva ISA y sin que todo el software compatible tenga que ser compilado 
+            para esta nueva arqutiectura? La solución es la hibridación.
+
+            Uno de los primeros diseños RISC-like sería el AMD K5, que usaba la exitosa microarquitectura del 29k a la que le añadieron 
+            un Front-End para traducir las CISC-x86 y posibilitando que el Back-End trabajase de forma superescalar, con ejecución fuera 
+            de orden, ejecución especulativa, renombre de registros, etc., sin alterar la compatibilidad con x86.
+
+            Actualmente, los diseños de Intel y AMD trabajan como RISC a nivel electrónico, aunque el repertorio de instrucciones sea 
+            CISC.
 
 \section{Memoria}\label{memoria}
 \section{Módulo de Entrada y Salida}\label{entradasalida}
