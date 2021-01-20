@@ -102,9 +102,59 @@
 
     \subsection{Ciclo Básico de Instrucciones}
 
+        Como ya se ha visto, es la unidad de control la encargada de ejecutar las instrucciones que procedan 
+        en cada momento, siguiendo una serie de pasos básicos (véase también la figura \ref{cicloinstruccion}):
+
+        \begin{enumerate}
+            \item Pasar una instrucción de memoria a la unidad de control.
+            \item Interpretar (decodificar) la instrucción.
+            \item Ejecutar la instrucción:
+            \begin{enumerate}
+                \item Pasando los datos necesarios, accediendo a memoria con esas direcciones de los datos 
+                calculadas para llevar los datos a la ALU y proveer registros en la ALU para su almacenamiento.
+                \item Generando señales de control para la ejecución de las operaciones.
+                \item Generando el resultado, ya sea en la ALU (si hay datos) o en la unidad de control (si no 
+                existen datos).
+            \end{enumerate}
+            \item Ejecutar --si existe-- la siguiente instrucción.
+        \end{enumerate}
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/cicloinstruccion.jpg}
+            \caption{Esquema del ciclo de instrucción.}
+            \label{cicloinstruccion}
+        \end{figure}
+
         \subsubsection{Registros y operaciones básicas}
 
-        \subsubsection{Instrucciones, operaciones y órdenes}
+            Los registros son un conjunto de biestables (bits) que se utilizan como almacén y que realizan las
+            siguientes operaciones comunes:
+
+            \begin{itemize}
+                \item \textbf{Lectura}.
+                \item \textbf{Escritura}.
+                \item \textbf{Transferencia}. $(RA)\rightarrow RB$
+                \item \textbf{Incremento} (INC). $(R1) + 1 \rightarrow R$
+                \item \textbf{Decremento} (DEC). $(R1)-1 \rightarrow R$
+                \item \textbf{Complemento} (CMP). $1 = 0; 0=1$
+                \item \textbf{Reset} (RES).
+                \item \textbf{Set} (SET).
+            \end{itemize}
+
+        \subsubsection{Instrucciones, $\mu$operaciones y $\mu$órdenes}
+
+            Un programa se compone de una serie de instrucciones, compuestas a su vez en ciclos (fases),
+            $\mu$operaciones y $\mu$órdenes.
+
+            Una instrucción se compone de cuatro ciclos; de captación, de indirección, de ejecución y 
+            de interrupción. Cada ciclo comprende la realización de una serie de pasos; y para ejecutar 
+            cada uno de ellos se deben realizar una serie de operaciones atómicas o $\mu$operaciones.
+
+            Cada conjunto de $\mu$órdenes que se emite en un ciclo de reloj de la unidad de control, se 
+            denomina $\mu$instrucción.
+
+            Una instrucción en lenguaje máquina se divide en $\mu$instrucciones.
 
         \subsubsection{Tipo de instrucciones}
 
