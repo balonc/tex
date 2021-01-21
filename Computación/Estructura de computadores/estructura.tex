@@ -549,4 +549,91 @@
 
 \section{Buses}
 
+    Los buses interconectan los elementos componentes de un ordenador mediante conjuntos de conductores 
+    eléctrico, soporte material de las señales eléctricas.
+
+    La función de este sistema es la de transferir señales de control (sincronización, códigos de operación 
+    en sentido general, etc) y datos (operandos, resultados).
+
+    De las conexiones y transferencias que se pueden establecer son:
+
+    \begin{enumerate}
+        \item De memoria al procesador y viceversa.
+        \item Del módulo de E/S al procesador y viceversa.
+        \item De memoria al módulo de E/S y viceversa.
+    \end{enumerate}
+
+    Cada una de estas transferencias requiere de múltiples señales, de tal forma que se puede definir un bus 
+    como un mecanismo de interconexión componentes de un dispositivo digital. No responde éste únicamente al 
+    establecimiento de un camino físico, sino que conlleva una política de uso y acceso por parte de los 
+    elementos interconectados.
+
+    Está compuesto de varias líneas, donde cada línea es capaz de transferir las señales binarias. Si se transmiten 
+    varios bits simultáneamente por diferentes líneas del bus, se dice que es una transmisión paralela.
+
+    Los buses cuentan con distintas señales para facilitar su funcionamiento:
+
+    \begin{itemize}
+        \item Líneas de dirección.
+        \item Líneas de datos.
+        \item Líneas de control.
+    \end{itemize}
+
+    \subsection{Organización maestro/esclavo}
+
+        En este sistema organizativo, el maestro o \textit{bus master} es el encargado de iniciar la transacción, 
+        enviando para ello las direcciones de los dispositivos intervinientes y activando las señales de control 
+        correspondientes.
+
+        El esclavo o \textit{bus slave} se encarga de responder a la operación indicada por el maestro.
+
+    \subsection{Jerarquía de buses}
+
+        La jerarquía de buses define las presaciones del bus, determinadas en gran parte por el ancho de 
+        éste y por la velocidad del reloj que controla las transferencias.
+
+        Según la jerarquía podemos distinguir hasta 5 tipos de buses:
+
+        \subsubsection{Buses tipo 0}
+
+            Los mas rápidos. Se corresponde con los buses internos de los dispositivos.
+        
+        \subsubsection{Buses tipo 1}
+
+            Se corresponde con el bus existente dentro de las placas que conecta los distintos componentes 
+            soldados o pinchados a ella.
+
+        \subsubsection{Buses tipo 2}
+
+            Es el encargado de conectar las placas de un módulo con la placa base.
+
+        \subsubsection{Buses tipo 3}
+
+            Es denominado bus del sistema, conectando los módulos y componentes.
+
+        \subsubsection{Bus tipo 4}
+
+            Conectan los periféricos.
+
+        \subsubsection{Bus tipo 5}
+
+            Son los más comunes a la hora de comunicar periféricos, debido a que pueden transmitir en 
+            semi-duplex o full-duplex.
+
+    \subsection{Tipos de buses}
+
+        En función de la política de utilización del bus podemos tener distintos tipos:
+
+        \subsubsection{Bus dedicado}
+
+        \subsubsection{Bus multiplexado en el tiempo}
+
+        \subsubsection{Bus backplane}
+
+        \subsubsection{Bus E/S y procesador-memoria}
+
+        \subsubsection{Bus procesador-memoria y E/S}
+
+    \subsection{Estandarización de los buses}
+
 \end{document}
