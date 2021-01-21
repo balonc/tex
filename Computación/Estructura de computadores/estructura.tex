@@ -433,7 +433,7 @@
 
 \section{Memoria}\label{memoria}
 
-    \subsection{Aspectos físicos}
+    %\subsection{Aspectos físicos}
 
         Las memorias tienen una serie de características físicas a tener en cuenta:
 
@@ -463,7 +463,90 @@
         magnética u óptica, velocidad reducida en comparación, tamaño ilimitado, permanente y estática, opcional en el sistema 
         y de bajo coste.
 
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/jerarquiamemoria.png}
+            \caption{Jerarquía de memorias.}
+            \label{jerarquiamemoria}
+        \end{figure}
+
 \section{Módulo de Entrada y Salida}\label{entradasalida}
+
+    La entrada y salida de datos representa el medio de comunicación existente entre el usuario y el 
+    ordenadr, logrando a su vez la eficiencia en las operaciones de E/S y minimizando el trabajo a 
+    realizar a la CPU.
+
+    Cuenta con dos elementos básicos unidos por los correspondientes buses:
+
+    \subsection{Interfaz o controlador del periférico}
+
+        Sistema mixto hardware/software que posibilita la comunicación entre la CPU/memoria y el 
+        periférico, siendo sus principales funciones:
+
+        \begin{itemize}
+            \item Control de transferencia de datos entre dispositivo y procesador,
+            \item Adaptación de longitud y formato de datos.
+            \item Arbitraje de bus.
+            \item Adaptación de los tiempos de transferencia de CPU y periférico.
+            \item Adaptación de señales eléctricas para la conexión de un periférico.
+            \item Decodificación de las órdenes provenientes del procesador.
+            \item Averiguar qué dispositivo se encuentra disponible para transferir datos.
+            \item Comunicación con los dispositivos.
+            \item Almacenamiento temporal de datos.
+            \item Detección de errores en el funcionamiento del dispositivo.
+        \end{itemize}
+
+    \subsection{Operación de entrada/salida (E/S)}
+
+        La operación de entrada/salida se lleva a cabo de la siguiente manera:
+
+        \begin{quote}
+            \small En primer lugar, se comprueba si el dispositivo está listo, leyendo el registro 
+            de estado del controlador, donde un bit indicará si puede comenzar a transferir una palabra.
+
+            El registro de control indicará el tipo de operación a realizar, donde los distintos bits de 
+            dicho registro indican cada una de las distintas acciones a llevar a cabo por el 
+            periférico.
+
+            Para comenzar una operación, el procesador debe escribir sobre los registros anteriores los 
+            distintos datos de la operación a través de una dirección de E/S o memoria asignada únicamente 
+            al controlador. Después, se transfiere el dato usando el registro de datos.
+
+            Una vez concluida la transferencia debe indicarse en el registro de control.
+        \end{quote}
+
+    \subsection{Dispositivos periféricos}
+
+        Son aquellos dispositivos que se conectan con el procesador. Éstos permiten realizar operaciones 
+        de E/S en las que suelen intervenir memoria y CPU. Para conectar estos 3 componentes se utilizan 
+        los siguientes buses:
+
+        \begin{itemize}
+            \item Bus de direcciones.
+            \item Bus de datos.
+            \item Bus de control.
+        \end{itemize}
+
+    \subsection{Tipos de entrada/salida}
+
+        Hay 3 tipos fundamentales por los cuales puede realizarse la operación de E/S:
+
+        \subsubsection{E/S por intrrupciones}
+
+            La E/S se realiza mediante una rutina de atención a la interrupción, donde el dispositivo 
+            indica a la CPU cuando está listo.
+
+        \subsubsection{E/S por consulta o programada}
+
+            Se realiza una consulta periódica al dispositivo para saber cuándo se encuentra disponible 
+            para operar. Es un proceso de mayor sencillez, pero la velocidad de transferencia está limitada 
+            a la velocidad que imponga la CPU. Además, existe el riesgo de sobrecarga.
+
+        \subsubsection{E/S por acceso directo a memoria}
+
+            El dispositivo accede directamente a memoria y se encarga de avisar a la CPU tanto del inicio 
+            como del final de la tarea. La velocidad de transferencia obtenida es superior.
+
 \section{Buses}
 
 \end{document}
