@@ -25,6 +25,55 @@
 
 \section{Cálculo de estadísticas}
 
+    Las características base de un Pokémon son valores de referencia que fundamentan 
+    las estadísticas de éstos, las cuales varían en cada especie y son inalterables; sirviendo 
+    como base para el cálculo de sus estadísticas individuales.
+
+    El listado de características es:
+
+    \begin{itemize}
+        \item \textbf{Puntos de salud (PS)}. Es la condición física del Pokémon, representada 
+        con un valor numérico. El Pokémon se considera debilitado cuando sus PS llegan a 0, que 
+        se buscará mediante los ataques del oponente en combate, los cambios de estado (como 
+        el veneno o la quemadura) o climatología adversa (como el granizo o la tormenta de arena).
+        \item \textbf{Ataque}. Representa la fuerza natural del Pokémon al realizar un ataque físico, 
+        considerándose ataque físico a todo movimiento donde el Pokémon cause daño al hacer contacto 
+        con el adversario, o en el que se requiera usar la fuerza física.
+
+        Hasta la III generación, la distinción entre ataque físico y especial se hacía por medio 
+        del tipo del ataque, siendo ataques físicos los tipos \textit{fantasma}, \textit{lucha}, 
+        \textit{normal}, \textit{tierra}, \textit{roca}, \textit{bicho}, \textit{veneno}, 
+        \textit{acero} y \textit{volador}. A partir de la IV generación depende de cada movimiento 
+        particular.
+
+        Sobre las alteraciones de estado, las quemaduras están estrechamente relacionadas con el 
+        ataque físico, pues si un Pokémon se encuentra quemado su ataque se disminuirá en un $50\%$.
+        \item \textbf{Defensa}. Representa la resistencia natural de un Pokémon ante los movimientos 
+        físicos.
+        \item \textbf{Ataque especial}. Representa la fuerza con la que un Pokémon realiza un movimiento 
+        especial, considerándose éstos a los movimientos en los que se realiza un ataque a distancia, o 
+        un ataque en el que se libera la energía del atacante.
+
+        Hasta la III generación, los ataques especiales eran de los tipos \textit{agua}, \textit{hielo},
+        \textit{fuego}, \textit{planta}, \textit{eléctrico}, \textit{dragón}, \textit{psíquico} y 
+        \textit{siniestro}.
+        \item \textbf{Defensa especial}. Representa la resistencia a los movimientos especiales.
+        \item \textbf{Especial}. En la I generación no existían las características \textbf{ataque especial}
+        y \textbf{defensa especial}. En su lugar se encontraba la característica \textbf{especial} que hacía 
+        la función de ambas.
+        \item \textbf{Velocidad}. Es la propiedad del Pokémon de atacar, antes o después, que el oponente.
+        
+        Sobre las alteraciones de estado, la parálisis está estrechamente relacionada con la velocidad, pues 
+        si un Pokémon se encuentra paralizado, su velocidad se reducirá en un $75\%$.
+        \item \textbf{Precisión}. Es una estadística temporal, únicamente modificable en combate. Su 
+        utilidad se basa en la probabilidad de que el Pokémon acierte o falle al usar un movimiento, contando 
+        éstos con una precisión determinada.
+        \item \textbf{Evasión}. Es una estadística temporal, únicamente modificable en combate. Su
+        utilidad es inversa a la \textbf{precisión}, siendo la probabilidad de que el Pokémon reciba o evite 
+        el ataque de un movimiento dirigido a él mismo. La evasión se aplica únicamente a los Pokémon, no a los 
+        movimientos.
+    \end{itemize}
+
     En las generaciones I y II, hay dos ecuaciones que determinan las estadísticas 
     de un Pokémon. El cálculo de PS es distinto al cálculo del resto de estadísticas.
 
