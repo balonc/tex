@@ -25,6 +25,35 @@
 
 \section{Cálculo de estadísticas}
 
+    En las generaciones I y II, hay dos ecuaciones que determinan las estadísticas 
+    de un Pokémon. El cálculo de PS es distinto al cálculo del resto de estadísticas.
+
+    \[
+        ps = [\frac{((2 \times b) + iv + [\frac{ev}{4}]) \times n}{100}] + n + 10
+    \]
+
+    \[
+        c = [\frac{(b + iv) \times 2 + [\frac{\sqrt{ev}}{4}] \times n}{100}] + 5    
+    \]
+
+    Donde $c$ es cualquier característica, a excepción de puntos de salud ($ps$).
+    los valores individuales relacionados con la característica y $ev$ a los puntos 
+    de esfuerzo.
+
+    En las generaciones posteriores, las fórmulas se calculan de la siguiente forma:
+
+    \[
+        ps = [\frac{((2 \times b) + iv + [\frac{ev}{4}]) \times n}{100}] + n + 10    
+    \]
+
+    \[
+        c = [([\frac{((2 \times b) + iv + [\frac{ev}{4}]) \times n}{100}] + 5) \times nat]    
+    \]
+
+    Donde la nueva variable $nat$ hace referencia a la naturaleza, que es un modificador 
+    añadido en la III generación que, depende de la naturaleza que posee el sujeto afecta a 
+    la característica de forma desfavorable ($0.9$, neutra ($1.0$) o favorable ($1.1$)).
+
 \section{Cálculo de poder oculto}
 
 \section{Combate}
