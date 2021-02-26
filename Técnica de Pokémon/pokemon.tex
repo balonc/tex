@@ -10,6 +10,7 @@
 \usepackage{amssymb}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{amsmath}
 
 \title{Le técnica de Pokémon}
 \author{Francisco Javier Balón Aguilar}
@@ -36,6 +37,7 @@
         con un valor numérico. El Pokémon se considera debilitado cuando sus PS llegan a 0, que 
         se buscará mediante los ataques del oponente en combate, los cambios de estado (como 
         el veneno o la quemadura) o climatología adversa (como el granizo o la tormenta de arena).
+        
         \item \textbf{Ataque}. Representa la fuerza natural del Pokémon al realizar un ataque físico, 
         considerándose ataque físico a todo movimiento donde el Pokémon cause daño al hacer contacto 
         con el adversario, o en el que se requiera usar la fuerza física.
@@ -48,8 +50,10 @@
 
         Sobre las alteraciones de estado, las quemaduras están estrechamente relacionadas con el 
         ataque físico, pues si un Pokémon se encuentra quemado su ataque se disminuirá en un $50\%$.
+        
         \item \textbf{Defensa}. Representa la resistencia natural de un Pokémon ante los movimientos 
         físicos.
+        
         \item \textbf{Ataque especial}. Representa la fuerza con la que un Pokémon realiza un movimiento 
         especial, considerándose éstos a los movimientos en los que se realiza un ataque a distancia, o 
         un ataque en el que se libera la energía del atacante.
@@ -57,21 +61,26 @@
         Hasta la III generación, los ataques especiales eran de los tipos \textit{agua}, \textit{hielo},
         \textit{fuego}, \textit{planta}, \textit{eléctrico}, \textit{dragón}, \textit{psíquico} y 
         \textit{siniestro}.
+        
         \item \textbf{Defensa especial}. Representa la resistencia a los movimientos especiales.
+        
         \item \textbf{Especial}. En la I generación no existían las características \textbf{ataque especial}
         y \textbf{defensa especial}. En su lugar se encontraba la característica \textbf{especial} que hacía 
         la función de ambas.
+        
         \item \textbf{Velocidad}. Es la propiedad del Pokémon de atacar, antes o después, que el oponente.
         
         Sobre las alteraciones de estado, la parálisis está estrechamente relacionada con la velocidad, pues 
         si un Pokémon se encuentra paralizado, su velocidad se reducirá en un $75\%$.
+        
         \item \textbf{Precisión}. Es una estadística temporal, únicamente modificable en combate. Su 
         utilidad se basa en la probabilidad de que el Pokémon acierte o falle al usar un movimiento, contando 
-        éstos con una precisión determinada.
+        éstos con una precisión determinada (para ver los cálculos con más detalle, ver sección \ref{precision}).
+
         \item \textbf{Evasión}. Es una estadística temporal, únicamente modificable en combate. Su
         utilidad es inversa a la \textbf{precisión}, siendo la probabilidad de que el Pokémon reciba o evite 
         el ataque de un movimiento dirigido a él mismo. La evasión se aplica únicamente a los Pokémon, no a los 
-        movimientos.
+        movimientos (para ver los cálculos con más detalle, ver sección \ref{precision}).
     \end{itemize}
 
     En las generaciones I y II, hay dos ecuaciones que determinan las estadísticas 
@@ -105,12 +114,113 @@
 
 \section{Cálculo de poder oculto}
 
-\section{Combate}
+\section{Las matemáticas del combate}
 
     \subsection{Cálculo de daño}
 
     \subsection{Cálculo de huida}
 
-    \subsection{Cálculo de precisión}
+    \subsection{Cálculo de precisión}\label{precision}
+
+        Que un movimiento cumpla su objetivo y sea certero depende de la \textbf{precisión} y 
+        la \textbf{evasión}, que se determina mediante la fórmula:
+
+        \[
+            a = pb \times \frac{p}{e}    
+        \]
+
+        Donde $pb$ corresponde con la precisión base del movimiento utilizado, en tanto por 
+        uno (dividido el valor bruto entre $100$). $p$ referencia a la precisión del Pokémon 
+        usuario del movimiento y $e$ referencia a la evasión del Pokémon rival, receptor del 
+        movimiento. 
+        
+        Tanto $p$ como $e$ se calculan mediante el número de iteraciones, cuyo límites se 
+        encuentran en el rango $[-6,6]$, que aumentan o disminuyen la precisión y/o la evasión; 
+        partiendo siempre de $0$, valor que puede ser modificado en combate, siendo el cálculo  
+        de $p$ (precisión) y de $e$ (evasión) inversamente proporcionales entre sí:
+
+        \[
+            p = pb
+            \begin{pmatrix}
+                9/3 \\ 
+                8/3 \\ 
+                7/3 \\ 
+                6/3 \\ 
+                5/3 \\ 
+                4/3 \\ 
+                3/3 \\ 
+                3/4 \\ 
+                3/5 \\ 
+                3/6 \\ 
+                3/7 \\ 
+                3/8 \\ 
+                3/9 \\ 
+            \end{pmatrix}
+            = 
+            \begin{pmatrix}
+                3pb \\ 
+                2,\widehat{6}pb \\ 
+                2,\widehat{3}pb \\ 
+                2pb \\ 
+                1,\widehat{6}pb \\ 
+                1,\widehat{3}pb \\ 
+                pb \\ 
+                0,75pb \\ 
+                0,6pb \\ 
+                0,5pb \\ 
+                0,4285pb \\ 
+                0,375pb \\ 
+                0,\widehat{3}pb \\ 
+            \end{pmatrix}
+            e = pb
+            \begin{pmatrix}
+                3/9 \\ 
+                3/8 \\ 
+                3/7 \\ 
+                3/6 \\ 
+                3/5 \\ 
+                3/4 \\ 
+                3/3 \\ 
+                4/3 \\ 
+                5/3 \\ 
+                6/3 \\ 
+                7/3 \\ 
+                8/3 \\ 
+                9/3 \\ 
+            \end{pmatrix}
+            = 
+            \begin{pmatrix}
+                0,\widehat{3}pb \\ 
+                0,375pb \\ 
+                0,4285pb \\ 
+                0,5pb \\ 
+                0,6pb \\ 
+                0,75pb \\ 
+                pb \\ 
+                1,\widehat{3}pb \\ 
+                1,\widehat{6}pb \\ 
+                2pb \\ 
+                2,\widehat{3}pb \\ 
+                2,\widehat{6}pb \\ 
+                3pb \\ 
+            \end{pmatrix}
+            \begin{bmatrix}
+                i_{+6} \\
+                i_{+5} \\
+                i_{+4} \\
+                i_{+3} \\
+                i_{+2} \\
+                i_{+1} \\
+                i_{0} \\
+                i_{-1} \\
+                i_{-2} \\
+                i_{-3} \\
+                i_{-4} \\
+                i_{-5} \\
+                i_{-6} \\
+            \end{bmatrix}
+        \]
+
+        Si tras el cálculo general $a$ es mayor que $1$, el movimiento acertará.
 
 \end{document}
