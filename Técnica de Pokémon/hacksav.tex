@@ -1,0 +1,48 @@
+\documentclass[a4paper, 11pt, titlepage]{article}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{imakeidx}
+\usepackage{makeidx}
+\usepackage{mathtools}
+\usepackage[spanish]{babel}
+\usepackage{eurosym}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+
+\title{SAV Hacking de Pokémon Rojo Fuego}
+\author{Francisco Javier Balón Aguilar}
+
+\begin{document}
+
+\maketitle
+\renewcommand{\contentsname}{Índice}
+\tableofcontents
+\newpage
+
+\section{Programación en C para la III generación, desde la perspectiva de la ROM <<FireRed>>}
+
+    La primera distinción a tener en cuenta, es que la programación en C para GBA no es lo 
+    mismo que la programación en C En general. Cuando programamos específicamente para el 
+    hardware de GBA, estamos trabajando en un entorno de nivel extremadamente bajo, basado en 
+    registros de E/S y escribiendo datos en búferes de datos VRAM, etc. Lo que puede estar 
+    acostumbrado a escribir son programas que llaman a varias funciones de bibliotecas como 
+    <stdio.h>. Este tipo de conceptos de "nivel superior" realmente no hacen una aparición. 
+    Las cosas más comparables a algo como stdio.h sería las funciones de BIOS del GBA, de 
+    las que hablaré más adelante.
+
+    Finalmente, la segunda y última distinción a hacer es que la programación para el GBA 
+    en general no es lo mismo que la programación para un hack ROM. Cuando se trabaja con 
+    una ROM precompilada, nos vemos obligados a trabajar dentro de los confines de la base 
+    de código existente, y tenemos que trabajar alrededor de los sistemas en su lugar por 
+    el motor predeterminado. Si ya estás familiarizado con cómo codificar en C, entonces es 
+    posible que puedas leer el código, pero es posible que te cueste entender lo que 
+    realmente hace. Para remediar esta situación, sugiero una sólida comprensión de la 
+    piratería ASM en la generación III ROM hacks. Específicamente Gen III ROM hacks, porque 
+    usted debe tener una buena comprensión de cómo FireRed y otros trabajan inorder para 
+    escribir buen código para explotar lo que ya está allí.
+
+
+\end{document}
