@@ -64,6 +64,64 @@
             \item \textbf{Relación coste/rendimiento}.
         \end{itemize}
 
+        Podemos clasificar los sistemas multiprocesador según el modo de trabajo en:
+
+        \subsubsection{Procesamiento asimétrico}
+
+            El procesamiento asimétrico\footnote{
+                El modo de procesamiento asimétrico se originó en 1970 en el Instituto
+                 Tecnológico de Massachusetts (M.I.T.). 
+            } entre varios ordenadores permite ejecutar procesos 
+            de manera independiente separados del procesador que controla y tiene instalado
+            el sistema operativo.\footnote{
+                A día de hoy este modo de procesamiento no se utiliza casi salvo en 
+                aplicaciones muy concretas como puede ser la PS3 de Sony, donde el 
+                procesador central tiene sub-procesadores que se encargan de tareas 
+                muy específicas.
+            }
+
+            Aunque a nivel físico ya no se utilice este diseño de arquitectura, a nivel 
+            lógico si que se sigue implantando en sistemas donde cada procesador se encarga
+            de una tarea específica, por ejemplo, un procesador puede ser el responsable
+            de las operaciones de disco, otro de las operaciones de video, etc. Estos
+            sistemas no tienen la flexibilidad de asignación de tareas a los procesadores 
+            menos cargados, estando predefinidas por defecto.
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=1\textwidth]{resources/multiprocesador_asimetrico.png}
+                \caption{Representación de multiprocesador asimétrico}
+                \label{multiprocesador_asimetrico}
+            \end{figure}
+
+        \subsubsection{Procesamiento simétrico}
+
+            En un sistema multiproceso, cada uno de los procesadores deben ser equivalentes,
+            con funciones similares, aunque haya alguno que realice tareas específicas.
+
+            A nivel de hardware, en los sistemas simétricos cada procesador puede acceder a 
+            la memoria RAM por completo. Cada procesador tiene la misma importancia a la hora
+            de acceder, por lo tanto todas las CPUs pueden interaccionar y compartir memoria 
+            entre ellas.
+            
+            A nivel de software, e independientemente del sistema operativo que lo gestione, 
+            cada procesador tiene capacidad para enviar o repartir tareas a otros procesadores. 
+            Al no existir una unidad central, y tener acceso total a la memoria, cada procesador 
+            es capaz de terminar cualquiera de las tareas asignadas. \footnote{
+                Al ser todos los procesadores idénticos, ante el fallo de uno de ellos el sistema 
+                operativo lo retira y lo notifica al operador. Todos los procesadores pueden cooperar
+                en la ejecución de un mismo proceso. Aun así, esta arquitectura también puede producir 
+                largas colas de espera.
+            }
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=1\textwidth]{resources/multiprocesador_simetrico.png}
+                \caption{Representación de multiprocesador simétrico}
+                \label{multiprocesador_simetrico}
+            \end{figure}
+
+
         \subsubsection{Interconexión de los procesadores}
 
     \subsection{Gestión del procesador}
