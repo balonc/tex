@@ -66,8 +66,9 @@
 
         Podemos clasificar los sistemas multiprocesador según el modo de trabajo en:
 
-        \subsubsection{Procesamiento asimétrico}
-
+        \begin{itemize}
+            \item \textbf{Procesamiento asimétrico}
+            
             El procesamiento asimétrico\footnote{
                 El modo de procesamiento asimétrico se originó en 1970 en el Instituto
                  Tecnológico de Massachusetts (M.I.T.). 
@@ -94,8 +95,8 @@
                 \label{multiprocesador_asimetrico}
             \end{figure}
 
-        \subsubsection{Procesamiento simétrico}
-
+            \item \textbf{Procesamiento simétrico}
+            
             En un sistema multiproceso, cada uno de los procesadores deben ser equivalentes,
             con funciones similares, aunque haya alguno que realice tareas específicas.
 
@@ -120,9 +121,30 @@
                 \caption{Representación de multiprocesador simétrico}
                 \label{multiprocesador_simetrico}
             \end{figure}
+        \end{itemize}
 
+        Podemos clasificarlos también según el modo de ejecución de instrucciones, atendiendo al 
+        número de instrucciones y datos que son capaces de procesar a la vez (véase cuadro 
+        \ref{modoejecucioninstrucciones}):
 
-        \subsubsection{Interconexión de los procesadores}
+        \begin{table}[htp]
+            \centering
+            \caption{Modos de ejecución de instrucciones}
+            \label{modoejecucioninstrucciones}
+            \begin{tabular}{rcc}
+                \hline
+                & \textbf{Un dato} & \textbf{Múltiples datos} \\ \hline
+                \textbf{Una instrucción} & SISD & SIMD \\ \hline
+                \textbf{Múltiples instrucciones} & MISD & MIMD \\ \hline
+            \end{tabular}
+        \end{table}
+
+        \begin{itemize}
+            \item \textbf{Sistemas SISD}
+            \item \textbf{Sistemas SIMD}
+            \item \textbf{Sistemas MISD}
+            \item \textbf{Sistemas MIMD}
+        \end{itemize}
 
     \subsection{Gestión del procesador}
 
