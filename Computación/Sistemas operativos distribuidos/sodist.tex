@@ -10,6 +10,7 @@
 \usepackage{amssymb}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{subcaption}
 
 % \setcounter{secnumdepth}{5}
 % \setcounter{tocdepth}{5}
@@ -140,10 +141,65 @@
         \end{table}
 
         \begin{itemize}
-            \item \textbf{Sistemas SISD}
-            \item \textbf{Sistemas SIMD}
-            \item \textbf{Sistemas MISD}
-            \item \textbf{Sistemas MIMD}
+            \item \textbf{Sistemas SISD} (Single  Instruction  Stream,  Single  Data  Stream). Un 
+            procesador procesa secuencialmente instrucciones, y cada instrucción lleva un dato asociado; 
+            siendo los sistemas menos efectivos.
+            \item \textbf{Sistemas SIMD} (Single  Instruction  Stream,  Multiple  Data  Stream). 
+            El procesador ejecuta una instrucción que puede llevar asociada varios datos.
+            \item \textbf{Sistemas MISD} (Multiple  Instruction  stream,  Single  Data  stream). Tienen  
+            como ventaja fundamental la tolerancia a los fallos. La redundancia de varias unidades de
+            proceso trabajando sobre los mismos datos aumenta la fiabilidad del sistema, ya que el fallo 
+            de una de las unidades de proceso no supondría ningún inconveniente. Por otro lado, estos 
+            sistemas encarecen demasiado la arquitectura y no aumentan el rendimiento ni la velocidad de 
+            proceso. 
+            \item \textbf{Sistemas MIMD} (Multiple Instruction stream, Multiple Data stream). Este tipo 
+            de arquitectura es el más adecuado para una enorme variedad de tareas en las que se desarrollan 
+            ejecuciones independientes en paralelo utilizando conjuntos de datos independientes. 
+
+            El procesamiento y ejecución se divide en lo que se llaman hilos, cada uno con su propio 
+            procesador, y pertenecientes a uno o varios procesos software. Desde este punto de vista se
+            deben controlar bloqueos que se puedan producir por la interferencia de varios hilos a los 
+            mismos recursos, como por ejemplo la memoria.
+
+            A nivel de hardware es una arquitectura fácil de implementar, aunque a nivel software se debe
+            controlar el acceso compartido con mecanismos como semáforos que eviten los bloqueos mutuos 
+            entre procesos. 
+
+            Dentro de esta arquitectura, el procesador y la memoria pueden presentar dos esquemas según 
+            estén conectados:
+            
+            \begin{itemize}
+                \item \textbf{Modelos  fuertemente  acoplados}. Los procesadores comparten memoria entre sí,
+                lo que puede provocar que en determinadas ocasiones se produzcan bloqueos de acceso.
+                Dentro del tipo de acceso a memoria, existen dos tipos:
+                
+                \begin{itemize}
+                    \item \textbf{UMA} o acceso uniforme a memoria.
+                    \item \textbf{NUMA} o acceso no uniforme a memoria, donde  la  velocidad  de acceso a 
+                    distintas zonas de memoria puede ser distinta.
+                \end{itemize}
+
+                Véase figura \ref{modelo_fuertemente_acoplado} para más detalle.
+        
+                \item \textbf{Modelos   débilmente   acoplados}. Cada procesador gestiona su propia 
+                memoria, teniendo como norma el acceso no remoto a memoria (siendo local). Véase figura 
+                \ref{modelo_debilmente_acoplado} para más detalle.
+            \end{itemize}
+
+            \begin{figure}[!tbp]
+                \begin{subfigure}[b]{0.5\textwidth}
+                  \includegraphics[width=\textwidth, height=\textwidth]{resources/modelo_fuertemente_acoplado_mimd.png}
+                  \caption{Modelo fuertemente acoplado}
+                  \label{modelo_fuertemente_acoplado}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}[b]{0.5\textwidth}
+                  \includegraphics[width=\textwidth, height=\textwidth]{resources/modelo_debilmente_acoplado_mimd.png}
+                  \caption{Modelo débilmente acoplado}
+                  \label{modelo_debilmente_acoplado}
+                \end{subfigure}
+                \caption{Modelos de acoplamiento sobre arquitectura MIMD}
+              \end{figure}
         \end{itemize}
 
     \subsection{Gestión del procesador}
