@@ -11,10 +11,10 @@
 \usepackage{listings}
 \usepackage{xcolor}
 
-% \setcounter{secnumdepth}{5}
-% \setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
 
-\title{Sistemas expertos en combinación con lógica difusa}
+\title{{\scshape\Huge Sistemas expertos en combinación con lógica difusa \par}}
 \author{Francisco Javier Balón Aguilar}
 \date{4 de enero de 2021}
 
@@ -23,6 +23,13 @@
 \maketitle
 \renewcommand{\contentsname}{Índice}
 \tableofcontents
+% \newpage
+%Lista de figuras 
+\listoffigures
+%\newpage
+
+%Lista de tablas 
+%\listoftables
 \newpage
 
 \section{Introducción}\label{introduccion}
@@ -78,7 +85,7 @@
         \begin{figure}[htp]
             \centering
             \includegraphics[width=0.7\textwidth]{resources/sistemaexperto.jpg}
-            \caption{Arquitectura de un sistema experto.}
+            \caption{Arquitectura de un sistema experto}
             \label{sistemaexperto}
         \end{figure}
 
@@ -126,7 +133,7 @@
         \centering
         \includegraphics[width=0.7\textwidth]{resources/logicadifusa2.jpg}
         \caption{Diferenciación gráfica de la lógica difusa con respecto a la lógica clásica en el 
-        caso borroso de la definición de \textit{altura}.}
+        caso borroso de la definición de \textit{altura}}
         \label{logicadifusa2}
     \end{figure}
 
@@ -144,7 +151,7 @@
         \begin{figure}[htp]
             \centering
             \includegraphics[width=0.7\textwidth]{resources/logicadifusa.png}
-            \caption{Arquitectura de un sistema basado en lógica difusa.}
+            \caption{Arquitectura de un sistema basado en lógica difusa}
             \label{logicadifusa}
         \end{figure}
 
@@ -279,7 +286,7 @@
     \begin{figure}[htp]
         \centering
         \includegraphics[width=0.7\textwidth]{resources/diagramaflujoexperto.png}
-        \caption{Diagrama de flujo para la obtención de un sistema experto difuso.}
+        \caption{Diagrama de flujo para la obtención de un sistema experto difuso}
         \label{diagramaflujoexperto}
     \end{figure}
 
@@ -304,7 +311,9 @@
         Por ejemplo, podríamos concluir en la creación de dos variables de entrada a partir de los datos 
         ofrecidos por el experto para configurar los conjuntos difusos. Serían:
 
-        \paragraph{Frecuencia cardíaca} La frecuencia cardíaca, es decir, el número de latidos del corazón 
+        \subsubsection{Frecuencia cardíaca} 
+        
+        La frecuencia cardíaca, es decir, el número de latidos del corazón 
         en un minuto. La fórmula que con más frecuencia se utiliza para establecer la frecuencia cardíaca 
         máxima de un sujeto es la \textit{fórmula de Astrand}\footnote{
             La \textit{fórmula de Astrand} se basa en restar la edad del sujeto a 220. Por ejemplo, un 
@@ -332,11 +341,13 @@
         \begin{figure}[htp]
             \centering
             \includegraphics[width=0.7\textwidth]{resources/frecuenciacardiaca.png}
-            \caption{Conjuntos difusos de la frecuencia cardíaca.}
+            \caption{Conjuntos difusos de la frecuencia cardíaca}
             \label{frecuenciacardiaca}
         \end{figure}
     
-        \paragraph{Frecuencia respiratoria} La frecuencia respiratorio corresponde al número de veces que 
+        \subsubsection{Frecuencia respiratoria} 
+        
+        La frecuencia respiratorio corresponde al número de veces que 
         un sujeto respira por minuto. La frecuencia normal es de 12/14 a 20/22. 
         
         La determinación de la frecuencia respiratoria consiste  en  precisar  la  cantidad  de  ciclos 
@@ -352,7 +363,7 @@
         \begin{figure}[htp]
             \centering
             \includegraphics[width=0.7\textwidth]{resources/frecuenciarespiratoria.png}
-            \caption{Conjuntos difusos de la frecuencia respiratoria.}
+            \caption{Conjuntos difusos de la frecuencia respiratoria}
             \label{frecuenciarespiratoria}
         \end{figure}
 
