@@ -202,6 +202,62 @@
               \end{figure}
         \end{itemize}
 
+        \subsubsection{Interconexión de los procesadores}
+
+            El modo en el que los procesadores están conectados es fundamental para el rendimiento
+            y velocidad del sistema. Existen diversos modos, pero los cuatro fundamentales son:
+
+            \begin{enumerate}
+                \item \textbf{Conexión con bus compartido}. Todos los procesadores están conexionados por el mismo 
+                bus, lo que hace que desde el nivel lógico del sistema operativo no sea lo más eficiente, además 
+                de dependiente de la velocidad que soporte el propio bus. Véase figura \ref{bus_compartido}.
+
+                \begin{figure}[htp]
+                    \centering
+                    \includegraphics[width=0.7\textwidth]{resources/bus_compartido.png}
+                    \caption{Conexión con bus compartido}
+                    \label{bus_compartido}
+                \end{figure}
+    
+                \item \textbf{Sistema de barras cruzadas}. Todos los procesadores pueden acceder a todas las 
+                memorias simultáneamente, siendo el único retardo la conmutación de barras y haciendo este tipo 
+                de conexión más eficiente que la anterior. Aun así, es una arquitectura compleja que necesita 
+                $n^2$ conmutadores. Véase figura \ref{barras_cruzadas}.
+
+                \begin{figure}[htp]
+                    \centering
+                    \includegraphics[width=0.8\textwidth]{resources/barras_cruzadas.png}
+                    \caption{Conexión con barras cruzadas}
+                    \label{barras_cruzadas}
+                \end{figure}
+
+                \item \textbf{Conexión mediante hipercubos}. Los procesadores y las memorias se conectan 
+                formando hipercubos, siendo la máxima distancia entre nodos $log_2n$ y cada nodo a su vez 
+                se conecta con $log_2n$ nodos (cada hipercubo contiene hipercubos de menor dimensión). Esto 
+                lo convierte en un modelo complejo pero escalable (complejidad con crecimiento logarítmico, 
+                no exponencial). Véase figura \ref{hipercubos}.
+                
+                \begin{figure}[htp]
+                    \centering
+                    \includegraphics[width=0.8\textwidth]{resources/hipercubos.png}
+                    \caption{Conexión mediante hipercubos}
+                    \label{hipercubos}
+                \end{figure}
+
+                \item \textbf{Conexión mediante conmutadores multietapa}. Está formado por $log_2n$ etapas, 
+                donde cada etapa consta de un conjunto de $n$ enlaces conectando a $n/2$ cajas de intercambio.
+                Esto lo convierte en un modelo complejo pero escalable (complejidad con crecimiento logarítmico, 
+                no exponencial). Véase figura \ref{conmutadores_multietapa}.
+                
+                \begin{figure}[htp]
+                    \centering
+                    \includegraphics[width=0.8\textwidth]{resources/conmutadores_multietapa.png}
+                    \caption{Conexión mediante conmutadores multietapa}
+                    \label{conmutadores_multietapa}
+                \end{figure}
+
+            \end{enumerate}
+
     \subsection{Gestión del procesador}
 
         \subsubsection{Asignación de los procesadores}
