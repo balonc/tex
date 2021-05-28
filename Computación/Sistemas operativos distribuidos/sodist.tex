@@ -12,8 +12,8 @@
 \usepackage{xcolor}
 \usepackage{subcaption}
 
-% \setcounter{secnumdepth}{5}
-% \setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
 
 \title{{\scshape\Huge Sistemas Operativos Distribuidos \par}}
 \author{Francisco Javier Balón Aguilar}
@@ -260,7 +260,30 @@
 
     \subsection{Gestión del procesador}
 
+        Para garantizar el correcto funcionamiento de un procesador, se desarrollan operaciones de control y
+        gestión. Al existir varios procesadores dentro de una misma máquina, deben actuar y coordinarse como
+        un solo procesador virtual.
+
         \subsubsection{Asignación de los procesadores}
+
+            Dentro de los procesadores del sistema, un procesador puede ser a la vez gestor y trabajador:
+            
+            \paragraph{Procesador como gestor} Se crea una jerarquía de niveles en la que cada procesador 
+            depende de los procesadores situados en un nivel superior. De este modo un procesador recibe 
+            órdenes de los procesadores situados en niveles superiores, y asigna trabajos a los 
+            procesadores inactivos situados en niveles inferiores. De esta forma se dota al sistma de una 
+            mayor tolerancia a fallos.  
+
+            \paragraph{Planificación por oleadas} Un gestor generalmente recibe órdenes que debe repartir 
+            a lo largo de la jerarquía. Si puede asignar el trabajo a alguno de los procesadores que están 
+            por debajo de él, lo hace, si no trata de ejecutar él el trabajo, y en caso de que no sea 
+            posible, lo pasa a niveles superiores. Si llega a la máxima jerarquía y ha sido incapaz de 
+            asignarlo, el trabajo se queda en espera pendiente de asignación hasta que haya algún procesador 
+            libre.
+
+            \paragraph{Problemas y dificultades} El gestor debe saber cuándo un procesador queda libre de 
+            asignación, por lo que debe tener una estimación actualizada de la disponibilidad de cada 
+            procesador en cada momento para evitar repartos de carga erróneos.
 
         \subsubsection{Planificación del procesador}
 
