@@ -409,7 +409,90 @@
 
     \subsection{Sincronización y gestión de la memoria}
 
+        La sincronización es el proceso por el cual diferentes aplicaciones y procesadores pueden acceder 
+        a la memoria de manera ordenada y sin interferir en la lectura o escritura de datos.
+
+        Para acceder a una zona compartida de memoria, se deben ejecutar tres pasos básicos:
+
+        \begin{itemize}
+            \item Bloquear el bus para que las otras CPU’s no puedan acceder a él (lock).
+            \item Ejecuta la instrucción TSL\footnote{
+                De hecho la instrucción TSL puede fallar en algunas ocasiones, por ejemplo si el bus no 
+                está bloqueado, lo que puede generar algún acceso no controlado a memoria.
+            } (Test and Set Lock) para bloquear el bus. 
+            \item Desbloquear el bus.
+        \end{itemize}
+
+        Estos pasos se pueden ejecutar preferiblemente por hardware, o por medio de la instrucción
+        software lock.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.5\textwidth]{resources/interaccion_procesadores_memoria_bus.png}
+            \caption{Interacción de procesadores y memoria a través del bus}
+            \label{interaccion_procesadores_memoria_bus}
+        \end{figure}
+
+        Cuando un procesador libera la memoria, debe avisar a aquellos procesos que se hayan quedado 
+        esperando para entrar. Este proceso de espera activa por parte de las CPU’s que no hayan podido 
+        entrar se llama spinning, y es el proceso por el cual un procesador se encuentra bloqueado 
+        (lock) con un trabajo pendiente para entrar en zona de memoria compartida. Véase la figura 
+        \ref{bloqueo_espera_activa_spin}.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/bloqueo_espera_activa_spin.png}
+            \caption{Mecanismo de bloqueo con espera activa (spin)}
+            \label{bloqueo_espera_activa_spin}
+        \end{figure}
+
         \subsubsection{Algoritmos de sincronización}
+
+            \paragraph{Algoritmo de sincronización a través de átomos}
+
+                Un átomo se define como un objeto accesible (se puede leer y escribir) con la propiedad 
+                de que sólo puede ser accedido a la vez por un procesador. 
+
+                Para controlar el acceso de los procesadores a los átomos, se suele implementar un 
+                algoritmo de sincronización específico para este tipo de objetos:
+
+                \subparagraph{Sincronización por cerrojo}
+
+                    Existe un elemento que indica si el átomo está ocupado o está libre, de tal manera 
+                    que el proceso que accede al átomo bloquea el cerrojo (o lo cierra), y no lo abre 
+                    hasta que no ha terminado sus operaciones en el átomo. 
+
+                \subparagraph{Sincronización optimista}
+
+                    El átomo mantiene dos versiones de la información, una local y otra global. El proceso 
+                    que accede al átomo modifica la versión local del mismo. Una vez ha terminado, 
+                    actualiza la versión global. El resto de procesos pueden acceder a la versión 
+                    global del átomo (para leer información). Este método puede provocar inconsistencia 
+                    en los datos.
+
+                \subparagraph{Sincronización por servidor}
+                
+                    Se controla el acceso a los átomos de forma centralizada desde un servidor designado.
+
+            \paragraph{Protocolos de espera}
+
+                Existen dos tipos de espera dentro del procesador:
+
+                    \subparagraph{Espera ocupada}
+
+                        Cuando un proceso no puede acceder a un átomo, el proceso sigue ocupando el 
+                        procesador, esperando a que ese átomo que solicita sea liberado.
+            
+                        Existe lo que se llama el protocolo de servicio completo, donde se notifica 
+                        la liberación de un átomo a todos los procesadores (independientemente que 
+                        quieran acceder o no).
+
+                    \subparagraph{Espera suspendida}
+
+                        El procesador <<echa>> al proceso que no puede acceder al átomo en ese momento, 
+                        metiéndolo en una cola de espera. Este método puede generar cuellos de botella 
+                        si el acceso a los átomos es muy prolongado por parte de algunos procesos.
+
 
 % BIBLIOGRAFÍA Y REFERENCIAS
 \newpage
