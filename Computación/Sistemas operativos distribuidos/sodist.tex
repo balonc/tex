@@ -339,7 +339,73 @@
 
                 \subparagraph{Algoritmo de espacio compartido}
 
+                    Divide el conjunto de procesadores en grupos que ejecutarán tareas similares, utilizando 
+                    coplanificación o planificación coordinada entre procesos para que se ejecuten al mismo tiempo.
+
+                    Las particiones de grupos se basan en hilos relacionados\footnote{
+                        La planificación de varios hilos relacionados al mismo tiempo sobre múltiples CPU’s se 
+                        llama space sharing. 
+                    }, de tal forma que cada conjunto 
+                    de procesadores asociados como grupo ejecute una parte completa de un proceso. A cada hilo 
+                    en un grupo se le asigna una CPU dedicada hasta que termine\footnote{
+                        Si un hilo realiza una operación de entrada y salida y se bloqueara, continuaría ocupando 
+                        la CPU, pudiendo dar un bloqueo indefinido.
+                    }.
+
+                    Como ejemplo, si tuviéramos un conjunto de 32 procesadores divididos en cuatro particiones con 
+                    dos procesadores sin asignar, tendríamos un mapa de utilización tal y como aparece en la figura 
+                    \ref{algoritmo_espacio_compartido}.
+
+                    \begin{figure}[htp]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{resources/algoritmo_espacio_compartido.png}
+                        \caption{Representación de algoritmo de espacio compartido}
+                        \label{algoritmo_espacio_compartido}
+                    \end{figure}
+
                 \subparagraph{Algoritmo de planificación por grupos}
+
+                    Planificando como una sola unidad de conjuntos de hilos que por su funcionalidad se relacionan 
+                    entre sí (\textit{gang}), todos los miembros de un grupo se ejecutan simultáneamente en diferentes 
+                    procesadores de tiempo compartido; diviendo el tiempo en \textit{quantums}\footnote{
+                        Los quantums no son una medida estándar de tiempo, depende del sistema y puede establecerse
+                        como un número determinado de ciclos de procesador. 
+                    }, de tal forma que todos los miembros del grupo comiencen y terminen sus \textit{quantums} juntos.
+               
+                    Al comienzo de un \textit{quantum} se replanifican todos los procesadores con un nuevo hilo 
+                    en cada uno de ellos. Al comienzo del siguiente se realiza otra planificación independiente de la 
+                    primera. Cabe destacar que si un hilo se bloquea, el procesador permanecerá inactivo hasta el 
+                    final del \textit{quantum}.
+
+                    Como ejemplo, si tuviéramos una planificación por grupos con 6 procesadores, 5 procesos y 24 hilos, 
+                    todos los hilos de un proceso se ejecutarán juntos, por lo que si uno de ellos envía una petición 
+                    a otro, éste recibirá el mensaje y lo contestará inmediatamente. Véase figura \ref{algoritmo_planificacion_grupos}.
+
+                    \begin{figure}[htp]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{resources/algoritmo_planificacion_grupos.png}
+                        \caption{Representación de ejecución de algoritmo de planificación por grupos}
+                        \label{algoritmo_planificacion_grupos}
+                    \end{figure}
+                
+                    Las comunicaciones entre dos hilos lleva un retardo asociado debido a la gestión de los mensajes.
+    
+                    Como ejemplo, si el proceso $A$ tiene dos hilos, $A_0$ y $A_1$, y el proceso $B$ tiene otros dos hilos,
+                    $B_0$ y $B_1$, y $A_0$ y $B_0$ se ejecutan en el procesador 0, y $A_1$ y $B_1$ en el procesador 1:
+
+                    \begin{itemize}
+                        \item $A_0$ envía un mensaje a $A_1$, y $A_1$ envía la respuesta nada más recibir el mensaje.
+                        \item $A_0$ envía el mensaje, pero recibe la respuesta con un retardo de $200ms$ debido a los hilos de $B$.
+                    \end{itemize}
+
+                    Véase figura \ref{esquema_comunicacion_dos_hilos}.
+
+                    \begin{figure}[htp]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{resources/esquema_comunicacion_dos_hilos.png}
+                        \caption{Esquema de comunicación entre dos hilos}
+                        \label{esquema_comunicacion_dos_hilos}
+                    \end{figure}
 
     \subsection{Sincronización y gestión de la memoria}
 
