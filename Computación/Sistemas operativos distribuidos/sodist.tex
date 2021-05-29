@@ -287,6 +287,60 @@
 
         \subsubsection{Planificación del procesador}
 
+            Según la política de planificación del sistema, cada procesador puede estar monoprogramado\footnote{
+                Las tareas que le han sido asignadas son independientes del resto de los procesadores, es decir, no trabaja  en  cooperación  con  ningún  procesador  más.
+            }
+            o multiprogramado\footnote{
+                La ejecución de tareas asignadas se produce en cooperación con varios procesadores entre sí.
+            }.
+
+            \paragraph{Tipos de planificación}
+
+                Dependiendo del tipo de instrucciones y del tipo de arquitectura, el sistema se puede 
+                decantar por distintos modos de ejecución:
+
+                \subparagraph{Coplanificación}
+
+                    Existe una coplanificación o planificación coordinada entre los procesos que 
+                    interactúan para que se ejecuten al mismo tiempo.
+
+                \subparagraph{Compartición de cargas}
+
+                    Se crea una cola global de hilos (tareas) para todos los procesadores, de tal forma que 
+                    elimina la necesidad de que las tareas estén asignadas a un mismo proceso.
+
+                \subparagraph{Asignación dedicada de procesadores}
+
+                    Pretende ejecutar un proceso lo antes posible, por lo que se divide el proceso en 
+                    hilos o tareas, y se asigna un procesador (distinto) a cada hilo, es decir, a cada
+                    proceso se le asignan tantos procesadores como hilos tenga. 
+
+                \subparagraph{Planificación dinámica}
+
+                    Se permite cambiar el número de hilos de un proceso para permitir ajustar la carga al
+                    sistema operativo, permitiendo la expulsión de algún proceso en curso y haciendo que éste 
+                    sea el tipo de planificación más utilizado.
+
+            \paragraph{Algoritmos de planificación}
+
+                \subparagraph{Algoritmo de tiempo compartido}
+
+                    Logra equilibrar la carga de tareas entre todos los procesadores de un sistema 
+                    distribuyendo las tareas de forma equilibrada, utilizando una estructura de datos 
+                    simple para la planificación y siendo todos los procesos de tiempo compartido, evitando 
+                    así sobrecargas en el sistema. Véase figura \ref{algoritmo_tiempo_compartido}.
+
+                    \begin{figure}[htp]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{resources/algoritmo_tiempo_compartido.png}
+                        \caption{Representación de algoritmo de tiempo compartido}
+                        \label{algoritmo_tiempo_compartido}
+                    \end{figure}
+
+                \subparagraph{Algoritmo de espacio compartido}
+
+                \subparagraph{Algoritmo de planificación por grupos}
+
     \subsection{Sincronización y gestión de la memoria}
 
         \subsubsection{Algoritmos de sincronización}
