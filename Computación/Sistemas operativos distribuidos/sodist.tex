@@ -639,6 +639,20 @@
             esclavo la deriva pertinente su reloj o simplemente que dote a los esclavos de un valor de 
             deriva el cual no es muy lógico. 
 
+            El algoritmo de Brekeley ofrece varios problemas:
+
+            \begin{itemize}
+                \item En caso de que el maestro falle, dejará de preguntar la hora y, en consecuencia, 
+                se perderá la sincronización.
+                \item En el paso de mensajes entre maestro y esclavos y vicerversa se ha de tener en 
+                cuenta el retraso que genera el propio envío de los mensajes por lo que tendremos errores 
+                a la hora de sincronizar.
+                \item Otro de los problemas de ser un algoritmo centralizado será el de tener que elegir 
+                un nuevo maestro debido a que se puedan producir fallos en el tratamiento de los datos 
+                para llevar a a cabo la sincronización, buscando un maestro que cometa menor cantidad de 
+                fallos y el sistema se mantenga en correcto funcionamiento. 
+            \end{itemize}
+
         \subsubsection{Protocolo de tiempo de red}
 
     \subsection{Sistemas basados en relojes lógicos}
