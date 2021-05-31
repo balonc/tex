@@ -491,6 +491,25 @@
 
 \section{Servicios de tiempo}
 
+    Este capítulo pretende introducir el concepto de gestión del tiempo dentro de un sistema distribuido, 
+    tanto a nivel físico, como lógico; siendo el tiempo un factor fundamental en todo sistema distribuido
+    \footnote{
+        Un ejemplo de sincronización de eventos son las transacciones, donde es fundamental saber el 
+        tiempo en el que se ha ejecutado una acción para poder establecer un orden entre ellas y que no 
+        se produzcan errores. 
+    }.
+
+    Existen varios tipos de sincronización temporal, de entre las que destacan la sincroniación externa 
+    (cada máquina se sincroniza mediante una fuente externa que marca el tiempo para todo el sistema) y 
+    la sincroniación interna (los ordenadores están sincronizados entre sí con una margen de error que 
+    permite establecer el orden en el que ocurren los eventos).
+
+    Desde un punto de vista computacional, existen dos maneras de tratar el tiempo en un sistema 
+    distribuido, mediante relojes físicos o mediante relojes lógicos. Los relojes físicos utilizan 
+    marcas de tiempo en el sistema, y es vital la sincronización entre ellos con unos márgenes 
+    aceptables de error, mientras que los relojes lógicos consideran el orden en el que ocurren los 
+    eventos en términos de ‘antes/después’ para estimar un orden en todo el sistema.
+
     \subsection{Sistemas basados en relojes físicos}
 
         \subsubsection{Algoritmo de Cristian}
