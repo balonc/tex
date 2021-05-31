@@ -489,46 +489,27 @@
                         metiéndolo en una cola de espera. Este método puede generar cuellos de botella 
                         si el acceso a los átomos es muy prolongado por parte de algunos procesos.
 
-\section{Componentes de un sistema distribuido}
+\section{Servicios de tiempo}
 
-    En el modelo cliente-servidor, una serie de ordenadores cliente operan sobre otra serie denominada 
-    máquina servidor, presentando un modelo de 3 capas:
+    \subsection{Sistemas basados en relojes físicos}
 
-    \begin{itemize}
-        \item \textbf{Capa de presentación}. Envío, recibimiento y muestreo de los datos, interactuando 
-        directamente con el usuario final.
-        \item \textbf{Capa de negocio}. Gestión de información y solicitud de recursos.
-        \item \textbf{Capa de datos}. Trasvase de información de entrada y salida.
-    \end{itemize}
+        \subsubsection{Algoritmo de Cristian}
 
-    \begin{figure}[htp]
-        \centering
-        \includegraphics[width=0.8\textwidth]{resources/division_capas_so.png}
-        \caption{Divisisón por capas de los sistemas operativos}
-        \label{division_capas_so}
-    \end{figure}
+        \subsubsection{Algoritmo de Berkeley}
 
-    
+        \subsubsection{Protocolo de tiempo de red}
 
-    \subsection{Arquitectura cliente-servidor}
+    \subsection{Sistemas basados en relojes lógicos}
 
-        \subsubsection{Arquitectura de cliente-servidor de tres niveles}
+        \subsubsection{Algoritmo de Lamport}
 
-        \subsubsection{Comunicaciones en una arquitectura de cliente-servidor de tres niveles}
+        \subsubsection{Relojes vectoriales de Mattern y de Fidge}
 
-        \subsubsection{Difusión de información}
+        \subsubsection{Protocolo BBS (Birman, Schiper, Stephenson)}
 
-            \paragraph{Difusión fiable}
-        
-        \subsubsection{Modelo de comunicaciones en un mismo grupo}
+        \subsubsection{Relojes matriciales}
 
-    \subsection{Funciones en arquitecturas distribuidas}
 
-        \subsubsection{Servicio de nombres}
-
-        \subsubsection{Migración de procesos}
-
-        \subsubsection{Ejecución remota de procesos}
 
 % BIBLIOGRAFÍA Y REFERENCIAS
 \newpage
