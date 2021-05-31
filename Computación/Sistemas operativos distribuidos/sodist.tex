@@ -595,6 +595,50 @@
 
         \subsubsection{Algoritmo de Berkeley}
 
+            Se procede a elegir un coordinador el cual tendrá el rol de maestro o lo que será lo mismo 
+            de servidor de tiempo. El coordinador en este algoritmo en diferencia con otros algoritmos 
+            de sincronización como es el caso del algoritmo de Cristian, no se mantendrá pasivo, se 
+            encargará de solicitar la hora del resto de equipos, los cuales tienen un rol de esclavos, 
+            dicha solicitud de hora se realizará de una forma periódica.
+
+            Una vez los esclavos hayan respondido con su hora local, el maestro realiza una estimación 
+            media de los retardos con los tiempos recibidos en los mensajes con cada uno de los equipos 
+            esclavos, obteniendo así un tiempo medio que relaciona las horas recibidas durante la 
+            solicitud y la hora propia del maestro.
+            
+            Realizada dicha estimación, el siguiente paso será actualizar los relojes de los equipos 
+            esclavos. Para ello, el maestro enviará a cada esclavo el desfase que tiene respecto a la 
+            hora promedio que se ha calculado. Se envía el desfase en lugar de enviar la hora coordinada 
+            puesto que se debe tener en cuenta el error que aparecería por el tiempo de transmisión. 
+            Finalmente, cada equipo se limitará a actualizar su reloj adelantándolo en caso de ir con 
+            retraso o atrasándolo en caso de ir adelantado para aplicar la deriva recibida.
+        
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.8\textwidth]{resources/algoritmo_berkeley.png}
+                \caption{Esquema del algoritmo de Berkeley}
+                \label{algoritmo_berkeley}
+            \end{figure}
+
+            Estudiando dicho algoritmo se puede pensar que no se tiene en cuenta el tiempo de propagación 
+            en la respuesta a la solicitud de la hora del esclavo a nuestro coordinador y por tanto, se 
+            recibe una hora con retraso. Dicha situación no es un escenario que se necesite tener en 
+            cuenta, puesto que la finalidad del algoritmo es la de calcular una hora promedio entre las 
+            que se reciben con el sondeo del maestro a todos sus esclavos. Además, en una red de área 
+            local entre los tiempos de propagación de mensajes entre maestro y los esclavos será 
+            despreciable y, por ello, no es necesario tener en cuenta.
+
+            El algoritmo de Berkeley realiza un promedio tolerante a fallos usando de base los tiempos 
+            enviados por los esclavos, lo cual significa que únicamente se toman para calcular el promedio 
+            los tiempos enviados por aquellos relojes cuya diferencia no difiere entre sí entre unos 
+            umbrales estipulados, de forma que se entenderá que el resto de relojes no están funcionando 
+            correctamente.
+
+            En caso de fallo del maestro el proceso será el de elegir otro coordinador. Como fallo se 
+            entenderá que el maestro no realice las solicitudes de tiempo periódicas, no envíe a cada 
+            esclavo la deriva pertinente su reloj o simplemente que dote a los esclavos de un valor de 
+            deriva el cual no es muy lógico. 
+
         \subsubsection{Protocolo de tiempo de red}
 
     \subsection{Sistemas basados en relojes lógicos}
