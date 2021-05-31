@@ -512,7 +512,86 @@
 
     \subsection{Sistemas basados en relojes físicos}
 
+        A diferencia de en los sistemas centralizados (el propio servidor es el que se encarga de 
+        realizar este proceso periódicamente), en un sistema distribuido la gestión es mucho más 
+        compleja. Si el reloj se atrasa con respecto al servicio de tiempo, se adelanta aunque se 
+        pierdan algunas unidades de tiempo. Si por el contrario el reloj se adelanta, no se puede 
+        retrasar de manera automática (porque puede afectar al orden de los eventos), se debe 
+        retrasar mediante algún mecanismo software.
+
+        Los relojes físicos de los ordenadores tienen limitaciones en la resolución, lo que general 
+        una imprecisión o deriva (\textit{drift}). Para contrarrestarlas, se puede optar por tres 
+        opciones:
+
+        \begin{itemize}
+            \item \textbf{Transmisión desde UTC\footnote{
+                Tiempo Universal Coordinado.
+            }}. Se transmite una señal desde satélites 
+            o centros terrestres con el tiempo atómico ajustado (año bisiesto por ejemplo). Una o 
+            varias máquinas pueden ser receptoras de este tiempo para sincronizar así sus relojes 
+            y pasárselo al resto de máquinas (con el retraso consiguiente en el envío del mensaje).
+            \item \textbf{Tiempo atómico}. Se define un segundo como el tiempo en el que un átomo 
+            de Cesio hace 9.192.631.770 transiciones. En principio se definió tomando como 
+            referencia la rotación de la Tierra.
+            \item \textbf{Algoritmos implementados mediante software}.
+        \end{itemize}
+
         \subsubsection{Algoritmo de Cristian}
+
+            Se basa en implantar un servidor ($S$) que se encarga de actualizar el tiempo en el resto 
+            de máquinas mediante UTC. El resto de máquinas son clientes que solicitan el tiempo 
+            actualizado cada cierto periodo a través de mensajes ($M_p$ como solicitud y $M_s$ como 
+            respuesta).
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.5\textwidth]{resources/algoritmo_cristian.png}
+                \caption{Solicitud de tiempo UTC mediante el algoritmo de Cristian}
+                \label{algoritmo_cristian}
+            \end{figure}
+
+            El algoritmo sigue los siguientes pasos:
+
+            \begin{itemize}
+                \item En primer lugar, un proceso o máquina $P$, solicita el tiempo a un 
+                servidor $S$, mediante un mensaje $M_p$. 
+                \item $S$ devuelve la respuesta a $P$ incluyendo el tiempo $t$ en el mensaje 
+                de respuesta $M_s$.
+                \item Al recibir el mensaje, $P$ ajusta su tiempo añadiendo el tiempo transcurrido 
+                entre el envío y la recepción (tiempo de transferencia o $Ttrans$), mediante la fórmula: 
+                \[Reloj = t + Ttrans\]
+            \end{itemize}
+    
+            Existe un tiempo de petición, un tiempo de respuesta, y un tiempo denominado de interrupciones 
+            que comprende desde que llega el mensaje de solicitud del tiempo hasta que se envía una 
+            respuesta con el nuevo tiempo.
+
+            El tiempo de transmisión de un mensaje es $T_1-T_0 / 2$. El tiempo total de transmisión más 
+            elaboración del mensaje de respuesta sería entonces $(T_1-T_0-I) / 2$, siendo $I$ el tiempo 
+            de interrupciones (véase figura \ref{algoritmo_cristian00}). 
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.5\textwidth]{resources/algoritmo_cristian00.png}
+                \caption{Esquema del algoritmo de Cristian}
+                \label{algoritmo_cristian00}
+            \end{figure}
+
+            De tal forma que el valor que se envía desde el servidor $S$ a $P$ se debe incrementar en 
+            $(T_1-T_0-I) / 2$ para que pueda ser una estimación más realista.
+
+            A pesar de su simplicidad, el algoritmo de Cristian ofrece varios problemas:
+
+            \begin{itemize}
+                \item El sistema puede estar muy centralizado en un servidor que transmite el tiempo 
+                a los demás. Si dicho servidor se colapsa o se cae, se crea un problema de sincronización 
+                en la red. Para solucionarlo se requerirán varios servidores que lleven a cabo esta 
+                función, con la correspondiente coordinación de tiempo entre ellos.
+                \item Si por casualidad se infiltrara un servidor S falso en el sistema, podría producir 
+                unos daños bastante grandes, sobre todo en sistemas que manejen aplicaciones bancarias. 
+                Para solucionarlo se necesitan procesos de autenticación del servidor, lo que aumenta el 
+                tiempo de sincronización
+            \end{itemize}
 
         \subsubsection{Algoritmo de Berkeley}
 
