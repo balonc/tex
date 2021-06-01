@@ -692,6 +692,67 @@
 
     \subsection{Sistemas basados en relojes lógicos}
 
+        La sincronización a nivel lógico dentro de un sistema distribuido, permite conocer el orden o 
+        serialización en el que ocurren los eventos, independientemente de la hora en la que tuvieron 
+        lugar.
+
+        Existen tres tipos de relojes lógicos fundamentalmente gestionados por algoritmos distintos:
+
+        \begin{itemize}
+            \item \textbf{Relojes vectoriales} (algoritmo de Fidge).
+            \item \textbf{Relojes escalares} (algoritmo de Lamport).
+            \item \textbf{Relojes matriciales}.
+        \end{itemize}
+
+        En un sistema distribuido hay tres elementos a tener en cuenta:
+
+        \begin{enumerate}
+            \item Los procesos que necesitan un control y una gestión por parte del sistema (por acceder 
+            a una zona común o por otros motivos).
+            \item Los mensajes entre procesos o sistema de comunicaciones. Es fundamental que este sistema 
+            tenga constancia de los procesos activos en un momento determinado en el sistema.
+            \item Los eventos que originan cambios en los procesos y en el sistema. Estos eventos pueden 
+            ser de tres tipos: 
+            \begin{itemize}
+                \item Eventos internos que sólo afectan al proceso, y no requieren acciones externas (se 
+                ejecutan en la máquina en la que se encuentra el proceso).
+                \item Eventos de envío, en los que un proceso se comunica con otro proceso para solicitar 
+                algún recurso o información.
+                \item Eventos de recepción, en los que un proceso recibe un mensaje de otro proceso solicitando 
+                algún tipo de servicio o recurso.
+            \end{itemize}
+        \end{enumerate}
+
+        De esta manera se puede realizar un esquema temporal de un sistema distribuido registrando los 
+        procesos del sistema y los eventos que han generado en cada momento. Véase figura \ref{eventos_procesos_sodist}.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/eventos_procesos_sodist.png}
+            \caption{Esquema de eventos y procesos en un sistema distribuido}
+            \label{eventos_procesos_sodist}
+        \end{figure}
+
+        Establecer relaciones de causalidad entre eventos, permite crear un orden entre ellos del tipo 
+        $A$ precede a $B$.
+
+        Determinados algoritmos (como el del Lamport), establecen los eventos con notación $e_{ij}$, donde $_j$ 
+        es el número de evento dentro del proceso $_i$. De esta manera, para un mismo proceso $_i$, se puede 
+        establecer un orden entre todos sus eventos. Por ejemplo un evento $e_{35}$ seria anterior al evento 
+        $e_{39}$.
+
+        También puede suceder, que dos eventos sean concurrentes, cuando entre ellos no se pueda 
+        establecer una relación de causalidad potencial, y no se sabe cuál ha originado al otro. Por 
+        ejemplo, los eventos concurrentes serían $e_{12}$ y $e_{31}$ en la figura 
+        \ref{precedencia_eventos_procesos}.
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/precedencia_eventos_procesos.png}
+            \caption{Esquema de precedencia de eventos entre procesos}
+            \label{precedencia_eventos_procesos}
+        \end{figure}
+
         \subsubsection{Algoritmo de Lamport}
 
         \subsubsection{Relojes vectoriales de Mattern y de Fidge}
