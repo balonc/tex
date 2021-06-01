@@ -655,6 +655,41 @@
 
         \subsubsection{Protocolo de tiempo de red}
 
+            Los protocolos de tiempo de red se aplican cuando la latencia de los mensajes es variable y 
+            puede ser muy alta. Se utilizan en redes grandes (WAN), o a través de Internet.
+
+            Los clientes se sincronizan mediante UTC sobre Internet.
+
+            El modelo que se propone para llevar este protocolo a cabo es un modelo jerárquico de 
+            servidores a diferentes niveles. Estos servidores deben estar sincronizados entre sí, y 
+            la caída de uno o los fallos en general se solucionan a través de la jerarquía.
+
+            De esta manera dos servidores situados en la misma jerarquía deben estar sincronizados entre 
+            sí mediante mensajes a través de la red, existiendo tres formas posibles de comunicación 
+            entre ellos a través de datagramas UDP:
+
+            \begin{itemize}
+                \item \textbf{Mediante multicast}: es el método menos empleado debido a su baja eficiencia 
+                y precisión ya que en parte se satura la red de mensajes de manera periódica. Sin embargo 
+                es el más fácil de implementar, ya que asegura que la información llega a todos los 
+                equipos conectados, y por tanto al servidor interesado.
+                \item \textbf{Utilizando una llamada a un procedimiento}: tiene una precisión mejor que 
+                el método multicast. Consiste en realizar un promedio del retardo de transmisión (de 
+                manera similar al algoritmo de Cristian).
+                \item \textbf{Interactuando entre ellos}: los dos servidores intercambian mensajes entre 
+                ellos para ajustar sus relojes. Es el más eficiente.
+            \end{itemize}
+
+            Los protocolos de tiempo en red deben estar soportados por algoritmos que admitan unos 
+            retardos importantes, del orden de 1 a 10 milisegundos (computacionalmente hablando es una 
+            cifra muy alta). 
+            
+            En general, la sincronización a nivel de relojes físicos se utiliza cuando de se quiere 
+            registrar el tiempo (por ejemplo en emails, o utilizar marcas de tiempo o timestamps). A 
+            nivel de aplicaciones se puede utilizar en procesos batch o de segundo plano, pero nunca en 
+            procesos transaccionales que requiera un orden riguroso de eventos (por ejemplo en la 
+            actualización de una cuenta bancaria).
+
     \subsection{Sistemas basados en relojes lógicos}
 
         \subsubsection{Algoritmo de Lamport}
