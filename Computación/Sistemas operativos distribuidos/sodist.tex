@@ -755,6 +755,73 @@
 
         \subsubsection{Algoritmo de Lamport}
 
+            Este algoritmo trata de actualizar a nivel lógico los relojes del resto de procesos para que 
+            exista una serialización de eventos entre todos ellos.
+            
+            Cada proceso $P_i$, tiene su propio reloj $L_i$, que aumenta en $1$ cada vez que ocurre un 
+            evento relacionado con el proceso. Cada vez que un proceso envía un mensaje, adjunta el valor
+            del reloj dentro del propio mensaje para que el proceso destinatario sepa el valor de su reloj 
+            lógico y sincronice así el suyo.
+
+            Cada vez que un proceso recibe un mensaje con un reloj lógico, ajusta su reloj con el valor máximo entre su reloj lógico y el recibido, y luego suma uno para registrar el evento de recepción del mensaje.
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.8\textwidth]{resources/algoritmo_lamport.png}
+                \caption{Esquema de precedencia de eventos en el algoritmo de Lamport}
+                \label{algoritmo_lamport}
+            \end{figure}
+    
+            En la figura \ref{algoritmo_lamport} se observan tres procesos que ejecutan una serie de eventos.
+
+            El proceso $A$ genera dos eventos y manda en el segundo de ellos un mensaje al proceso $B$. Al 
+            no recibir mensajes hasta ese punto, el siguiente evento de $A$ será el número 3.
+
+            El proceso $B$ por el contrario empieza su reloj lógico en el evento número 3, ya que ha 
+            recibido un mensaje del proceso $A$ cuyo contenido del reloj lógico es 2. A partir de ese 
+            momento genera eventos de manera normal.
+
+            El proceso $C$, empieza sus eventos de manera normal, sin recibir ningún reloj lógico que le 
+            indique el número en el que debe empezar. En el evento correspondiente al 3, recibe un mensaje 
+            de $C$ con un reloj lógico de valor 4, por lo que $C$ pasará a tener un reloj lógico de valor 
+            5. El proceso $C$ en el evento 6 envía un mensaje al proceso $A$, por lo que $A$ pasará a 
+            tener un reloj lógico directamente de 7 eventos.
+
+            Dentro del algoritmo existen dos tipos de implementaciones:
+
+            \begin{itemize}
+                \item \textbf{Implementación no sincronizada}. Cada proceso avanza su reloj de forma independiente.
+                Sincroniza su reloj en función del valor del mensaje recibido, pero ajustando su reloj en base a su 
+                sistema.
+                \item \textbf{Implementación sincronizada}. Los procesos ajustan los relojes en función a los valores 
+                recibidos por otros procesos. Véase figura \ref{algoritmo_lamport01}.
+                
+                \begin{figure}[htp]
+                    \centering
+                    \includegraphics[width=0.6\textwidth]{resources/algoritmo_lamport01.png}
+                    \caption{Esquema de precedencia de eventos en el algoritmo de Lamport}
+                    \label{algoritmo_lamport01}
+                \end{figure}
+            \end{itemize}
+
+            Como ventajas en la utilización del algoritmo de Lamport se pueden citar las siguientes:
+
+            \begin{itemize}
+                \item Fácil de implementar y programar. 
+                \item Consigue un ordenamiento de eventos, aunque para ello los procesos deben estar 
+                comunicados de manera frecuente.
+                \item Tiene una ligera penalización por el alto número de mensajes intercambiados entre 
+                los procesos.
+            \end{itemize}
+
+            Mientras que sus desventajas serían:
+
+            \begin{itemize}
+                \item Los relojes no son muy fiables, ya que son meros contadores, sin registrar (mediante 
+                marcas de tiempo o timestamps) el momento concreto en el que ha surgido el evento.
+                \item Es muy difícil contemplar bien la causalidad entre eventos en un sistema mediano-grande.
+            \end{itemize}
+
         \subsubsection{Relojes vectoriales de Mattern y de Fidge}
 
         \subsubsection{Protocolo BBS (Birman, Schiper, Stephenson)}
