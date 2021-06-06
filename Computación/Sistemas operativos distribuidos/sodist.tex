@@ -888,6 +888,20 @@
 
     \subsection{Algoritmos de elección y cooperación}
 
+        Los algoritmos de elección y cooperación se llevan a cabo cuando se requiere alguna acción que 
+        necesite de un proceso principal que asuma el control.
+
+        Esta función puede ir rotando entre los procesos, dependiendo del algoritmo, y sobre todo se 
+        debe tener en cuenta cómo reaccionar en caso de fallo o si se produce un bloqueo del proceso que 
+        asume el control.
+
+        La elección en un momento determinado es única, y se debe llevar a cabo por todos los procesos o 
+        nodos participantes.
+
+        En el caso de que un coordinador no responda, se debe elegir uno nuevo, y si el coordinador 
+        antiguo se vuelve a activar, se repetirá de nuevo el proceso de elección de coordinador.
+
+
         \subsubsection{Algoritmo del matón}
 
         \subsubsection{Algoritmo del anillo}
