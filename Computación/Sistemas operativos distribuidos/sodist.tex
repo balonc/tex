@@ -848,6 +848,23 @@
 
         \subsubsection{Protocolo BBS (Birman, Schiper, Stephenson)}
 
+            Basándose en los relojes vectoriales de Mattern y Fidge utiliza técnicas de multidifusión para 
+            mantener actualizado el sistema y enviar sus mensajes.
+
+            El remitente del mensaje, entrega los mensajes al resto de procesos siempre y cuando hayan 
+            recibido correctamente los mensajes anteriores. En caso contrario almacena los mensajes en 
+            un buffer, hasta que llegados un número determinado, vacía el buffer y elimina el proceso de 
+            la lista de distribución. Los mensajes se almacenan de forma ordenada.
+            
+            En cada mensaje que se envía se adjunta el vector de procesos con los eventos actualizados.
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.4\textwidth]{resources/algoritmo_protocolo_bbs.png}
+                \caption{Esquema de precedencia de eventos en el protocolo BBS}
+                \label{algoritmo_protocolo_bbs}
+            \end{figure}
+
         \subsubsection{Relojes matriciales}
 
 \section{Sincronización distribuida}
