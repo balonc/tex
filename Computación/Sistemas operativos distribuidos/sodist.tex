@@ -867,6 +867,23 @@
 
         \subsubsection{Relojes matriciales}
 
+            Los relojes lógicos matriciales son los que mejor reflejan el estado del sistema a nivel 
+            global. Cada nodo posee una matriz de vectores de tiempo que reflejan un posible estado 
+            del sistema.
+
+            Cada proceso tiene una matriz de $n$ filas por $n$ columnas, donde $n$ es el número de 
+            procesos del sistema, de tal manera que dentro de una matriz de un proceso dado $i$, su 
+            reloj lógico se correspondería con la posición $M_i[i,i]$. Para el resto de procesos, 
+            la matriz $M_i[k, j]$, donde $j$ representaría al proceso $P_j$, y $k$ sería la última 
+            actualización que el proceso $P_i$ ha recibido del proceso $P_j$.
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.8\textwidth]{resources/algoritmo_relojes_matriciales.png}
+                \caption{Esquema de precedencia de eventos en relojes matriciales}
+                \label{algoritmo_relojes_matriciales}
+            \end{figure}
+
 \section{Sincronización distribuida}
 
     \subsection{Algoritmos de elección y cooperación}
