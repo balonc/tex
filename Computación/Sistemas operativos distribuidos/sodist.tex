@@ -824,6 +824,28 @@
 
         \subsubsection{Relojes vectoriales de Mattern y de Fidge}
 
+            Con una base similar a Lamport, soluciona el problema de la causalidad de eventos en relación con 
+            la sucesión de los mismos, es decir, que un evento ocurra antes que otro no implica que necesariamente 
+            el que ha ocurrido antes ha provocado el de después.
+
+            Para registrar los eventos de cada proceso, se genera un vector que contiene el reloj lógico 
+            de cada proceso, de tal manera que un reloj lógico situado en una máquina $i$, con $k$ procesos, 
+            inicialmente estará a cero ($V_i[k]=0$). Si el proceso $i$ genera un evento, actualizará sólo su 
+            posición dentro del vector, de tal manera que $V_i[i] = V_i[i]+1$.
+
+            Si se recibe un mensaje con el reloj lógico de un proceso externo, se actualizará el vector de 
+            relojes lógicos siempre y cuando el valor recibido sea mayor que el existente en el vector.
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.8\textwidth]{resources/algoritmo_mattern_fidge.png}
+                \caption{Esquema de precedencia de eventos en el algoritmo de relojes vectoriales de Mattern 
+                y de Fidge}
+                \label{algoritmo_mattern_fidge}
+            \end{figure}
+
+            % TODO Explicación
+
         \subsubsection{Protocolo BBS (Birman, Schiper, Stephenson)}
 
         \subsubsection{Relojes matriciales}
