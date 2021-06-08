@@ -14,7 +14,7 @@
 \setcounter{secnumdepth}{5}
 \setcounter{tocdepth}{5}
 
-\title{{\scshape\Huge El protocolo modbus \par}}
+\title{{\scshape\Huge El protocolo modbus RTU\par}}
 \author{Francisco Javier Balón Aguilar}
 
 \begin{document}
@@ -33,6 +33,21 @@
 
 \section{Introducción}
 
+    El protocolo modbus es un protocolo de transmisión en serie, los datos se transmiten uno detrás de 
+    otros. Comúnmente se implementa sobre redes de comunicaciones RS-485, pero también puede ser implementado
+    sobre redes de comunicaciones RS-232 e incluso redes ethernet TCP/IP.
 
+\section{Modos de transmisión}
+
+    modbus cuenta con dos modos de transmisión:
+
+    \begin{itemize}
+        \item \textbf{RTU} o Remote Terminal Unit, donde la comunicación entre dispositivos se realiza 
+        por medio de datos binarios.
+        \item \textbf{ASCII} o American Standard Code for Information Interchange, donde la comunicación 
+        entre dispositivos se realiza por medio de caracteres ASCII.
+    \end{itemize}
+
+    En el presente documento nos centraremos en el modo de transmisión RTU.
 
 \end{document}
