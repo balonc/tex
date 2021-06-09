@@ -1,0 +1,186 @@
+\documentclass[11pt, twosides, titlepage]{article}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{imakeidx}
+\usepackage{makeidx}
+\usepackage{mathtools}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\title{{\scshape\Huge Serial\par}}
+\author{Francisco Javier Balón Aguilar}
+
+\begin{document}
+\maketitle
+\renewcommand{\contentsname}{Index} % Nombre dado al ?ndice
+\tableofcontents % Genera la tabla de contenidos del ?ndice autom?ticamente
+\newpage
+
+% %Lista de figuras 
+% \listoffigures
+% \newpage
+
+% %Lista de tablas 
+% \listoftables
+% \newpage
+
+\section{Introduction}
+
+    The conventional serial port (not the newer USB port, or Firewire port) is a very old I/O (Input/Output) port. Until around 2006, most new desktop PC's had one, and old PC's from the 1990's sometimes had 2 of them. Most laptops gave up them before the desktops did. Macs (Apple Computer) after mid-1998 only had the USB port. However, it's possible, to put a conventional serial port device on the USB bus which is on all modern PCs.
+
+    Each serial port has a "file" associated with it in the /dev directory. It isn't really a file but it seems like one. For example, /dev/ttyS0. Other serial ports are /dev/ttyS1, /dev/ttyS2, etc. But ports on the USB bus, multiport cards, etc. have different names.
+
+    The common specification for the conventional serial port is RS-232 (or RS-232). So it's often called a "RS-232 serial port". The connector(s) for the serial port are often seen as one or two 9-pin connectors (in some cases 25-pin) on the back of a PC. But the serial port is more than just connectors. It includes the associated electronics which must produce signals conforming to the RS-232 specification. See Voltage Waveshapes. One pin is used to send out data bytes and another to receive data bytes. Another pin is a common signal ground. The other "useful" pins are used mainly for signalling purposes with a steady negative voltage meaning "off" and a steady positive voltage meaning "on".
+
+    The UART (Universal Asynchronous Receiver-Transmitter) chip does most of the work. Today, the functionality of this chip is usually built into another chip. See What Are UARTs? These have improved over time and old models (prior to say 1994) are usually very obsolete.
+
+    The serial port was originally designed for connecting external modems to a PC but it's used to connect many other devices also such as mice, text-terminals, some printers, etc. to a computer. You just plug these devices into the serial port using the correct cable. Many internal modem cards have a built-in serial port so when you install one inside your PC it's as if you just installed another serial port in your PC.
+    
+\section{How the Hardware Transfers Bytes}
+
+    Below is an introduction to the topic, but for a more advanced treatment of it see FIFOs.
+
+    \subsection{Transmitting}
+
+        Transmitting is sending bytes out of the serial port away from the computer (output). Once you understand transmitting, receiving (input) is easy to understand since it's similar. The first explanation given here will be grossly oversimplified. Then more detail will be added in later explanations. When the computer wants to send a byte out the serial port (to the external cable) the CPU sends the byte on the bus inside the computer to the I/O (Input Output) address of the serial port. I/O is often written as just IO. The serial port takes the byte, and sends it out one bit at a time (a serial bit-stream) on the transmit pin of the serial cable connector. For what a bit (and byte) look like electrically see Voltage Waveshapes.
+
+        Here's a replay of the above in a little more detail (but still very incomplete). Most of the work at the serial port is done by the UART chip (or the like). To transmit a byte, the serial device driver program (running on the CPU) sends a byte to the serial port"s I/O address. This byte gets into a 1-byte "transmit shift register" in the serial port. From this shift register bits are taken from the byte one-by-one and sent out bit-by-bit on the serial line. Then when the last bit has been sent and the shift register needs another byte to send, it could just ask the CPU to send it another byte. Thus would be simple but it would likely introduce delays since the CPU might not be able to get the byte immediately. After all, the CPU is usually doing other things besides just handling the serial port.
+        
+        A way to eliminate such delays is to arrange things so that the CPU gets the byte before the shift register needs it and stores it in a serial port buffer (in hardware). Then when the shift register has sent out its byte and needs a new byte immediately, the serial port hardware just transfers the next byte from its own buffer to the shift register. No need to call the CPU to fetch a new byte.
+        
+        The size of this serial port buffer was originally only one byte, but today it is usually 16 bytes (more in higher priced serial ports). Now there is still the problem of keeping this buffer sufficiently supplied with bytes so that when the shift register needs a byte to transmit it will always find one there (unless there are no more bytes to send). This is done by contacting the CPU using an interrupt.
+        
+        First we'll explain the case of the old fashioned one-byte buffer, since 16-byte buffers work similarly (but are more complex). When the shift register grabs the byte out of the buffer and the buffer needs another byte, it sends an interrupt to the CPU by putting a voltage on a dedicated wire on the computer bus. Unless the CPU is doing something very important, the interrupt forces it to stop what it was doing and start running a program which will supply another byte to the port's buffer. The purpose of this buffer is to keep an extra byte (waiting to be sent) queued in hardware so that there will be no gaps in the transmission of bytes out the serial port cable.
+        
+        Once the CPU gets the interrupt, it will know who sent the interrupt since there is a dedicated interrupt wire for each serial port (unless interrupts are shared). Then the CPU will start running the serial device driver which checks registers at I/0 addresses to find out what has happened. It finds out that the serial's transmit buffer is empty and waiting for another byte. So if there are more bytes to send, it sends the next byte to the serial port's I/0 address. This next byte should arrive when the previous byte is still in the transmit shift register and is still being transmitted bit-by-bit.
+        
+        In review, when a byte has been fully transmitted out the transmit wire of the serial port and the shift register is now empty the following 3 things happen in rapid succession:
+        
+        \begin{enumerate}
+            \item The next byte is moved from the transmit buffer into the transmit shift register.
+            \item The transmission of this new byte (bit-by-bit) begins.
+            \item Another interrupt is issued to tell the device driver to send yet another byte to the now empty transmit buffer.
+        \end{enumerate}
+            
+        Thus we say that the serial port is interrupt driven. Each time the serial port issues an interrupt, the CPU sends it another byte. Once a byte has been sent to the transmit buffer by the CPU, then the CPU is free to pursue some other activities until it gets the next interrupt. The serial port transmits bits at a fixed rate which is selected by the user (or an application program). It's sometimes called the baud rate. The serial port also adds extra bits to each byte (start, stop and perhaps parity bits) so there are often 10 bits sent per byte. At a rate (also called speed) of 19,200 bits per second (bps), there are thus 1,920 bytes/sec (and also 1,920 interrupts/sec).
+
+        Doing all this is a lot of work for the CPU. This is true for many reasons. First, just sending one 8-bit byte at a time over a 32-bit data bus (or even 64-bit) is not a very efficient use of bus width. Also, there is a lot of overhead in handing each interrupt. When the interrupt is received, the device driver only knows that something caused an interrupt at the serial port but doesn't know that it's because a character has been sent. The device driver has to make various checks to find out what happened. The same interrupt could mean that a character was received, one of the control lines changed state, etc.
+
+        A major improvement has been the enlargement of the buffer size of the serial port from 1-byte to 16-bytes. This means that when the CPU gets an interrupt it gives the serial port up to 16 new bytes to transmit. This is fewer interrupts to service but data must still be transferred one byte at a time over a wide bus. The 16-byte buffer is actually a FIFO (First In First Out) queue and is often called a FIFO. See FIFOs for details about the FIFO along with a repeat of some of the above info.
+        
+    \subsection{Receiving}
+        
+        Receiving bytes by a serial port is similar to sending them only it's in the opposite direction. It's also interrupt driven. For the obsolete type of serial port with 1-byte buffers, when a byte is fully received from the external cable it goes into the 1-byte receive buffer. Then the port gives the CPU an interrupt to tell it to pick up that byte so that the serial port will have room for storing the next byte which is currently being received. For newer serial ports with 16-byte buffers, this interrupt (to fetch the bytes) may be sent after 14 bytes are in the receive buffer. The CPU then stops what it was doing, runs the interrupt service routine, and picks up 14 to 16 bytes from the port. For an interrupt sent when the 14th byte has been received, there could be 16 bytes to get if 2 more bytes have arrived since the interrupt. But if 3 more bytes should arrive (instead of 2), then the 16-byte buffer will overrun. It also may pick up less than 14 bytes by setting it up that way or due to timeouts. See FIFOs for more details.
+
+    \subsection{The Large Serial Buffers}
+
+        We've talked about small 16-byte serial port hardware buffers but there are also much larger buffers in main memory. When the CPU takes some bytes out of the receive buffer of the hardware, it puts them into a much larger (say 8k-byte) receive buffer in main memory. Then a program that is getting bytes from the serial port takes the bytes it's receiving out of that large buffer (using a "read" statement in the program).
+
+        A similar situation exists for bytes that are to be transmitted. When the CPU needs to fetch some bytes to be transmitted it takes them out of a large (8k-byte) transmit buffer in main memory and puts them into the small 16-byte transmit buffer in the hardware. And when a program wants to send bytes out the serial port, it writes them to this large transmit buffer.
+        
+        Both of these buffers are managed by the serial driver. But the driver does more than just dealing with these buffers. It also does limited filtering (minor modifications) of data passing thru these buffers and listens for control certain characters. All this is configurable using the Stty program.
+
+\section{Serial Port Basics}
+
+    \subsection{What is a Serial Port?}
+
+        \subsubsection{Intro to Serial}
+
+            The UART serial port (or just "serial port for short" is an I/O (Input/Output) device.
+
+            An I/O device is just a way to get data into and out of a computer. There are many types of I/O devices such as the older serial ports and parallel ports, network cards, universal serial buses (USB), and firewire etc. Most pre-2007 PC's have a serial port or two (on older PC's). Each has a 9-pin connector (sometimes 25-pin) on the back of the computer. Computer programs can send data (bytes) to the transmit pin (output) and receive bytes from the receive pin (input). The other pins are for control purposes and ground.
+            
+            The serial port is much more than just a connector. It converts the data from parallel to serial and changes the electrical representation of the data. Inside the computer, data bits flow in parallel (using many wires at the same time). Serial flow is a stream of bits over a single wire (such as on the transmit or receive pin of the serial connector). For the serial port to create such a flow, it must convert data from parallel (inside the computer) to serial on the transmit pin (and conversely).
+            
+            Most of the electronics of the serial port is found in a computer chip (or a part of a chip) known as a UART. For more details on UARTs see the section What Are UARTS? But you may want to finish this section first so that you will hopefully understand how the UART fits into the overall scheme of things.
+
+        \subsubsection{Pins and Wires}
+
+            Old PC's used 25 pin connectors but only about 9 pins were actually used so later on most connectors were only 9-pin. Each of the 9 pins usually connects to a wire. Besides the two wires used for transmitting and receiving data, another pin (wire) is signal ground. The voltage on any wire is measured with respect to this ground. Thus the minimum number of wires to use for 2-way transmission of data is 3. Except that it has been known to work with no signal ground wire but with degraded performance and sometimes with errors.
+
+            There are still more wires which are for control purposes (signalling) only and not for sending bytes. All of these signals could have been shared on a single wire, but instead, there is a separate dedicated wire for every type of signal. Some (or all) of these control wires are called "modem control lines". Modem control wires are either in the asserted state (on) of +5 volts or in the negated state (off) of -5 volts. One of these wires is to signal the computer to stop sending bytes out the serial port cable. Conversely, another wire signals the device attached to the serial port to stop sending bytes to the computer. If the attached device is a modem, other wires may tell the modem to hang up the telephone line or tell the computer that a connection has been made or that the telephone line is ringing (someone is attempting to call in). See section Pinout and Signals for more details.
+
+        \subsubsection{RS-232 (EIA-232...)}
+
+            The serial port (not the USB) is usually a RS-232-C, EIA-232-D, or EIA-232-E. These three are almost the same thing. The original RS (Recommended Standard) prefix officially became EIA (Electronics Industries Association) and later EIA/TIA after EIA merged with TIA (Telecommunications Industries Association). The EIA-232 spec provides also for synchronous (sync) communication but the hardware to support sync is almost always missing on PC's. The RS designation is was intended to become obsolete but is still widely used and will be used in this howto for RS-232. Other documents may use the full EIA/TIA designation, or just EIA or TIA. For info on other (non-RS-232) serial ports see the section Other Serial Devices (not async RS-232)
+
+    \subsection{IO Address \& IRQ}
+
+        Since the computer needs to communicate with each serial port, the operating system must know that each serial port exists and where it is (its I/O address). It also needs to know which wire (IRQ number) the serial port must use to request service from the computer's CPU. It requests service by sending an interrupt voltage on this wire. Thus every serial port device must store in its non-volatile memory both its I/O address and its Interrupt ReQuest number: IRQ. See Interrupts. The PCI bus has its own system of interrupts. But since the PCI-aware BIOS sets up these PCI interrupts to map to IRQs, it seemingly behaves just as described above. Except that sharing of PCI interrupts is allowed (2 or more devices may use the same IRQ number).
+
+        I/O addresses are not the same as memory addresses. When an I/O addresses is put onto the computer's address bus, another wire is energized. This both tells main memory to ignore the address and tells all devices which have I/O addresses (such as the serial port) to listen to the address sent on the bus to see if it matches the device's. If the address matches, then the I/O device reads the data on the data bus.
+        
+        The I/O address of a certain device (such as ttyS2) will actually be a range of addresses. The lower address in this range is the base address. "address" usually means just the "base address".
+
+    \subsection{Names: ttyS0, ttyS1...}
+
+        The serial ports are named ttyS0, ttyS1, etc. (and usually correspond respectively to COM1, COM2, etc. in DOS/Windows). The /dev directory has a special file for each port. Type "ls /dev/ttyS*" to see them. Just because there may be (for example) a ttyS3 file, doesn't necessarily mean that there exists a physical serial port there.
+
+        Which one of these names (ttyS0, ttyS1, etc.) refers to which physical serial port is determined as follows. The serial driver (software) maintains a table showing which I/O address corresponds to which ttyS. This mapping of names (such as ttyS1) to I/O addresses (and IRQ's) may be both set and viewed by the "setserial" command. See What is Setserial. This does not set the I/O address and IRQ in the hardware itself (which is set by jumpers or by plug-and-play software). Thus which physical port corresponds to say ttyS1 depends both on what the serial driver thinks (per setserial) and what is set in the hardware. If a mistake has been made, the physical port may not correspond to any name (such as ttyS2) and thus it can't be used. See Serial Port Devices /dev/ttyS2, etc. for more details.
+
+    \subsection{Interrupts}
+    
+        When the serial port receives a number of bytes (may be set to 1, 4, 8, or 14) into its FIFO buffer, it signals the CPU to fetch them by sending an electrical signal known as an interrupt on a certain wire normally used only by that port. Thus the FIFO waits until it has received a number of bytes and then issues an interrupt.
+
+        However, this interrupt will also be sent if there is an unexpected delay while waiting for the next byte to arrive (known as a timeout). Thus if the bytes are being received slowly (such as from someone typing on a terminal keyboard) there may be an interrupt issued for every byte received. For some UART chips the rule is like this: If 4 bytes in a row could have been received in an interval of time, but none of these 4 show up, then the port gives up waiting for more bytes and issues an interrupt to fetch the bytes currently in the FIFO. Of course, if the FIFO is empty, no interrupt will be issued.
+
+        Each interrupt conductor (inside the computer) has a number (IRQ) and the serial port must know which conductor to use to signal on. For example, ttyS0 normally uses IRQ number 4 known as IRQ4 (or IRQ 4). A list of them and more will be found in "man setserial" (search for "Configuring Serial Ports"). Interrupts are issued whenever the serial port needs to get the CPU's attention. It's important to do this in a timely manner since the buffer inside the serial port can hold only 16 incoming bytes. If the CPU fails to remove such received bytes promptly, then there will not be any space left for any more incoming bytes and the small buffer may overflow (overrun) resulting in a loss of data bytes.
+
+        There is no Flow Control to prevent this.
+
+        Interrupts are also issued when the serial port has just sent out all of its bytes from its small transmit FIFO buffer out the external cable. It then has space for 16 more outgoing bytes. The interrupt is to notify the CPU of that fact so that it may put more bytes in the small transmit buffer to be transmitted. Also, when a modem control line changes state, an interrupt is issued.
+
+        The buffers mentioned above are all hardware buffers. The serial port also has large buffers in main memory. This will be explained later
+
+        Interrupts convey a lot of information but only indirectly. The interrupt itself just tells a chip called the interrupt controller that a certain serial port needs attention. The interrupt controller then signals the CPU. The CPU then runs a special program to service the serial port. That program is called an interrupt service routine (part of the serial driver software). It tries to find out what has happened at the serial port and then deals with the problem such a transferring bytes from (or to) the serial port's hardware buffer. This program can easily find out what has happened since the serial port has registers at IO addresses known to the serial driver software. These registers contain status information about the serial port. The software reads these registers and by inspecting the contents, finds out what has happened and takes appropriate action.
+
+    \subsection{Data Flow (Speeds)}
+
+        Data (bytes representing letters, pictures, etc.) flows into and out of your serial port. Flow rates (such as 56k (56000) bits/sec) are (incorrectly) called "speed". But almost everyone says "speed" instead of "flow rate".
+
+        It's important to understand that the average speed is often less than the specified speed. Waits (or idle time) result in a lower average speed. These waits may include long waits of perhaps a second due to Flow Control. At the other extreme there may be very short waits (idle time) of several micro-seconds between bytes. If the device on the serial port (such as a modem) can't accept the full serial port speed, then the average speed must be reduced.
+        
+    \subsection{Flow Control}
+
+        Flow control means the ability to slow down the flow of bytes in a wire. For serial ports this means the ability to stop and then restart the flow without any loss of bytes. Flow control is needed for modems and other hardware to allow a jump in instantaneous flow rates.
+
+        \subsubsection{Example of Flow Control}
+
+            For example, consider the case where you connect a 33.6k external modem via a short cable to your serial port. The modem sends and receives bytes over the phone line at 33.6k bits per second (bps). Assume it's not doing any data compression or error correction. You have set the serial port speed to 115,200 bits/sec (bps), and you are sending data from your computer to the phone line. Then the flow from the your computer to your modem over the short cable is at 115.2k bps. However the flow from your modem out the phone line is only 33.6k bps. Since a faster flow (115.2k) is going into your modem than is coming out of it, the modem is storing the excess flow (115.2k -33.6k = 81.6k bps) in one of its buffers. This buffer would soon overrun (run out of free storage space) unless the high 115.2k flow is stopped.
+
+            But now flow control comes to the rescue. When the modem's buffer is almost full, the modem sends a stop signal to the serial port. The serial port passes on the stop signal on to the device driver and the 115.2k bps flow is halted. Then the modem continues to send out data at 33.6k bps drawing on the data it previous accumulated in its buffer. Since nothing is coming into this buffer, the number of bytes in it starts to drop. When almost no bytes are left in the buffer, the modem sends a start signal to the serial port and the 115.2k flow from the computer to the modem resumes. In effect, flow control creates an average flow rate in the short cable (in this case 33.6k) which is significantly less than the "on" flow rate of 115.2k bps. This is "start-stop" flow control.
+            
+            In the above simple example it was assumed that the modem did no data compression. This could happen when the modem is sending a file which is already compressed and can't be compressed further. Now let's consider the opposite extreme where the modem is compressing the data with a high compression ratio. In such a case the modem might need an input flow rate of say 115.2k bps to provide an output (to the phone line) of 33.6k bps (compressed data). This compression ratio is 3.43 (115.2/33.6). In this case the modem is able to compress the 115.2 bps PC-to-modem flow and send the same data (in compressed form) out the phone line at 33.6bps. There's no need for flow control here so long as the compression ratio remains higher than 3.43. But the compression ratio varies from second to second and if it should drop below 3.43, flow control will be needed
+            
+            In the above example, the modem was an external modem. But the same situation exists (as of early 2003) for most internal modems. There is still a speed limit on the PC-to-modem speed even though this flow doesn't take place over an external cable. This makes the internal modems compatible with the external modems.
+            
+            In the above example of flow control, the flow was from the computer to a modem. But there is also flow control which is used for the opposite direction of flow: from a modem (or other device) to a computer. Each direction of flow involves 3 buffers: 1. in the modem 2. in the UART chip (called FIFOs) and 3. in main memory managed by the serial driver. Flow control protects all buffers (except the FIFOs) from overflowing.
+            
+            Under Linux, the small UART FIFO buffers are not protected by flow control but instead rely on a fast response to the interrupts they issue. Some UART chips can be set to do hardware flow control to protect their FIFOs but Linux (as of early 2003) doesn't seem to support it. FIFO stand for "First In, First Out" which is the way it handles bytes in a queue. All the 3 buffers use the FIFO rule but only the one in the UART is named "FIFO". This is the essence of flow control but there are still some more details.
+
+        \subsubsection{Symptoms of No Flow Control}
+
+            Understanding flow-control theory can be of practical use. The symptom of no flow control is that chunks of data missing from files sent without the benefit of flow control. When overflow happens, often hundreds or even thousands of bytes get lost, and all in contiguous chunks.
+
+        \subsubsection{Hardware vs. Software Flow Control}
+
+            If feasible, it's best to use "hardware" flow control that uses two dedicated "modem control" wires to send the "stop" and "start" signals. Hardware flow control at the serial port works like this: The two pins, RTS (Request to send) and CTS (Clear to send) are used. When the computer is ready to receive data it asserts RTS by putting a positive voltage on the RTS pin (meaning "Request To Send to me"). When the computer is not able to receive any more bytes, it negates RTS by putting a negative voltage on the pin saying: "stop sending to me". The RTS pin is connected by the serial cable to another pin on the modem, printer, terminal, etc. This other pin's only function is to receive this signal.
+
+            For the case of a modem, this "other" pin will be the modem's RTS pin. But for a printer, another PC, or a non-modem device, it's usually a CTS pin so a "crossover" or "null modem" cable is required. This cable connects the CTS pin at one end with the RTS pin at the other end (two wires since each end of the cable has a CTS pin). For a modem, a straight-thru cable is used.
+            
+            For the opposite direction of flow a similar scheme is used. For a modem, the CTS pin is used to send the flow control signal to the CTS pin on the PC. For a non-modem, the RTS pin sends the signal. Thus modems and non-modems have the roles of their RTS and CTS pins interchanged. Some non-modems such as dumb terminals may use other pins for flow control such as the DTR pin instead of RTS.
+            
+            Software flow control uses the main receive and transmit data wires to send the start and stop signals. It uses the ASCII control characters DC1 (start) and DC3 (stop) for this purpose. They are just inserted into the regular stream of data. Software flow control is not only slower in reacting but also does not allow the sending of binary data unless special precautions are taken. Since binary data will likely contain DC1 and DC3 characters, special means must be taken to distinguish between a DC3 that means a flow control stop and a DC3 that is part of the binary code. Likewise for DC1. 
+
+    \subsection{Data Flow Path; Buffers}
+
+        It's been mentioned that there are 3 buffers for each direction of flow (3 pairs altogether): 16-byte FIFO buffers (in the UART), a pair of larger buffers inside a device connected to the serial port (such as a modem), and a pair of buffers (say 8k) in main memory. When an application program sends bytes to the serial port they first get stashed in the transmit serial port buffer in main memory. The other member of this pair consists of a receive buffer for the opposite direction of byte-flow. Here's an example diagram for the case of browsing the Internet with a browser. Transmit data flow is left to right while receive flow is right to left. There is a separate buffer for each direction of flow.
+
+\end{document}
