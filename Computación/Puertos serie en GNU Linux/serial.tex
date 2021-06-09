@@ -1,0 +1,99 @@
+\documentclass[11pt, twosides, titlepage]{article}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{imakeidx}
+\usepackage{makeidx}
+\usepackage{mathtools}
+\usepackage[spanish]{babel}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\title{{\scshape\Huge Puertos Serie en GNU/Linux\par}}
+\author{Francisco Javier Balón Aguilar}
+
+\begin{document}
+\maketitle
+\renewcommand{\contentsname}{Índice de contenidos} % Nombre dado al ?ndice
+\tableofcontents % Genera la tabla de contenidos del ?ndice autom?ticamente
+\newpage
+
+%Lista de figuras 
+\listoffigures
+\newpage
+
+%Lista de tablas 
+\listoftables
+\newpage
+
+\section{Introducción}
+
+    El puerto serie convencional (no el puerto USB más nuevo ni el puerto Firewire) es un 
+    puerto de E/S muy antiguo. Hasta alrededor de 2006, la mayoría de las PC de escritorio 
+    nuevas tenían una, y las PC antiguas de la década de 1990 a veces tenían 2 de ellas. 
+    La mayoría de las computadoras portátiles las abandonaron antes que las computadoras 
+    de escritorio. Los Apple Macs después de mediados de 1998 solo tenía el puerto 
+    USB. Sin embargo, es posible poner un dispositivo de puerto serie convencional en el 
+    bus USB que está en todos los PC modernos.
+
+    Cada puerto serie tiene un <<archivo>> asociado en el directorio \textbf{/dev}. No es 
+    realmente un archivo, pero aparenta ser uno. Por ejemplo, \textbf{/dev/ttyS0}. Otros 
+    puertos serie \textbf{/dev/ttyS1}, \textbf{/dev/ttyS2}, etc. 
+
+    La denominación común para el puerto serie convencional es RS-232, a menudo 
+    llamado "puerto serie RS-232". Los conectores para el puerto serie generalmente se ven 
+    como uno o dos conectores de 9 pines (en algunos casos de 25 pines). Pero el puerto 
+    serie es más que solo conectores. Incluye la electrónica asociada que debe producir 
+    señales conforme a la especificación RS-232. Véase \ref{ondas_voltage}. Un pin se 
+    utiliza para enviar bytes de datos y otro para recibir bytes de datos. Otro pin es 
+    una señal de tierra común. Los otros pines <<útiles>> se utilizan principalmente para 
+    fines de señalización con un voltaje negativo constante que significa <<apagado>> y un 
+    voltaje positivo constante que significa <<encendido>>.
+
+    El chip UART (\textit{Universal Asynchronous Receiver-Transmitter}) hace la mayor parte 
+    del trabajo. Hoy en día, la funcionalidad de este chip generalmente se integra en otro 
+    chip. Véase \ref{uarts}. Estos han mejorado con el tiempo y los modelos antiguos (antes 
+    de 1994) suelen ser muy obsoletos.
+
+\section{Cómo los bytes son transmitidos por hardware}
+
+    \subsection{Transmisión}
+
+        La transmisión consiste en enviar bytes fuera del puerto serie lejos de la 
+        computadora (salida). Recibir (entrada) es fácil de asimilar. La primera 
+        explicación dada aquí será simplificada. Luego se agregarán más detalles en 
+        explicaciones posteriores (véase \ref{fifos}). Cuando la computadora desea enviar 
+        un byte al puerto serie (al cable externo), la CPU envía el byte en el bus dentro 
+        de la computadora a la dirección de E/S\footnote{
+            E/S a menudo se escribirá como IO.
+        } del puerto serie. El puerto serie toma el byte y lo envía un bit a la vez 
+        (un flujo de bits en serie) en el pin de transmisión del conector de cable en 
+        serie. Para lo que un poco (y byte) parecen eléctricamente ver Formas de onda de 
+        voltaje.
+
+        Aquí hay una repetición de lo anterior con un poco más de detalle (pero aún muy 
+        incompleta). La mayor parte del trabajo en el puerto serie lo realiza el chip 
+        UART (o similar). Para transmitir un byte, el programa de controlador de 
+        dispositivo serie (que se ejecuta en la CPU) envía un byte a la dirección de E/s 
+        del puerto serie. Este byte entra en un "registro de cambio de transmisión" de 1 
+        byte en el puerto serie. A partir de este registro de desplazamiento, los bits se 
+        toman del byte uno por uno y se envían bit a bit en la línea serie. Luego, cuando 
+        se ha enviado el último bit y el registro shift necesita otro byte para enviar, 
+        simplemente podría pedirle a la CPU que le envíe otro byte. Por lo tanto sería 
+        simple, pero probablemente introduciría retrasos ya que la CPU podría no ser capaz 
+        de obtener el byte inmediatamente. Después de todo, la CPU generalmente está 
+        haciendo otras cosas además de manejar el puerto serie.
+        
+        Una forma de eliminar tales retrasos es organizar las cosas para que la CPU 
+        obtenga el byte antes de que el registro de cambios lo necesite y lo almacene en 
+        un búfer de puerto serie (en hardware). Luego, cuando el registro shift ha enviado 
+        su byte y necesita un nuevo byte inmediatamente, el hardware del puerto serie solo 
+        transfiere el siguiente byte de su propio búfer al registro shift. No es necesario 
+        llamar a la CPU para obtener un nuevo byte.
+
+\end{document}
