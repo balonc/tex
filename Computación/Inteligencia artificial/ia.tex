@@ -388,7 +388,7 @@
 
     \subsection{Métodos de encadenamiento hacia delante y hacia atrás}
 
-        \subsubsection{Ecadenamiento hacia delante (Forward chaining)}
+        \subsubsection{Ecadenamiento hacia delante (Forward chaining)}\label{encadenamiento_delante}
 
             Se parte de una serie de hechos iniciales, donde a través del conjunto de reglas se 
             obtienen nuevas conclusiones, estando condicionadas éstas por los datos iniciales.
@@ -402,7 +402,7 @@
             pueden exstir numerosos factores que condicionen el orden de ejecución (prioridades), 
             por lo que existen estrategias de resolución de conflictos.
 
-        \subsubsection{Encadenamiento hacia atrás (Backwards chaining)}
+        \subsubsection{Encadenamiento hacia atrás (Backwards chaining)}\label{encadenamiento_atras}
 
             Siendo éste el proceso inverso, se parte de un conjunto de síntomas y se buscan 
             las causas que las provocan.
@@ -678,5 +678,12 @@
             \label{componentes_sistema_experto}
         \end{figure}    
 
+        Podemos considerar al motor de inferencia y a la base de conocimientos como los núcleos 
+        y elementos principales de un sistema experto.
+
+        El motor de inferencia puede utilizar mecanismos de encadenamiento hacia delante (véase sección 
+        \ref{encadenamiento_delante}) y encadenamiento hacia atrás (véase sección \ref{encadenamiento_atras})
+        con los datos y reglas de la base de conocimientos; en otras palabras, tiene la capacidad de 
+        contestar preguntas mediante mecanismos entrelazados contenidos en la base de conocimientos.
 
 \end{document}
