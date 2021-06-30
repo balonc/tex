@@ -647,4 +647,29 @@
         permite resolver problemas sin solución algorítmica.
     \end{itemize}
 
+    \subsection{Componentes de un sistema experto}
+
+        Los componentes base que debe tener un sistema experto son:
+
+        \begin{itemize}
+            \item \textbf{Base de conocimiento}. Contiene información sobre un tema en específico, 
+            generalmente introducida por un experto en dicho tema. Suele estar formada por reglas de 
+            razonamiento, u otros componentes que permitan generar e inferir conocimiento a partir de 
+            una situación dada.
+            \item \textbf{Base de hechos}. Proporciona al sistema los datos actuales sobre la situación 
+            concreta en la cual se va a realizar la aplicación, que según se ejecute el sistema derivará 
+            nuevos hechos como consecuencia de las reglas disparadas.
+            \item \textbf{Motor de inferencia}. Fusiona la base de conocimiento y la base de hechos para 
+            realizar una serie de razonamientos acerca del problema que se le ha presentado.
+            \item \textbf{Interface hombre-máquina}. Son módulos de interacción con el usuario.
+        \end{itemize}
+
+        \begin{figure}[htp]
+            \centering
+            \includegraphics[width=0.8\textwidth]{resources/componentes_sistema_experto.png}
+            \caption{Componentes de un sistema experto}
+            \label{componentes_sistema_experto}
+        \end{figure}    
+
+
 \end{document}
