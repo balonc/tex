@@ -731,5 +731,95 @@
             formular planes de recuperación para remediar fallos producidos y monitorizar la ejecución de éste.
         \end{itemize}
 
+    \subsection{Metodología para el desarrollo de un sistema experto}
+
+        Existen distintos ciclos de vida y metodologías para el desarrollo de estos sistemas, de 
+        entre las que destacamos:
+
+        \subsubsection{Metodología Buchanan}
+
+            Constante relación entre el ingeniero de conocimientos y el experto del área.
+            Se destacan 5 etapas en su desarrollo. Véase figura \ref{buchanan}.
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.8\textwidth]{resources/buchanan.png}
+                \caption{Esquema de la metodología Buchanan}
+                \label{buchanan}
+            \end{figure}    
+    
+        \subsubsection{Metodología Klic}
+
+            Inspirado en la metodología clásica del ciclo de vida del software en casacada,
+            da protagonismo al análisis de posibilidades y a la viabilidad. Véase figura 
+            \ref{klic}:
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.8\textwidth]{resources/klic.png}
+                \caption{Esquema de la metodología klic}
+                \label{klic}
+            \end{figure}    
+
+        \subsubsection{Metodología Commonkads}
+
+            Espiral e iterativo, basado en el modelado del conocimiento. Su objetivo es 
+            alcanzar la capacidad para resolver problemas comparables a la de un experto 
+            humano en el mismo dominio de aplicación. Véase figura \ref{commonkads00}:
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.4\textwidth]{resources/commonkads00.png}
+                \caption{Esquema de la metodología en espiral o Commonkads}
+                \label{commonkads00}
+            \end{figure}    
+
+            Se basa en unos principios básicos:
+
+            \begin{itemize}
+                \item Se basa en la construcción de modelos de diversos aspectos del 
+                conocimiento humano.
+                \item Principio del nivel de conocimiento\footnote{
+                    El modelado debe centrarse en la estructura conceptual del conocimiento.
+                }.
+                \item El conocimiento debe tener una estructura interna estable.
+            \end{itemize}
+
+            En función de la naturaleza del problema a resolver, podemos tener varios modelos 
+            categorizados e interables entre sí:
+
+            \begin{itemize}
+                \item \textbf{Modelos de organización}.
+                \item \textbf{Modelo de tarea}.
+                \item \textbf{Modelo de agente}. 
+                \item \textbf{Modelo de conocimiento}.
+                \item \textbf{Modelo de comunicación}. 
+                \item \textbf{Modelo de diseño}. 
+            \end{itemize}
+
+            La relación e interacción entre modelos se puede observar representado en la 
+            figura \ref{commonkads01}.
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.4\textwidth]{resources/commonkads01.png}
+                \caption{Esquema de interacción de modelos}
+                \label{commonkads01}
+            \end{figure}    
+
+        \subsubsection{Metodología Mike}
+
+            Se trata de una evolución de la metodología Commonkads, que añade a cada etapa del 
+            ciclo de vida en espiral elementos que permiten unir el prototipado con un proceso 
+            de desarrollo incremental y sostenible dentro del paradigma del modelado, de tal 
+            forma que se van creando prototipos de un sistema experto cada vez más complejo hasta
+            la solución final. Véase figura \ref{mike}.
+
+            \begin{figure}[htp]
+                \centering
+                \includegraphics[width=0.6\textwidth]{resources/mike.png}
+                \caption{Esquema de la metodología Mike}
+                \label{mike}
+            \end{figure}    
 
 \end{document}
